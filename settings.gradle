@@ -1,0 +1,3 @@
+rootProject.name = 'trainingtask'
+include 'com.qulix.merakses.trainingtask.web'
+
