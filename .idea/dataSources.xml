@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="taskdb" uuid="170edb59-3ddf-4a3c-b08c-f12d896c6dfc">
+    <data-source source="LOCAL" name="HSQLDB (Local)" uuid="1f6c0408-26c1-49d3-b71a-d487f2059e90">
       <driver-ref>hsqldb.local</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.hsqldb.jdbc.JDBCDriver</jdbc-driver>
-      <jdbc-url>jdbc:hsqldb:file:taskdb/taskdb</jdbc-url>
+      <jdbc-url>jdbc:hsqldb:hsql://localhost/taskdb</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

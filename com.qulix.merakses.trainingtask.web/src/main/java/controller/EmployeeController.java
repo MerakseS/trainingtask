@@ -10,9 +10,10 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(name = "Controller", value = "/Controller")
+@WebServlet(name = "Employee", value = "/employee")
 public class EmployeeController extends HttpServlet {
     private static final EmployeeService employeeService = ServiceProvider.getEmployeeService();
     private static final Gson gson = new Gson();
@@ -21,7 +22,12 @@ public class EmployeeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String strId = request.getParameter("id");
         if (strId == null) {
-            List<Employee> employeeList = employeeService.getAllEmployees();
+            List<Employee> employeeList = null;
+            try {
+                employeeList = employeeService.getAllEmployees();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             sendJson(response, employeeList);
             return;
         }

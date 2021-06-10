@@ -5,6 +5,7 @@ import repository.EmployeeRepository;
 import repository.RepositoryProvider;
 import service.EmployeeService;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class DefaultEmployeeService implements EmployeeService {
@@ -16,13 +17,13 @@ public class DefaultEmployeeService implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
+    public List<Employee> getAllEmployees() throws SQLException {
         return employeeRepository.getAllEmployees();
     }
 
     @Override
     public Employee getEmployee(long id) {
-        return null;
+        return employeeRepository.getEmployeeById(id);
     }
 
     @Override

@@ -9,7 +9,7 @@ public interface EmployeeService {
 
     Employee createEmployee(String firstName, String surName, String patronymic);
 
-    List<Employee> getAllEmployees();
+    List<Employee> getAllEmployees() throws SQLException;
 
     Employee getEmployee(long id);
 
