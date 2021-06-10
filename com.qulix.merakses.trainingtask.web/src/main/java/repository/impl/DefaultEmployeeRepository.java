@@ -19,6 +19,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
     private static final String EMPLOYEE_PATRONYMIC_COLUMN_NAME = "E_PATRONYMIC";
 
     private static final String GET_ALL_EMPLOYEES_QUERY = "SELECT * FROM EMPLOYEE";
+    private static final String GET_EMPLOYEE_BY_ID_QUERY = "SELECT * FROM EMPLOYEE WHERE E_ID = ?";
 
     @Override
     public Employee saveEmployee(Employee employee) {
@@ -47,8 +48,25 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
     }
 
     @Override
-    public Employee getEmployeeById(long id) {
-        return null;
+    public Employee getEmployeeById(long id) throws SQLException {
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_EMPLOYEE_BY_ID_QUERY)) {
+
+            statement.setLong(1, id);
+
+            try (ResultSet result = statement.executeQuery()) {
+                if (result.next()) {
+                    Employee employee = new Employee();
+                    employee.setId(result.getLong(EMPLOYEE_ID_COLUMN_NAME));
+                    employee.setFirstName(result.getString(EMPLOYEE_FIRST_NAME_COLUMN_NAME));
+                    employee.setSurName(result.getString(EMPLOYEE_SURNAME_COLUMN_NAME));
+                    employee.setPatronymic(result.getString(EMPLOYEE_PATRONYMIC_COLUMN_NAME));
+                    return employee;
+                }
+
+                return null;
+            }
+        }
     }
 
     @Override

@@ -11,7 +11,7 @@ public interface EmployeeService {
 
     List<Employee> getAllEmployees() throws SQLException;
 
-    Employee getEmployee(long id);
+    Employee getEmployee(long id) throws SQLException;
 
     Employee updateEmployee(long id, String firstName, String surName, String patronymic);
 

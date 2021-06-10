@@ -4,6 +4,7 @@ import entity.Employee;
 import repository.EmployeeRepository;
 import repository.RepositoryProvider;
 import service.EmployeeService;
+import service.ServiceException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -22,8 +23,13 @@ public class DefaultEmployeeService implements EmployeeService {
     }
 
     @Override
-    public Employee getEmployee(long id) {
-        return employeeRepository.getEmployeeById(id);
+    public Employee getEmployee(long id) throws SQLException {
+        Employee employee = employeeRepository.getEmployeeById(id);
+        if (employee == null) {
+            throw new ServiceException("Пользователь с id " + id + " не сущесвует!");
+        }
+
+        return employee;
     }
 
     @Override

@@ -13,28 +13,33 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(name = "Employee", value = "/employee")
+@WebServlet(name = "Employee", value = "/employee/*")
 public class EmployeeController extends HttpServlet {
     private static final EmployeeService employeeService = ServiceProvider.getEmployeeService();
     private static final Gson gson = new Gson();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String strId = request.getParameter("id");
-        if (strId == null) {
-            List<Employee> employeeList = null;
+        String pathInfo = request.getPathInfo();
+        if (pathInfo == null || pathInfo.equals("/")) {
             try {
-                employeeList = employeeService.getAllEmployees();
+                List<Employee> employeeList = employeeService.getAllEmployees();
+                sendJson(response, employeeList);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-            sendJson(response, employeeList);
             return;
         }
 
-        long id = Long.parseLong(strId);
-        Employee employee = employeeService.getEmployee(id);
-        sendJson(response, employee);
+        Long id = parseRouteParameter(request, response);
+        if (id != null) {
+            try {
+                Employee employee = employeeService.getEmployee(id);
+                sendJson(response, employee);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -57,5 +62,25 @@ public class EmployeeController extends HttpServlet {
         PrintWriter writer = response.getWriter();
         writer.print(gson.toJson(payload));
         writer.flush();
+    }
+
+    private Long parseRouteParameter(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String pathInfo = request.getPathInfo();
+        if (pathInfo == null || pathInfo.equals("/")) {
+            return null;
+        }
+
+        String[] splits = pathInfo.split("/");
+        if (splits.length != 2) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            return null;
+        }
+
+        try {
+            return Long.parseLong(splits[1]);
+        } catch (NumberFormatException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+            return null;
+        }
     }
 }

@@ -11,7 +11,7 @@ public interface EmployeeRepository {
 
     List<Employee> getAllEmployees() throws SQLException;
 
-    Employee getEmployeeById(long id);
+    Employee getEmployeeById(long id) throws SQLException;
 
     Employee updateEmployee(Employee employee);
 
