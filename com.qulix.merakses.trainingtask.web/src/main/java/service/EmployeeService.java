@@ -2,7 +2,6 @@ package service;
 
 import entity.Employee;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface EmployeeService {
