@@ -9,9 +9,9 @@ public interface EmployeeService {
 
     Employee createEmployee(String firstName, String surName, String patronymic);
 
-    List<Employee> getAllEmployees() throws SQLException;
+    List<Employee> getAllEmployees();
 
-    Employee getEmployee(long id) throws SQLException;
+    Employee getEmployee(long id);
 
     Employee updateEmployee(long id, String firstName, String surName, String patronymic);
 

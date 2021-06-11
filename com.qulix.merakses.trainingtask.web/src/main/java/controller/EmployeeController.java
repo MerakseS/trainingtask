@@ -3,6 +3,7 @@ package controller;
 import com.google.gson.Gson;
 import entity.Employee;
 import service.EmployeeService;
+import service.ServiceException;
 import service.ServiceProvider;
 
 import javax.servlet.*;
@@ -10,6 +11,8 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.ConnectException;
+import java.security.Provider;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -19,26 +22,24 @@ public class EmployeeController extends HttpServlet {
     private static final Gson gson = new Gson();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String pathInfo = request.getPathInfo();
-        if (pathInfo == null || pathInfo.equals("/")) {
-            try {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            String pathInfo = request.getPathInfo();
+            if (pathInfo == null || pathInfo.equals("/")) {
                 List<Employee> employeeList = employeeService.getAllEmployees();
                 sendJson(response, employeeList);
-            } catch (SQLException e) {
-                e.printStackTrace();
+                return;
             }
-            return;
-        }
 
-        Long id = parseRouteParameter(request, response);
-        if (id != null) {
-            try {
-                Employee employee = employeeService.getEmployee(id);
-                sendJson(response, employee);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            Long id = parseRouteParameter(pathInfo);
+            Employee employee = employeeService.getEmployee(id);
+            sendJson(response, employee);
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            response.getWriter().write(e.getMessage());
+            response.getWriter().flush();
         }
     }
 
@@ -64,23 +65,8 @@ public class EmployeeController extends HttpServlet {
         writer.flush();
     }
 
-    private Long parseRouteParameter(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String pathInfo = request.getPathInfo();
-        if (pathInfo == null || pathInfo.equals("/")) {
-            return null;
-        }
-
+    private Long parseRouteParameter(String pathInfo) {
         String[] splits = pathInfo.split("/");
-        if (splits.length != 2) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-            return null;
-        }
-
-        try {
-            return Long.parseLong(splits[1]);
-        } catch (NumberFormatException e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST);
-            return null;
-        }
+        return Long.parseLong(splits[1]);
     }
 }

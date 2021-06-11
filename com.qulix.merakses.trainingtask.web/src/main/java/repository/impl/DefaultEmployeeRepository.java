@@ -3,6 +3,7 @@ package repository.impl;
 import database.DatabaseConnection;
 import entity.Employee;
 import repository.EmployeeRepository;
+import repository.RepositoryException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,7 +28,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
     }
 
     @Override
-    public List<Employee> getAllEmployees() throws SQLException {
+    public List<Employee> getAllEmployees() {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ALL_EMPLOYEES_QUERY)) {
             List<Employee> employeeList = new ArrayList<>();
@@ -44,11 +45,13 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
             }
 
             return employeeList;
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
         }
     }
 
     @Override
-    public Employee getEmployeeById(long id) throws SQLException {
+    public Employee getEmployeeById(long id) {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_EMPLOYEE_BY_ID_QUERY)) {
 
@@ -66,6 +69,8 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
 
                 return null;
             }
+        } catch (SQLException e) {
+            throw new RepositoryException(e);
         }
     }
 
