@@ -46,7 +46,7 @@ public class EmployeeController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
             String firsName = request.getParameter(FIRSTNAME_PARAMETER);
             String surname = request.getParameter(SURNAME_PARAMETER);
@@ -62,12 +62,32 @@ public class EmployeeController extends HttpServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            Long id = ServletUtils.parseRouteParameter(request.getPathInfo());
+            String firsName = request.getParameter(FIRSTNAME_PARAMETER);
+            String surname = request.getParameter(SURNAME_PARAMETER);
+            String patronymic = request.getParameter(PATRONYMIC_PARAMETER);
 
+            Employee employee = employeeService.updateEmployee(id, firsName, surname, patronymic);
+            ServletUtils.sendJson(response, employee);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            response.getWriter().write(e.getMessage());
+            response.getWriter().flush();
+        }
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
+            Long id = ServletUtils.parseRouteParameter(request.getPathInfo());
+            employeeService.deleteEmployee(id);
+            ServletUtils.sendJson(response, id);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            response.getWriter().write(e.getMessage());
+            response.getWriter().flush();
+        }
     }
 }

@@ -17,26 +17,14 @@ public class DefaultEmployeeService implements EmployeeService {
     @Override
     public Employee createEmployee(String firstName, String surName, String patronymic) {
         try {
-            if (firstName == null || firstName.isBlank() || surName == null || surName.isBlank()) {
-                throw new ServiceException("Введите обязательные поля.");
-            }
-
-            if (surName.length() > 30) {
-                throw new ServiceException("Длина имени не больше 30 символов.");
-            }
-
-            if (firstName.length() > 30) {
-                throw new ServiceException("Длина фамилии не больше 30 символов.");
-            }
-
-            if (patronymic != null && patronymic.length() > 30) {
-                throw new ServiceException("Длина отчества не больше 30 символов.");
-            }
+            validateValues(firstName, surName, patronymic);
 
             Employee employee = new Employee();
             employee.setFirstName(firstName);
             employee.setSurName(surName);
-            employee.setPatronymic(patronymic);
+            if (patronymic != null && !patronymic.isBlank()) {
+                employee.setPatronymic(patronymic);
+            }
 
             employee = employeeRepository.saveEmployee(employee);
             log.info("Successfully created employee with id " + employee.getId());
@@ -75,11 +63,63 @@ public class DefaultEmployeeService implements EmployeeService {
 
     @Override
     public Employee updateEmployee(long id, String firstName, String surName, String patronymic) {
-        return null;
+        try {
+            Employee employee = employeeRepository.getEmployeeById(id);
+            if (employee == null) {
+                log.error("Employee with id " + id + " doesn't exist.");
+                throw new ServiceException("Пользователь с id " + id + " не сущесвует!");
+            }
+
+            validateValues(firstName, surName, patronymic);
+
+            employee.setFirstName(firstName);
+            employee.setSurName(surName);
+            if (patronymic != null && !patronymic.isBlank()) {
+                employee.setPatronymic(patronymic);
+            }
+
+            employee = employeeRepository.updateEmployee(employee);
+            log.info("Successfully updated employee with id " + employee.getId());
+
+            return employee;
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override
     public long deleteEmployee(long id) {
-        return 0;
+        try {
+            Employee employee = employeeRepository.getEmployeeById(id);
+            if (employee == null) {
+                log.error("Employee with id " + id + " doesn't exist.");
+                throw new ServiceException("Пользователь с id " + id + " не сущесвует!");
+            }
+
+            employeeRepository.deleteEmployeeById(id);
+            log.info("Successfully deleted employee with id " + id);
+
+            return id;
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    private void validateValues(String firstName, String surName, String patronymic) {
+        if (firstName == null || firstName.isBlank() || surName == null || surName.isBlank()) {
+            throw new ServiceException("Введите обязательные поля.");
+        }
+
+        if (surName.length() > 30) {
+            throw new ServiceException("Длина имени не больше 30 символов.");
+        }
+
+        if (firstName.length() > 30) {
+            throw new ServiceException("Длина фамилии не больше 30 символов.");
+        }
+
+        if (patronymic != null && patronymic.length() > 30) {
+            throw new ServiceException("Длина отчества не больше 30 символов.");
+        }
     }
 }
