@@ -72,13 +72,15 @@ public class DefaultEmployeeService implements EmployeeService {
 
             validateValues(firstName, surName, patronymic);
 
-            employee.setFirstName(firstName);
-            employee.setSurName(surName);
+            Employee newEmployee = new Employee();
+            newEmployee.setId(id);
+            newEmployee.setFirstName(firstName);
+            newEmployee.setSurName(surName);
             if (patronymic != null && !patronymic.isBlank()) {
-                employee.setPatronymic(patronymic);
+                newEmployee.setPatronymic(patronymic);
             }
 
-            employee = employeeRepository.updateEmployee(employee);
+            employee = employeeRepository.updateEmployee(newEmployee);
             log.info("Successfully updated employee with id " + employee.getId());
 
             return employee;
