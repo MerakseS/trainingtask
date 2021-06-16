@@ -30,7 +30,11 @@
             <label>Отчество
                 <br/><input type="text" name="patronymic" placeholder="Отчество" value="${employee.patronymic}"/>
             </label> <br/><br/>
-            <input type="submit" value="${title}"> <br/>
+            <label>Должность*
+                <br/><input type="text" name="position" placeholder="Должность" value="${employee.position}"/>
+            </label> <br/><br/>
+            <input type="submit" value="${title}"> <br/><br/>
+            <input type="button" onclick="history.back()" value="Отмена">
             <p>* – обязательные поля.</p>
         </form>
 </div>

@@ -12,16 +12,23 @@ import java.util.List;
 
 public class DefaultEmployeeService implements EmployeeService {
     private static final Logger log = Logger.getLogger(DefaultEmployeeService.class);
-    private static final EmployeeRepository employeeRepository = RepositoryProvider.getEmployeeRepository();
+    private final EmployeeRepository employeeRepository;
+
+    public DefaultEmployeeService() {
+        RepositoryProvider provider = RepositoryProvider.getInstance();
+        employeeRepository = provider.getEmployeeRepository();
+    }
+
 
     @Override
-    public Employee createEmployee(String firstName, String surName, String patronymic) {
+    public Employee createEmployee(String firstName, String surName, String patronymic, String position) {
         try {
-            validateValues(firstName, surName, patronymic);
+            validateValues(firstName, surName, patronymic, position);
 
             Employee employee = new Employee();
             employee.setFirstName(firstName);
             employee.setSurName(surName);
+            employee.setPosition(position);
             if (patronymic != null && !patronymic.isBlank()) {
                 employee.setPatronymic(patronymic);
             }
@@ -37,8 +44,8 @@ public class DefaultEmployeeService implements EmployeeService {
 
     @Override
     public List<Employee> getAllEmployees() {
-        log.info("Getting all employees.");
         try {
+            log.info("Getting all employees.");
             return employeeRepository.getAllEmployees();
         } catch (RepositoryException e) {
             throw new ServiceException(e);
@@ -47,8 +54,8 @@ public class DefaultEmployeeService implements EmployeeService {
 
     @Override
     public Employee getEmployee(long id) {
-        log.info("Getting employee with id " + id);
         try {
+            log.info("Getting employee with id " + id);
             Employee employee = employeeRepository.getEmployeeById(id);
             if (employee == null) {
                 log.error("Employee with id " + id + " doesn't exist.");
@@ -62,7 +69,7 @@ public class DefaultEmployeeService implements EmployeeService {
     }
 
     @Override
-    public Employee updateEmployee(long id, String firstName, String surName, String patronymic) {
+    public Employee updateEmployee(long id, String firstName, String surName, String patronymic, String position) {
         try {
             Employee employee = employeeRepository.getEmployeeById(id);
             if (employee == null) {
@@ -70,12 +77,13 @@ public class DefaultEmployeeService implements EmployeeService {
                 throw new ServiceException("Пользователь с id " + id + " не сущесвует!");
             }
 
-            validateValues(firstName, surName, patronymic);
+            validateValues(firstName, surName, patronymic, position);
 
             Employee newEmployee = new Employee();
             newEmployee.setId(id);
             newEmployee.setFirstName(firstName);
             newEmployee.setSurName(surName);
+            newEmployee.setPosition(position);
             if (patronymic != null && !patronymic.isBlank()) {
                 newEmployee.setPatronymic(patronymic);
             }
@@ -107,17 +115,22 @@ public class DefaultEmployeeService implements EmployeeService {
         }
     }
 
-    private void validateValues(String firstName, String surName, String patronymic) {
-        if (firstName == null || firstName.isBlank() || surName == null || surName.isBlank()) {
+    private void validateValues(String firstName, String surName, String patronymic, String position) {
+        if (firstName == null || firstName.isBlank() || surName == null || surName.isBlank()
+                || position == null || position.isBlank()) {
             throw new ServiceException("Введите обязательные поля.");
         }
 
-        if (surName.length() > 30) {
+        if (firstName.length() > 30) {
             throw new ServiceException("Длина имени не больше 30 символов.");
         }
 
-        if (firstName.length() > 30) {
+        if (surName.length() > 30) {
             throw new ServiceException("Длина фамилии не больше 30 символов.");
+        }
+
+        if (position.length() > 30) {
+            throw new ServiceException("Длина должности не больше 30 символов.");
         }
 
         if (patronymic != null && patronymic.length() > 30) {

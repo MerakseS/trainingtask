@@ -7,6 +7,7 @@ public class Employee implements Serializable {
     private String firstName;
     private String surName;
     private String patronymic;
+    private String position;
 
     public long getId() {
         return id;
@@ -38,5 +39,13 @@ public class Employee implements Serializable {
 
     public void setPatronymic(String patronymic) {
         this.patronymic = patronymic;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 }

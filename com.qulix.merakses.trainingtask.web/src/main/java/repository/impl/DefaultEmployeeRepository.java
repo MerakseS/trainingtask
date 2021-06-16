@@ -18,13 +18,14 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
     private static final String EMPLOYEE_FIRST_NAME_COLUMN_NAME = "E_FIRST_NAME";
     private static final String EMPLOYEE_SURNAME_COLUMN_NAME = "E_SURNAME";
     private static final String EMPLOYEE_PATRONYMIC_COLUMN_NAME = "E_PATRONYMIC";
+    private static final String EMPLOYEE_POSITION_COLUMN_NAME = "E_POSITION";
 
     private static final String GET_ALL_EMPLOYEES_QUERY = "SELECT * FROM EMPLOYEE";
     private static final String GET_EMPLOYEE_BY_ID_QUERY = "SELECT * FROM EMPLOYEE WHERE E_ID = ?";
     private static final String SAVE_EMPLOYEE_QUERY =
-            "INSERT INTO EMPLOYEE (E_FIRST_NAME, E_SURNAME, E_PATRONYMIC) VALUES (?, ?, ?)";
+            "INSERT INTO EMPLOYEE (E_FIRST_NAME, E_SURNAME, E_PATRONYMIC, E_POSITION) VALUES (?, ?, ?, ?)";
     private static final String UPDATE_EMPLOYEE_QUERY =
-            "UPDATE EMPLOYEE SET E_FIRST_NAME = ?, E_SURNAME = ?, E_PATRONYMIC = ? WHERE E_ID = ?";
+            "UPDATE EMPLOYEE SET E_FIRST_NAME = ?, E_SURNAME = ?, E_PATRONYMIC = ?, E_POSITION = ? WHERE E_ID = ?";
     private static final String DELETE_EMPLOYEE_QUERY = "DELETE FROM EMPLOYEE WHERE E_ID = ?";
 
     @Override
@@ -35,6 +36,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
             statement.setString(1, employee.getFirstName());
             statement.setString(2, employee.getSurName());
             statement.setString(3, employee.getPatronymic());
+            statement.setString(4, employee.getPosition());
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
@@ -68,6 +70,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
                     employee.setFirstName(result.getString(EMPLOYEE_FIRST_NAME_COLUMN_NAME));
                     employee.setSurName(result.getString(EMPLOYEE_SURNAME_COLUMN_NAME));
                     employee.setPatronymic(result.getString(EMPLOYEE_PATRONYMIC_COLUMN_NAME));
+                    employee.setPosition(result.getString(EMPLOYEE_POSITION_COLUMN_NAME));
                     employeeList.add(employee);
                 }
             }
@@ -92,6 +95,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
                     employee.setFirstName(result.getString(EMPLOYEE_FIRST_NAME_COLUMN_NAME));
                     employee.setSurName(result.getString(EMPLOYEE_SURNAME_COLUMN_NAME));
                     employee.setPatronymic(result.getString(EMPLOYEE_PATRONYMIC_COLUMN_NAME));
+                    employee.setPosition(result.getString(EMPLOYEE_POSITION_COLUMN_NAME));
                     return employee;
                 }
 
@@ -110,7 +114,8 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
             statement.setString(1, employee.getFirstName());
             statement.setString(2, employee.getSurName());
             statement.setString(3, employee.getPatronymic());
-            statement.setLong(4, employee.getId());
+            statement.setString(4, employee.getPosition());
+            statement.setLong(5, employee.getId());
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {

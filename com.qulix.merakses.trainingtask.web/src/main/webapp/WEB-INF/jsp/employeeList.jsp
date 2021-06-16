@@ -8,8 +8,6 @@
     <title>Работники</title>
     <link href="../../css/style.css" rel="stylesheet" type="text/css" media="all"/>
 </head>
-<style>
-</style>
 <body>
 <div>
     <h1>Список работников</h1>
@@ -17,6 +15,7 @@
         <c:forEach var="employee" items="${employeeList}">
             <tr>
                 <td><c:out value="${employee.firstName} ${employee.surName} ${employee.patronymic}"/></td>
+                <td><c:out value="${employee.position}" /></td>
                 <td><button onclick="location.href='employee/edit?id=${employee.id}'">Изменить</button></td>
                 <td><button onclick="location.href='employee/delete?id=${employee.id}'">Удалить</button></td>
             </tr>

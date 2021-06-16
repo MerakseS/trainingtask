@@ -14,6 +14,7 @@ public class InsertEmployeeCommand implements Command {
     private static final String FIRSTNAME_PARAMETER = "firstname";
     private static final String SURNAME_PARAMETER = "surname";
     private static final String PATRONYMIC_PARAMETER = "patronymic";
+    private static final String POSITION_PARAMETER = "position";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -23,8 +24,9 @@ public class InsertEmployeeCommand implements Command {
         String firsName = request.getParameter(FIRSTNAME_PARAMETER);
         String surname = request.getParameter(SURNAME_PARAMETER);
         String patronymic = request.getParameter(PATRONYMIC_PARAMETER);
+        String position = request.getParameter(POSITION_PARAMETER);
 
-        employeeService.createEmployee(firsName, surname, patronymic);
+        employeeService.createEmployee(firsName, surname, patronymic, position);
 
         response.sendRedirect(EMPLOYEE_LIST_PATH);
     }

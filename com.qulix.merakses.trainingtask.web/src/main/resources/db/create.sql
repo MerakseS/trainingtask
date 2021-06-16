@@ -10,7 +10,8 @@ CREATE TABLE employee
     e_id         BIGINT IDENTITY PRIMARY KEY,
     e_first_name VARCHAR(30) NOT NULL,
     e_surname    VARCHAR(30) NOT NULL,
-    e_patronymic VARCHAR(30)
+    e_patronymic VARCHAR(30),
+    e_position   VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE task
@@ -26,7 +27,13 @@ CREATE TABLE task
 );
 
 ALTER TABLE task
-    ADD FOREIGN KEY (t_project) REFERENCES project (p_id);
+    ADD CONSTRAINT FK_task_project
+        FOREIGN KEY (t_project) REFERENCES project (p_id)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE;
 
 ALTER TABLE task
-    ADD FOREIGN KEY (t_executor) REFERENCES employee (e_id);
+    ADD CONSTRAINT FK_task_employee
+        FOREIGN KEY (t_executor) REFERENCES employee (e_id)
+            ON DELETE CASCADE
+            ON UPDATE CASCADE;
