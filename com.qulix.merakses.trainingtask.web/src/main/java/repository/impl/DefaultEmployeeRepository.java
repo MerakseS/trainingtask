@@ -20,10 +20,10 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
     private static final String EMPLOYEE_PATRONYMIC_COLUMN_NAME = "E_PATRONYMIC";
     private static final String EMPLOYEE_POSITION_COLUMN_NAME = "E_POSITION";
 
-    private static final String GET_ALL_EMPLOYEES_QUERY = "SELECT * FROM EMPLOYEE";
-    private static final String GET_EMPLOYEE_BY_ID_QUERY = "SELECT * FROM EMPLOYEE WHERE E_ID = ?";
     private static final String SAVE_EMPLOYEE_QUERY =
             "INSERT INTO EMPLOYEE (E_FIRST_NAME, E_SURNAME, E_PATRONYMIC, E_POSITION) VALUES (?, ?, ?, ?)";
+    private static final String GET_ALL_EMPLOYEES_QUERY = "SELECT * FROM EMPLOYEE";
+    private static final String GET_EMPLOYEE_BY_ID_QUERY = "SELECT * FROM EMPLOYEE WHERE E_ID = ?";
     private static final String UPDATE_EMPLOYEE_QUERY =
             "UPDATE EMPLOYEE SET E_FIRST_NAME = ?, E_SURNAME = ?, E_PATRONYMIC = ?, E_POSITION = ? WHERE E_ID = ?";
     private static final String DELETE_EMPLOYEE_QUERY = "DELETE FROM EMPLOYEE WHERE E_ID = ?";
@@ -73,9 +73,9 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
                     employee.setPosition(result.getString(EMPLOYEE_POSITION_COLUMN_NAME));
                     employeeList.add(employee);
                 }
-            }
 
-            return employeeList;
+                return employeeList;
+            }
         } catch (SQLException e) {
             throw new RepositoryException(e);
         }
