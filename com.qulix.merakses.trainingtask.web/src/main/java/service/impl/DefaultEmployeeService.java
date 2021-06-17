@@ -58,7 +58,7 @@ public class DefaultEmployeeService implements EmployeeService {
             Employee employee = employeeRepository.getEmployeeById(id);
             if (employee == null) {
                 log.error("Employee with id " + id + " doesn't exist.");
-                throw new ServiceException("Пользователь с id " + id + " не сущесвует!");
+                throw new ServiceException("Работник с id " + id + " не сущесвует!");
             }
 
             return employee;
@@ -73,7 +73,7 @@ public class DefaultEmployeeService implements EmployeeService {
             Employee employee = employeeRepository.getEmployeeById(id);
             if (employee == null) {
                 log.error("Employee with id " + id + " doesn't exist.");
-                throw new ServiceException("Пользователь с id " + id + " не сущесвует!");
+                throw new ServiceException("Работник с id " + id + " не сущесвует!");
             }
 
             validateValues(firstName, surName, patronymic, position);
@@ -102,10 +102,10 @@ public class DefaultEmployeeService implements EmployeeService {
             Employee employee = employeeRepository.getEmployeeById(id);
             if (employee == null) {
                 log.error("Employee with id " + id + " doesn't exist.");
-                throw new ServiceException("Пользователь с id " + id + " не сущесвует!");
+                throw new ServiceException("Работник с id " + id + " не сущесвует!");
             }
 
-            employeeRepository.deleteEmployeeById(id);
+            id = employeeRepository.deleteEmployeeById(id);
             log.info("Successfully deleted employee with id " + id);
 
             return id;
