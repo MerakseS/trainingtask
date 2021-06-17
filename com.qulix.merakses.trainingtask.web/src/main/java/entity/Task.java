@@ -1,6 +1,7 @@
 package entity;
 
 import entity.enums.StatusEnum;
+
 import java.util.Date;
 
 public class Task {

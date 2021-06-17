@@ -1,4 +1,4 @@
-package controller.command.employeeCommand.impl;
+package controller.command.impl.employeeCommand;
 
 import controller.command.Command;
 import entity.Employee;
@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class ShowEditEmployeeFormCommand implements Command {
     private static final String EMPLOYEE_EDIT_PATH = "/WEB-INF/jsp/employeeEdit.jsp";
-    private static final String TITLE_VALUE = "Изменить работника";
+    private static final String TITLE_VALUE = "РР·РјРµРЅРёС‚СЊ СЂР°Р±РѕС‚РЅРёРєР°";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

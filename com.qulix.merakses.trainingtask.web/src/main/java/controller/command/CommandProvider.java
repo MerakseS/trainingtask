@@ -4,7 +4,7 @@ import controller.command.impl.NotFoundCommand;
 
 import java.util.HashMap;
 
-public class CommandProvider {
+public abstract class CommandProvider {
 
     protected final HashMap<String, Command> commands;
 

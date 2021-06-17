@@ -1,4 +1,4 @@
-package controller.command.employeeCommand.impl;
+package controller.command.impl.employeeCommand;
 
 import controller.command.Command;
 import service.EmployeeService;
@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class UpdateEmployeeCommand implements Command {
+public class InsertEmployeeCommand implements Command {
     private static final String EMPLOYEE_LIST_PATH = "/employee";
 
     private static final String FIRSTNAME_PARAMETER = "firstname";
@@ -21,13 +21,13 @@ public class UpdateEmployeeCommand implements Command {
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
         EmployeeService employeeService = serviceProvider.getEmployeeService();
 
-        long id = Long.parseLong(request.getParameter("id"));
         String firsName = request.getParameter(FIRSTNAME_PARAMETER);
         String surname = request.getParameter(SURNAME_PARAMETER);
         String patronymic = request.getParameter(PATRONYMIC_PARAMETER);
         String position = request.getParameter(POSITION_PARAMETER);
 
-        employeeService.updateEmployee(id, firsName, surname, patronymic, position);
+        employeeService.createEmployee(firsName, surname, patronymic, position);
+
         response.sendRedirect(EMPLOYEE_LIST_PATH);
     }
 }

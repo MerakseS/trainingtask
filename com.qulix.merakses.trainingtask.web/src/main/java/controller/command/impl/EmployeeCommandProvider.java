@@ -1,8 +1,8 @@
-package controller.command.employeeCommand;
+package controller.command.impl;
 
 import controller.command.Command;
 import controller.command.CommandProvider;
-import controller.command.employeeCommand.impl.*;
+import controller.command.impl.employeeCommand.*;
 
 public class EmployeeCommandProvider extends CommandProvider {
 

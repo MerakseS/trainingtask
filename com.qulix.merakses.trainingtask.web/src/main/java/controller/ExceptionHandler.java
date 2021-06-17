@@ -46,7 +46,7 @@ public class ExceptionHandler extends HttpServlet {
             out.println("Servlet Name : " + servletName + "</br></br>");
             out.println("Exception Type : " + throwable.getClass().getName() + "</br></br>");
             out.println("The request URI: " + requestUri + "<br><br>");
-            out.println("The exception message: " + throwable.getMessage()  + "<br><br>");
+            out.println("The exception message: " + throwable.getMessage() + "<br><br>");
             throwable.printStackTrace();
         }
         out.println("</body>");

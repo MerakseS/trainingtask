@@ -1,4 +1,4 @@
-package controller.command.employeeCommand.impl;
+package controller.command.impl.employeeCommand;
 
 import controller.command.Command;
 import service.EmployeeService;
@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class DeleteEmployeeCommand implements Command{
+public class DeleteEmployeeCommand implements Command {
     private static final String EMPLOYEE_LIST_PATH = "/employee";
 
     @Override

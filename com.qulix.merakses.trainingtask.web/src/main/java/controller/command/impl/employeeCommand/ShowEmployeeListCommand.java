@@ -1,4 +1,4 @@
-package controller.command.employeeCommand.impl;
+package controller.command.impl.employeeCommand;
 
 import controller.command.Command;
 import entity.Employee;

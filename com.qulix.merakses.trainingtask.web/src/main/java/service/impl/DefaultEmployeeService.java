@@ -19,7 +19,6 @@ public class DefaultEmployeeService implements EmployeeService {
         employeeRepository = provider.getEmployeeRepository();
     }
 
-
     @Override
     public Employee createEmployee(String firstName, String surName, String patronymic, String position) {
         try {
