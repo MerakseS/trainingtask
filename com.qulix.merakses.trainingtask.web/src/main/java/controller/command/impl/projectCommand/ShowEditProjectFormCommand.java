@@ -1,8 +1,8 @@
-package controller.command.impl.employeeCommand;
+package controller.command.impl.projectCommand;
 
 import controller.command.Command;
-import entity.Employee;
-import service.EmployeeService;
+import entity.Project;
+import service.ProjectService;
 import service.ServiceProvider;
 
 import javax.servlet.ServletException;
@@ -10,23 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ShowEditEmployeeFormCommand implements Command {
-    private static final String EMPLOYEE_EDIT_PATH = "/WEB-INF/jsp/employeeEdit.jsp";
+public class ShowEditProjectFormCommand implements Command {
+    private static final String PROJECT_EDIT_PATH = "/WEB-INF/jsp/projectEdit.jsp";
 
-    private static final String TITLE_VALUE = "Изменить работника";
+    private static final String TITLE_VALUE = "Изменить проект";
 
     private static final String ID_PARAMETER = "id";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        EmployeeService employeeService = serviceProvider.getEmployeeService();
+        ProjectService projectService = serviceProvider.getProjectService();
 
         long id = Long.parseLong(request.getParameter(ID_PARAMETER));
-        Employee employee = employeeService.getEmployee(id);
+        Project project = projectService.getProject(id);
 
         request.setAttribute("title", TITLE_VALUE);
-        request.setAttribute("employee", employee);
-        request.getRequestDispatcher(EMPLOYEE_EDIT_PATH).forward(request, response);
+        request.setAttribute("project", project);
+        request.getRequestDispatcher(PROJECT_EDIT_PATH).forward(request, response);
     }
 }

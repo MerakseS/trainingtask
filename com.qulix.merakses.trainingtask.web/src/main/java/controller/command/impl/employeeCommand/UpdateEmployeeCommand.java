@@ -11,6 +11,7 @@ import java.io.IOException;
 public class UpdateEmployeeCommand implements Command {
     private static final String EMPLOYEE_LIST_PATH = "/employee";
 
+    private static final String ID_PARAMETER = "id";
     private static final String FIRSTNAME_PARAMETER = "firstname";
     private static final String SURNAME_PARAMETER = "surname";
     private static final String PATRONYMIC_PARAMETER = "patronymic";
@@ -21,7 +22,7 @@ public class UpdateEmployeeCommand implements Command {
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
         EmployeeService employeeService = serviceProvider.getEmployeeService();
 
-        long id = Long.parseLong(request.getParameter("id"));
+        long id = Long.parseLong(request.getParameter(ID_PARAMETER));
         String firsName = request.getParameter(FIRSTNAME_PARAMETER);
         String surname = request.getParameter(SURNAME_PARAMETER);
         String patronymic = request.getParameter(PATRONYMIC_PARAMETER);
