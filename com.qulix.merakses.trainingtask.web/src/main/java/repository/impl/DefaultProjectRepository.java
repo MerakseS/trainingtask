@@ -89,6 +89,7 @@ public class DefaultProjectRepository implements ProjectRepository {
                     project.setId(result.getLong(PROJECT_ID_COLUMN_NAME));
                     project.setName(result.getString(PROJECT_NAME_COLUMN_NAME));
                     project.setDescription(result.getString(PROJECT_DESCRIPTION_COLUMN_NAME));
+                    //TODO taskList
 
                     return project;
                 }
