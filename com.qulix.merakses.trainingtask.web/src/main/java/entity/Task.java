@@ -1,12 +1,12 @@
 package entity;
 
-import entity.enums.StatusEnum;
+import entity.enums.Status;
 
 import java.time.LocalDate;
 
 public class Task {
     private long id;
-    private StatusEnum status;
+    private Status status;
     private String name;
     private Project project;
     private int workTime;
@@ -22,11 +22,11 @@ public class Task {
         this.id = id;
     }
 
-    public StatusEnum getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(StatusEnum status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

@@ -1,6 +1,6 @@
 package entity.enums;
 
-public enum StatusEnum {
+public enum Status {
     NOT_STARTED("Не начата"),
     IN_PROGRESS("В процессе"),
     COMPLETED("Завершена"),
@@ -8,7 +8,7 @@ public enum StatusEnum {
 
     private final String status;
 
-    StatusEnum(String status) {
+    Status(String status) {
         this.status = status;
     }
 

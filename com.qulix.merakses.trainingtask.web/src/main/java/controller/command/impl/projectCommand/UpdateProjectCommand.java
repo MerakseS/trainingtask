@@ -1,7 +1,6 @@
 package controller.command.impl.projectCommand;
 
 import controller.command.Command;
-import service.EmployeeService;
 import service.ProjectService;
 import service.ServiceProvider;
 
@@ -27,6 +26,7 @@ public class UpdateProjectCommand implements Command {
         String description = request.getParameter(DESCRIPTION_PARAMETER);
 
         projectService.updateProject(id, name, description);
+
         response.sendRedirect(PROJECT_LIST_PATH);
     }
 }

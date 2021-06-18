@@ -29,6 +29,7 @@ public class UpdateEmployeeCommand implements Command {
         String position = request.getParameter(POSITION_PARAMETER);
 
         employeeService.updateEmployee(id, firsName, surname, patronymic, position);
+
         response.sendRedirect(EMPLOYEE_LIST_PATH);
     }
 }

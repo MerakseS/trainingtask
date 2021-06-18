@@ -20,6 +20,7 @@ public class ShowEmployeeListCommand implements Command {
         EmployeeService employeeService = serviceProvider.getEmployeeService();
 
         List<Employee> employeeList = employeeService.getAllEmployees();
+
         request.setAttribute("employeeList", employeeList);
         request.getRequestDispatcher(EMPLOYEE_LIST_PATH).forward(request, response);
     }

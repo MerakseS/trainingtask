@@ -1,7 +1,7 @@
 package service.impl;
 
 import entity.Task;
-import entity.enums.StatusEnum;
+import entity.enums.Status;
 import service.TaskService;
 
 import java.time.LocalDate;
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class DefaultTaskService implements TaskService {
     @Override
-    public Task createTask(String name, long projectId, int workTime, LocalDate startDate, LocalDate endDate, StatusEnum status, long employeeId) {
+    public Task createTask(String name, long projectId, int workTime, LocalDate startDate, LocalDate endDate, Status status, long employeeId) {
         return null;
     }
 
@@ -24,7 +24,7 @@ public class DefaultTaskService implements TaskService {
     }
 
     @Override
-    public Task updateTask(long taskId, String name, long projectId, int workTime, LocalDate startDate, LocalDate endDate, StatusEnum status, long employeeId) {
+    public Task updateTask(long taskId, String name, long projectId, int workTime, LocalDate startDate, LocalDate endDate, Status status, long employeeId) {
         return null;
     }
 

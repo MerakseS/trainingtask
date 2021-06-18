@@ -20,6 +20,7 @@ public class ShowProjectListCommand implements Command {
         ProjectService projectService = serviceProvider.getProjectService();
 
         List<Project> projectList = projectService.getAllProjects();
+
         request.setAttribute("projectList", projectList);
         request.getRequestDispatcher(PROJECT_LIST_PATH).forward(request, response);
     }
