@@ -12,11 +12,14 @@
 <div>
     <h1>${title}</h1>
     <c:if test="${employee != null}">
-        <form action="update?id=${employee.id}" method="POST">
+        <form action="update" method="POST">
     </c:if>
     <c:if test="${employee == null}">
         <form action="insert" method="POST">
     </c:if>
+        <c:if test="${employee != null}">
+            <input type="hidden" name="id" value="${employee.id}"/>
+        </c:if>
             <label>Имя*
                 <br/><input type="text" name="firstname" placeholder="Имя" value="${employee.firstName}"/>
             </label> <br/><br/>
