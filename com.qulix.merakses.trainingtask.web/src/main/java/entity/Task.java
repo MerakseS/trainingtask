@@ -2,7 +2,7 @@ package entity;
 
 import entity.enums.StatusEnum;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Task {
     private long id;
@@ -10,8 +10,8 @@ public class Task {
     private String name;
     private Project project;
     private int workTime;
-    private Date startDate;
-    private Date endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private Employee employee;
 
     public long getId() {
@@ -54,19 +54,19 @@ public class Task {
         this.workTime = workTime;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

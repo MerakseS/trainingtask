@@ -7,6 +7,7 @@ public class RepositoryProvider {
 
     private final EmployeeRepository employeeRepository = new DefaultEmployeeRepository();
     private final ProjectRepository projectRepository = new DefaultProjectRepository();
+    private final TaskRepository taskRepository = new DefaultTaskRepository();
 
     public static RepositoryProvider getInstance() {
         return instance;
@@ -18,5 +19,9 @@ public class RepositoryProvider {
 
     public ProjectRepository getProjectRepository() {
         return projectRepository;
+    }
+
+    public TaskRepository getTaskRepository() {
+        return taskRepository;
     }
 }

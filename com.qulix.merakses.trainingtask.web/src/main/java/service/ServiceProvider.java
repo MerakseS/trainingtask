@@ -7,6 +7,7 @@ public class ServiceProvider {
 
     private final EmployeeService employeeService = new DefaultEmployeeService();
     private final ProjectService projectService = new DefaultProjectService();
+    private final TaskService taskService = new DefaultTaskService();
 
     public static ServiceProvider getInstance() {
         return instance;
@@ -18,5 +19,9 @@ public class ServiceProvider {
 
     public ProjectService getProjectService() {
         return projectService;
+    }
+
+    public TaskService getTaskService() {
+        return taskService;
     }
 }

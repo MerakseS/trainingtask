@@ -10,10 +10,10 @@ public interface ProjectService {
 
     List<Project> getAllProjects();
 
-    Project getProject(long id);
+    Project getProject(long projectId);
 
-    Project updateProject(long id, String name, String description);
+    Project updateProject(long projectId, String name, String description);
 
-    long deleteProject(long id);
+    long deleteProject(long projectId);
     
 }

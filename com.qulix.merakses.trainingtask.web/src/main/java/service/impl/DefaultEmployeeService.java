@@ -52,13 +52,13 @@ public class DefaultEmployeeService implements EmployeeService {
     }
 
     @Override
-    public Employee getEmployee(long id) {
+    public Employee getEmployee(long employeeId) {
         try {
-            log.info("Getting employee with id " + id);
-            Employee employee = employeeRepository.getEmployeeById(id);
+            log.info("Getting employee with id " + employeeId);
+            Employee employee = employeeRepository.getEmployeeById(employeeId);
             if (employee == null) {
-                log.error("Employee with id " + id + " doesn't exist.");
-                throw new ServiceException("Работник с id " + id + " не сущесвует!");
+                log.error("Employee with id " + employeeId + " doesn't exist.");
+                throw new ServiceException("Работник с id " + employeeId + " не сущесвует!");
             }
 
             return employee;
@@ -68,18 +68,18 @@ public class DefaultEmployeeService implements EmployeeService {
     }
 
     @Override
-    public Employee updateEmployee(long id, String firstName, String surName, String patronymic, String position) {
+    public Employee updateEmployee(long employeeId, String firstName, String surName, String patronymic, String position) {
         try {
-            Employee employee = employeeRepository.getEmployeeById(id);
+            Employee employee = employeeRepository.getEmployeeById(employeeId);
             if (employee == null) {
-                log.error("Employee with id " + id + " doesn't exist.");
-                throw new ServiceException("Работник с id " + id + " не сущесвует!");
+                log.error("Employee with id " + employeeId + " doesn't exist.");
+                throw new ServiceException("Работник с id " + employeeId + " не сущесвует!");
             }
 
             validateValues(firstName, surName, patronymic, position);
 
             Employee newEmployee = new Employee();
-            newEmployee.setId(id);
+            newEmployee.setId(employeeId);
             newEmployee.setFirstName(firstName);
             newEmployee.setSurName(surName);
             newEmployee.setPosition(position);
@@ -97,18 +97,18 @@ public class DefaultEmployeeService implements EmployeeService {
     }
 
     @Override
-    public long deleteEmployee(long id) {
+    public long deleteEmployee(long employeeId) {
         try {
-            Employee employee = employeeRepository.getEmployeeById(id);
+            Employee employee = employeeRepository.getEmployeeById(employeeId);
             if (employee == null) {
-                log.error("Employee with id " + id + " doesn't exist.");
-                throw new ServiceException("Работник с id " + id + " не сущесвует!");
+                log.error("Employee with id " + employeeId + " doesn't exist.");
+                throw new ServiceException("Работник с id " + employeeId + " не сущесвует!");
             }
 
-            id = employeeRepository.deleteEmployeeById(id);
-            log.info("Successfully deleted employee with id " + id);
+            employeeId = employeeRepository.deleteEmployeeById(employeeId);
+            log.info("Successfully deleted employee with id " + employeeId);
 
-            return id;
+            return employeeId;
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }
