@@ -78,9 +78,9 @@ public class DefaultProjectService implements ProjectService {
 
             Project newProject = new Project();
             newProject.setId(id);
-            project.setName(name);
+            newProject.setName(name);
             if (description != null && !description.isBlank()) {
-                project.setDescription(description);
+                newProject.setDescription(description);
             }
 
             project = projectRepository.updateProject(newProject);

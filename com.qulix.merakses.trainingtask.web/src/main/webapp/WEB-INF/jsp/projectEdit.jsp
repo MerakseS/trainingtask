@@ -21,7 +21,7 @@
                 <br/><input type="text" name="name" placeholder="Наименование" value="${project.name}"/>
             </label> <br/><br/>
             <label>Описание
-                <br/><textarea name="description" rows="5" placeholder="Описание"><${project.description}/textarea>
+                <br/><textarea name="description" rows="5" placeholder="Описание">${project.description}</textarea>
             </label> <br/><br/>
 <%--            TODO список задач--%>
             <input type="submit" value="${title}"> <br/><br/>
