@@ -33,10 +33,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(SAVE_EMPLOYEE_QUERY, RETURN_GENERATED_KEYS)) {
 
-            statement.setString(1, employee.getFirstName());
-            statement.setString(2, employee.getSurName());
-            statement.setString(3, employee.getPatronymic());
-            statement.setString(4, employee.getPosition());
+            setValuesToStatement(employee, statement);
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
@@ -65,12 +62,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
 
             try (ResultSet result = statement.executeQuery()) {
                 while (result.next()) {
-                    Employee employee = new Employee();
-                    employee.setId(result.getLong(EMPLOYEE_ID_COLUMN_NAME));
-                    employee.setFirstName(result.getString(EMPLOYEE_FIRST_NAME_COLUMN_NAME));
-                    employee.setSurName(result.getString(EMPLOYEE_SURNAME_COLUMN_NAME));
-                    employee.setPatronymic(result.getString(EMPLOYEE_PATRONYMIC_COLUMN_NAME));
-                    employee.setPosition(result.getString(EMPLOYEE_POSITION_COLUMN_NAME));
+                    Employee employee = getEmployeeByResultSet(result);
                     employeeList.add(employee);
                 }
 
@@ -89,17 +81,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
             statement.setLong(1, id);
 
             try (ResultSet result = statement.executeQuery()) {
-                if (result.next()) {
-                    Employee employee = new Employee();
-                    employee.setId(result.getLong(EMPLOYEE_ID_COLUMN_NAME));
-                    employee.setFirstName(result.getString(EMPLOYEE_FIRST_NAME_COLUMN_NAME));
-                    employee.setSurName(result.getString(EMPLOYEE_SURNAME_COLUMN_NAME));
-                    employee.setPatronymic(result.getString(EMPLOYEE_PATRONYMIC_COLUMN_NAME));
-                    employee.setPosition(result.getString(EMPLOYEE_POSITION_COLUMN_NAME));
-                    return employee;
-                }
-
-                return null;
+                return result.next() ? getEmployeeByResultSet(result) : null;
             }
         } catch (SQLException e) {
             throw new RepositoryException(e);
@@ -111,10 +93,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_EMPLOYEE_QUERY)) {
 
-            statement.setString(1, employee.getFirstName());
-            statement.setString(2, employee.getSurName());
-            statement.setString(3, employee.getPatronymic());
-            statement.setString(4, employee.getPosition());
+            setValuesToStatement(employee, statement);
             statement.setLong(5, employee.getId());
 
             int affectedRows = statement.executeUpdate();
@@ -144,5 +123,23 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
         } catch (SQLException e) {
             throw new RepositoryException(e);
         }
+    }
+
+    private void setValuesToStatement(Employee employee, PreparedStatement statement) throws SQLException {
+        statement.setString(1, employee.getFirstName());
+        statement.setString(2, employee.getSurName());
+        statement.setString(3, employee.getPatronymic());
+        statement.setString(4, employee.getPosition());
+    }
+
+    private Employee getEmployeeByResultSet(ResultSet result) throws SQLException {
+        Employee employee = new Employee();
+        employee.setId(result.getLong(EMPLOYEE_ID_COLUMN_NAME));
+        employee.setFirstName(result.getString(EMPLOYEE_FIRST_NAME_COLUMN_NAME));
+        employee.setSurName(result.getString(EMPLOYEE_SURNAME_COLUMN_NAME));
+        employee.setPatronymic(result.getString(EMPLOYEE_PATRONYMIC_COLUMN_NAME));
+        employee.setPosition(result.getString(EMPLOYEE_POSITION_COLUMN_NAME));
+
+        return employee;
     }
 }

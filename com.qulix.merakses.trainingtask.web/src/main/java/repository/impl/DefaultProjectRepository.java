@@ -32,8 +32,7 @@ public class DefaultProjectRepository implements ProjectRepository {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(SAVE_PROJECT_QUERY, RETURN_GENERATED_KEYS)) {
 
-            statement.setString(1, project.getName());
-            statement.setString(2, project.getDescription());
+            setValuesToStatement(project, statement);
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
@@ -58,14 +57,11 @@ public class DefaultProjectRepository implements ProjectRepository {
     public List<Project> getAllProjects() {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ALL_PROJECTS_QUERY)) {
-            List<Project> projectList = new ArrayList<>();
 
             try (ResultSet result = statement.executeQuery()) {
+                List<Project> projectList = new ArrayList<>();
                 while (result.next()) {
-                    Project project = new Project();
-                    project.setId(result.getLong(PROJECT_ID_COLUMN_NAME));
-                    project.setName(result.getString(PROJECT_NAME_COLUMN_NAME));
-                    project.setDescription(result.getString(PROJECT_DESCRIPTION_COLUMN_NAME));
+                    Project project = getProjectByResultSet(result);
                     projectList.add(project);
                 }
 
@@ -83,18 +79,8 @@ public class DefaultProjectRepository implements ProjectRepository {
 
             statement.setLong(1, id);
 
-            try (ResultSet result = statement.executeQuery()){
-                if (result.next()) {
-                    Project project = new Project();
-                    project.setId(result.getLong(PROJECT_ID_COLUMN_NAME));
-                    project.setName(result.getString(PROJECT_NAME_COLUMN_NAME));
-                    project.setDescription(result.getString(PROJECT_DESCRIPTION_COLUMN_NAME));
-                    //TODO taskList
-
-                    return project;
-                }
-
-                return null;
+            try (ResultSet result = statement.executeQuery()) {
+                return result.next() ? getProjectByResultSet(result) : null;
             }
         } catch (SQLException e) {
             throw new RepositoryException(e);
@@ -106,8 +92,7 @@ public class DefaultProjectRepository implements ProjectRepository {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_PROJECT_QUERY)) {
 
-            statement.setString(1, project.getName());
-            statement.setString(2, project.getDescription());
+            setValuesToStatement(project, statement);
             statement.setLong(3, project.getId());
 
             int affectedRows = statement.executeUpdate();
@@ -130,12 +115,26 @@ public class DefaultProjectRepository implements ProjectRepository {
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException(format("Can't update project. No rows affected. Project's id: %s", id));
+                throw new SQLException(format("Can't delete project. No rows affected. Project's id: %s", id));
             }
 
             return id;
         } catch (SQLException e) {
             throw new RepositoryException(e);
         }
+    }
+
+    private void setValuesToStatement(Project project, PreparedStatement statement) throws SQLException {
+        statement.setString(1, project.getName());
+        statement.setString(2, project.getDescription());
+    }
+
+    private Project getProjectByResultSet(ResultSet result) throws SQLException {
+        Project project = new Project();
+        project.setId(result.getLong(PROJECT_ID_COLUMN_NAME));
+        project.setName(result.getString(PROJECT_NAME_COLUMN_NAME));
+        project.setDescription(result.getString(PROJECT_DESCRIPTION_COLUMN_NAME));
+
+        return project;
     }
 }
