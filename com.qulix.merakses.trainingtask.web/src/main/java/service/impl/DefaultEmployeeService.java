@@ -70,24 +70,19 @@ public class DefaultEmployeeService implements EmployeeService {
     @Override
     public Employee updateEmployee(long employeeId, String firstName, String surName, String patronymic, String position) {
         try {
-            Employee employee = employeeRepository.getEmployeeById(employeeId);
-            if (employee == null) {
-                log.error("Employee with id " + employeeId + " doesn't exist.");
-                throw new ServiceException("Работник с id " + employeeId + " не сущесвует!");
-            }
-
+            checkThatEmployeeExists(employeeId);
             validateValues(firstName, surName, patronymic, position);
 
-            Employee newEmployee = new Employee();
-            newEmployee.setId(employeeId);
-            newEmployee.setFirstName(firstName);
-            newEmployee.setSurName(surName);
-            newEmployee.setPosition(position);
+            Employee employee = new Employee();
+            employee.setId(employeeId);
+            employee.setFirstName(firstName);
+            employee.setSurName(surName);
+            employee.setPosition(position);
             if (patronymic != null && !patronymic.isBlank()) {
-                newEmployee.setPatronymic(patronymic);
+                employee.setPatronymic(patronymic);
             }
 
-            employee = employeeRepository.updateEmployee(newEmployee);
+            employee = employeeRepository.updateEmployee(employee);
             log.info("Successfully updated employee with id " + employee.getId());
 
             return employee;
@@ -99,11 +94,7 @@ public class DefaultEmployeeService implements EmployeeService {
     @Override
     public long deleteEmployee(long employeeId) {
         try {
-            Employee employee = employeeRepository.getEmployeeById(employeeId);
-            if (employee == null) {
-                log.error("Employee with id " + employeeId + " doesn't exist.");
-                throw new ServiceException("Работник с id " + employeeId + " не сущесвует!");
-            }
+            checkThatEmployeeExists(employeeId);
 
             employeeId = employeeRepository.deleteEmployeeById(employeeId);
             log.info("Successfully deleted employee with id " + employeeId);
@@ -111,6 +102,14 @@ public class DefaultEmployeeService implements EmployeeService {
             return employeeId;
         } catch (RepositoryException e) {
             throw new ServiceException(e);
+        }
+    }
+
+    private void checkThatEmployeeExists(long employeeId) {
+        Employee employee = employeeRepository.getEmployeeById(employeeId);
+        if (employee == null) {
+            log.error("Employee with id " + employeeId + " doesn't exist.");
+            throw new ServiceException("Работник с id " + employeeId + " не сущесвует!");
         }
     }
 

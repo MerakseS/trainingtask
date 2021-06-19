@@ -9,7 +9,7 @@ public class Task {
     private Status status;
     private String name;
     private Project project;
-    private int workTime;
+    private Integer workTime;
     private LocalDate startDate;
     private LocalDate endDate;
     private Employee employee;
@@ -46,11 +46,11 @@ public class Task {
         this.project = project;
     }
 
-    public int getWorkTime() {
+    public Integer getWorkTime() {
         return workTime;
     }
 
-    public void setWorkTime(int workTime) {
+    public void setWorkTime(Integer workTime) {
         this.workTime = workTime;
     }
 

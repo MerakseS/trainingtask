@@ -15,5 +15,7 @@ public interface ProjectService {
     Project updateProject(long projectId, String name, String description);
 
     long deleteProject(long projectId);
+
+    void checkThatProjectExists(long projectId);
     
 }

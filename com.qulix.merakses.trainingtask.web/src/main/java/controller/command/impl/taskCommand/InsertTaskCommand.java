@@ -27,12 +27,12 @@ public class InsertTaskCommand implements controller.command.Command {
         TaskService taskService = serviceProvider.getTaskService();
 
         String name = request.getParameter(NAME_PARAMETER);
-        long projectId = Long.parseLong(request.getParameter(PROJECT_ID_PARAMETER));
-        int workTime = Integer.parseInt(request.getParameter(WORK_TIME_PARAMETER));
-        LocalDate startDate = LocalDate.parse(request.getParameter(START_DATE_PARAMETER));
-        LocalDate endDate = LocalDate.parse(request.getParameter(END_DATE_PARAMETER));
-        Status status = Status.valueOf(request.getParameter(STATUS_PARAMETER));
-        long employeeId = Long.parseLong(request.getParameter(EMPLOYEE_ID_PARAMETER));
+        Long projectId = Long.valueOf(request.getParameter(PROJECT_ID_PARAMETER));
+        String workTime = request.getParameter(WORK_TIME_PARAMETER);
+        String startDate = request.getParameter(START_DATE_PARAMETER);
+        String endDate = request.getParameter(END_DATE_PARAMETER);
+        String status = request.getParameter(STATUS_PARAMETER);
+        Long employeeId = Long.valueOf(request.getParameter(EMPLOYEE_ID_PARAMETER));
 
         taskService.createTask(name, projectId, workTime, startDate, endDate, status, employeeId);
 
