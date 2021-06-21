@@ -1,10 +1,10 @@
 package entity.enums;
 
 public enum Status {
-    NOT_STARTED("РќРµ РЅР°С‡Р°С‚Р°"),
-    IN_PROGRESS("Р’ РїСЂРѕС†РµСЃСЃРµ"),
-    COMPLETED("Р—Р°РІРµСЂС€РµРЅР°"),
-    POSTPONED("РћС‚Р»РѕР¶РµРЅР°");
+    NOT_STARTED("Не начата"),
+    IN_PROGRESS("В процессе"),
+    COMPLETED("Завершена"),
+    POSTPONED("Отложена");
 
     private final String status;
 

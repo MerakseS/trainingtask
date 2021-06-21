@@ -5,9 +5,15 @@ import service.impl.*;
 public class ServiceProvider {
     private static final ServiceProvider instance = new ServiceProvider();
 
-    private final EmployeeService employeeService = new DefaultEmployeeService();
-    private final ProjectService projectService = new DefaultProjectService();
-    private final TaskService taskService = new DefaultTaskService();
+    private final EmployeeService employeeService;
+    private final ProjectService projectService;
+    private final TaskService taskService;
+
+    public ServiceProvider() {
+        employeeService = new DefaultEmployeeService();
+        projectService = new DefaultProjectService();
+        taskService = new DefaultTaskService(projectService);
+    }
 
     public static ServiceProvider getInstance() {
         return instance;

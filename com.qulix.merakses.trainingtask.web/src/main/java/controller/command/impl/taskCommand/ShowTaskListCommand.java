@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ShowTaskListCommand implements Command {
-    private static final String TASK_EDIT_PATH = "/WEB-INF/jsp/taskEdit.jsp";
+    private static final String TASK_LIST_PATH = "/WEB-INF/jsp/taskList.jsp";
     
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -22,6 +22,6 @@ public class ShowTaskListCommand implements Command {
         List<Task> taskList = taskService.getAllTasks();
 
         request.setAttribute("taskList", taskList);
-        request.getRequestDispatcher(TASK_EDIT_PATH).forward(request, response);
+        request.getRequestDispatcher(TASK_LIST_PATH).forward(request, response);
     }
 }

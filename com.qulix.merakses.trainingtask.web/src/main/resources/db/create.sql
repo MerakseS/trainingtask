@@ -17,7 +17,7 @@ CREATE TABLE employee
 CREATE TABLE task
 (
     t_id         BIGINT IDENTITY PRIMARY KEY,
-    t_status     VARCHAR(15) NOT NULL,
+    t_status     VARCHAR(20) NOT NULL,
     t_name       VARCHAR(50) NOT NULL,
     t_project    BIGINT      NOT NULL,
     t_work_time  INT,

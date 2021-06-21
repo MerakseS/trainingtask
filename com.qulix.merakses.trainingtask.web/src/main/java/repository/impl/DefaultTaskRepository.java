@@ -37,10 +37,9 @@ public class DefaultTaskRepository implements TaskRepository {
     private final EmployeeRepository employeeRepository;
     private final ProjectRepository projectRepository;
 
-    public DefaultTaskRepository() {
-        RepositoryProvider provider = RepositoryProvider.getInstance();
-        employeeRepository = provider.getEmployeeRepository();
-        projectRepository = provider.getProjectRepository();
+    public DefaultTaskRepository(EmployeeRepository employeeRepository, ProjectRepository projectRepository) {
+        this.employeeRepository = employeeRepository;
+        this.projectRepository = projectRepository;
     }
 
     @Override
@@ -163,7 +162,7 @@ public class DefaultTaskRepository implements TaskRepository {
     }
 
     private void setValuesToStatement(Task task, PreparedStatement statement) throws SQLException {
-        statement.setString(1, task.getStatus().toString());
+        statement.setString(1, task.getStatus().name());
         statement.setString(2, task.getName());
         statement.setLong(3, task.getProject().getId());
         statement.setInt(4, task.getWorkTime());

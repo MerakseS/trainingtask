@@ -11,24 +11,30 @@ import service.ServiceException;
 import service.ServiceProvider;
 import service.TaskService;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.List;
 
 public class DefaultTaskService implements TaskService {
     private static final Logger log = Logger.getLogger(DefaultTaskService.class);
 
+    private static final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
+
     private final TaskRepository taskRepository;
     private final EmployeeRepository employeeRepository;
     private final ProjectService projectService;
 
-    public DefaultTaskService() {
+    public DefaultTaskService(ProjectService projectService) {
         RepositoryProvider repositoryProvider = RepositoryProvider.getInstance();
-        taskRepository = repositoryProvider.getTaskRepository();
-        employeeRepository = repositoryProvider.getEmployeeRepository();
-        
-        ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        projectService = serviceProvider.getProjectService();
+        this.taskRepository = repositoryProvider.getTaskRepository();
+        this.employeeRepository = repositoryProvider.getEmployeeRepository();
+        this.projectService = projectService;
     }
 
     @Override
@@ -61,7 +67,7 @@ public class DefaultTaskService implements TaskService {
             throw new ServiceException(e);
         } catch (NumberFormatException e) {
             throw new ServiceException("Некорректный ввод работы.");
-        } catch (DateTimeParseException e) {
+        } catch (DateTimeParseException | ParseException e) {
             throw new ServiceException("Некорректный ввод даты.");
         } catch (IllegalArgumentException e) {
             throw new ServiceException("Некорректный статус.");
@@ -136,7 +142,7 @@ public class DefaultTaskService implements TaskService {
             throw new ServiceException(e);
         } catch (NumberFormatException e) {
             throw new ServiceException("Некорректный ввод работы.");
-        } catch (DateTimeParseException e) {
+        } catch (DateTimeParseException | ParseException e) {
             throw new ServiceException("Некорректный ввод даты.");
         } catch (IllegalArgumentException e) {
             throw new ServiceException("Некорректный статус.");
@@ -178,7 +184,7 @@ public class DefaultTaskService implements TaskService {
             throw new ServiceException("Работа не может быть отрицательной");
         }
 
-        if (endDate.isBefore(startDate)) {
+        if (startDate != null && endDate != null && endDate.isBefore(startDate)) {
             throw new ServiceException("Дата окончания не может быть раньше даты начала");
         }
 
@@ -193,10 +199,13 @@ public class DefaultTaskService implements TaskService {
         return status;
     }
 
-    private LocalDate parseDate(String strDate) {
+    private LocalDate parseDate(String strDate) throws ParseException {
         LocalDate localDate = null;
         if (strDate != null && !strDate.isBlank()) {
-            localDate = LocalDate.parse(strDate);
+            Date date = formatter.parse(strDate);
+            localDate = date.toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate();
         }
 
         return localDate;

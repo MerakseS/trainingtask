@@ -37,10 +37,30 @@
             <label>Описание
                 <br/><textarea name="description" rows="5" placeholder="Описание">${project.description}</textarea>
             </label> <br/>
-<%--            TODO список задач--%>
-        <p>* – обязательные поля.</p>
-        <input type="submit" value="${title}"> <br/><br/>
-        <input type="button" onclick="history.back()" value="Отмена">
+            <p>* – обязательные поля.</p>
+
+            <c:if test="${project != null}">
+                <table>
+                    <c:forEach var="task" items="${project.taskList}">
+                        <tr>
+                            <td><c:out value="${task.status}"/></td>
+                            <td><c:out value="${task.name}"/></td>
+                            <td><c:out value="${task.workTime}"/></td>
+                            <td><c:out value="${task.startDate}"/></td>
+                            <td><c:out value="${task.endDate}"/></td>
+                            <td><c:out value="${task.employee.firstName} ${task.employee.surName} ${task.employee.patronymic}"/></td>
+                            <td><button onclick="location.href='/task/edit?id=${task.id}&projectId=${project.id}'">Изменить</button></td>
+                            <td><button onclick="location.href='/task/delete?id=${task.id}'">Удалить</button></td>
+                        </tr>
+                    </c:forEach>
+                </table>
+                <br/>
+                <button onclick="location.href='/task/new?projectId=${project.id}'">Добавить задачу</button>
+                <br/><br/>
+            </c:if>
+
+            <input type="submit" value="${title}">
+            <input type="button" onclick="history.back()" value="Отмена">
         </form>
 </div>
 
