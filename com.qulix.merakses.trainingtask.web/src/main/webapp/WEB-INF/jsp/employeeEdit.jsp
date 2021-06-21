@@ -1,6 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:useBean id="title" scope="request" type="java.lang.String"/>
+<c:set var="title" scope="page">
+    <c:if test="${employee != null}">
+        Изменить работника
+    </c:if>
+    <c:if test="${employee == null}">
+        Добавить работника
+    </c:if>
+</c:set>
 
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
@@ -9,17 +16,21 @@
     <link href="../../css/style.css" rel="stylesheet" type="text/css" media="all"/>
 </head>
 <body>
-<div>
-    <h1>${title}</h1>
+
+<jsp:include page="header.jsp">
+    <jsp:param name="title" value="${title}"/>
+</jsp:include>
+
+<div class="container">
     <c:if test="${employee != null}">
-        <form action="update" method="POST">
-    </c:if>
-    <c:if test="${employee == null}">
-        <form action="insert" method="POST">
-    </c:if>
-        <c:if test="${employee != null}">
-            <input type="hidden" name="id" value="${employee.id}"/>
+    <form action="update" method="POST">
         </c:if>
+        <c:if test="${employee == null}">
+        <form action="insert" method="POST">
+            </c:if>
+            <c:if test="${employee != null}">
+                <input type="hidden" name="id" value="${employee.id}"/>
+            </c:if>
             <label>Имя*
                 <br/><input type="text" name="firstname" placeholder="Имя" value="${employee.firstName}"/>
             </label> <br/><br/>
@@ -31,11 +42,14 @@
             </label> <br/><br/>
             <label>Должность*
                 <br/><input type="text" name="position" placeholder="Должность" value="${employee.position}"/>
-            </label> <br/><br/>
+            </label> <br/>
+            <p>* – обязательные поля.</p>
             <input type="submit" value="${title}"> <br/><br/>
             <input type="button" onclick="history.back()" value="Отмена">
-            <p>* – обязательные поля.</p>
         </form>
 </div>
+
+<jsp:include page="footer.jsp"/>
+
 </body>
 </html>

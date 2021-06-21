@@ -13,8 +13,6 @@ import java.io.IOException;
 public class ShowEditProjectFormCommand implements Command {
     private static final String PROJECT_EDIT_PATH = "/WEB-INF/jsp/projectEdit.jsp";
 
-    private static final String TITLE_VALUE = "Изменить проект";
-
     private static final String ID_PARAMETER = "id";
 
     @Override
@@ -25,7 +23,6 @@ public class ShowEditProjectFormCommand implements Command {
         long id = Long.parseLong(request.getParameter(ID_PARAMETER));
         Project project = projectService.getProject(id);
 
-        request.setAttribute("title", TITLE_VALUE);
         request.setAttribute("project", project);
         request.getRequestDispatcher(PROJECT_EDIT_PATH).forward(request, response);
     }

@@ -13,8 +13,6 @@ import java.io.IOException;
 public class ShowEditEmployeeFormCommand implements Command {
     private static final String EMPLOYEE_EDIT_PATH = "/WEB-INF/jsp/employeeEdit.jsp";
 
-    private static final String TITLE_VALUE = "Изменить работника";
-
     private static final String ID_PARAMETER = "id";
 
     @Override
@@ -25,7 +23,6 @@ public class ShowEditEmployeeFormCommand implements Command {
         long id = Long.parseLong(request.getParameter(ID_PARAMETER));
         Employee employee = employeeService.getEmployee(id);
 
-        request.setAttribute("title", TITLE_VALUE);
         request.setAttribute("employee", employee);
         request.getRequestDispatcher(EMPLOYEE_EDIT_PATH).forward(request, response);
     }

@@ -9,8 +9,12 @@
     <link href="../../css/style.css" rel="stylesheet" type="text/css" media="all"/>
 </head>
 <body>
-<div>
-    <h1>Список проектов</h1>
+
+<jsp:include page="header.jsp">
+    <jsp:param name="title" value="Список проектов"/>
+</jsp:include>
+
+<div class="container">
     <table>
         <c:forEach var="project" items="${projectList}">
             <tr>
@@ -24,5 +28,8 @@
     <br/>
     <button onclick="location.href='project/new'">Добавить проект</button>
 </div>
+
+<jsp:include page="footer.jsp"/>
+
 </body>
 </html>
