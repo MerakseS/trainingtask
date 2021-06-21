@@ -5,9 +5,9 @@
     <file url="file://$PROJECT_DIR$/com.qulix.merakses.trainingtask.web/src/main/java/controller/command/impl/employeeCommand/ShowEditEmployeeFormCommand.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/com.qulix.merakses.trainingtask.web/src/main/java/controller/command/impl/employeeCommand/ShowNewEmployeeFormCommand.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/com.qulix.merakses.trainingtask.web/src/main/java/controller/command/impl/taskCommand/ShowNewTaskFormCommand.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/com.qulix.merakses.trainingtask.web/src/main/java/entity/enums/Status.java" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/com.qulix.merakses.trainingtask.web/src/main/java/entity/enums/Status.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/com.qulix.merakses.trainingtask.web/src/main/java/repository/impl/DefaultEmployeeRepository.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/com.qulix.merakses.trainingtask.web/src/main/java/service/impl/DefaultEmployeeService.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/com.qulix.merakses.trainingtask.web/src/main/webapp/WEB-INF/jsp/taskEdit.jsp" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/com.qulix.merakses.trainingtask.web/src/main/webapp/WEB-INF/jsp/taskEdit.jsp" charset="UTF-8" />
   </component>
 </project>
