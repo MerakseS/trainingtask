@@ -41,8 +41,10 @@
             <input type="submit" value="${title}">
             <input type="button" onclick="history.back()" value="Отмена">
         </form>
+</div>
 
-        <c:if test="${project != null}">
+<div class="container">
+    <c:if test="${project != null}">
         <h3>Список задач проекта</h3>
         <table>
             <c:forEach var="task" items="${project.taskList}">
@@ -67,7 +69,7 @@
         <br/>
         <button onclick="location.href='/task/new?projectId=${project.id}'">Добавить задачу</button>
         <br/><br/>
-        </c:if>
+    </c:if>
 </div>
 
 <jsp:include page="footer.jsp"/>

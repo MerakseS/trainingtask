@@ -55,15 +55,15 @@
             </label> <br/><br/>
             <label>Проект*<br/>
                 <select name="projectId">
-                    <c:forEach var="project" items="${projectList}">
-                        <option value="${project.id}"
-                                <c:if test="${project.id == selectedProject.id}">
-                                    selected
-                                </c:if>
-                        >
-                                ${project.name}
-                        </option>
-                    </c:forEach>
+                    <c:if test="${selectedProject != null}">
+                        <option value="${selectedProject.id}">${selectedProject.name}</option>
+                    </c:if>
+
+                    <c:if test="${selectedProject == null}">
+                        <c:forEach var="project" items="${projectList}">
+                            <option value="${project.id}">${project.name}</option>
+                        </c:forEach>
+                    </c:if>
                 </select>
             </label> <br/><br/>
             <label>Работа (часы)<br/>
