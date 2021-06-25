@@ -1,9 +1,7 @@
 package service;
 
 import entity.Task;
-import entity.enums.Status;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface TaskService {

@@ -1,6 +1,5 @@
 package controller.command.impl.taskCommand;
 
-import entity.enums.Status;
 import service.ServiceProvider;
 import service.TaskService;
 
@@ -8,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDate;
 
 public class InsertTaskCommand implements controller.command.Command {
     private static final String TASK_LIST_PATH = "/task";

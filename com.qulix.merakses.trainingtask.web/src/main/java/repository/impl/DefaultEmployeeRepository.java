@@ -5,12 +5,15 @@ import entity.Employee;
 import repository.EmployeeRepository;
 import repository.RepositoryException;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.String.format;
-import static java.sql.Statement.*;
+import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 public class DefaultEmployeeRepository implements EmployeeRepository {
 

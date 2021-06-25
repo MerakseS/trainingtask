@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ShowTaskListCommand implements Command {
     private static final String TASK_LIST_PATH = "/WEB-INF/jsp/taskList.jsp";
-    
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServiceProvider serviceProvider = ServiceProvider.getInstance();

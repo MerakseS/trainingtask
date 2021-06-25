@@ -1,10 +1,7 @@
 package controller.command.impl.taskCommand;
 
-import entity.Employee;
 import entity.Project;
 import entity.Task;
-import entity.enums.Status;
-import service.EmployeeService;
 import service.ProjectService;
 import service.ServiceProvider;
 import service.TaskService;
@@ -13,7 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 public class ShowEditTaskFormCommand implements controller.command.Command {
     private static final String TASK_EDIT_PATH = "/WEB-INF/jsp/taskEdit.jsp";

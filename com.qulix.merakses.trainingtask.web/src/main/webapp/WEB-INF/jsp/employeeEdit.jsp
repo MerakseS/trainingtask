@@ -23,11 +23,11 @@
 
 <div class="container">
     <c:if test="${employee != null}">
-    <form action="update" method="POST">
-        </c:if>
-        <c:if test="${employee == null}">
+        <form action="update" method="POST">
+    </c:if>
+    <c:if test="${employee == null}">
         <form action="insert" method="POST">
-            </c:if>
+    </c:if>
             <c:if test="${employee != null}">
                 <input type="hidden" name="id" value="${employee.id}"/>
             </c:if>

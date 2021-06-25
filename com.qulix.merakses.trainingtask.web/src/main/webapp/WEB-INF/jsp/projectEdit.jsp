@@ -23,11 +23,11 @@
 
 <div class="container">
     <c:if test="${project != null}">
-        <form action="update" method="POST">
-    </c:if>
-    <c:if test="${project == null}">
+    <form action="update" method="POST">
+        </c:if>
+        <c:if test="${project == null}">
         <form action="insert" method="POST">
-    </c:if>
+            </c:if>
             <c:if test="${project != null}">
                 <input type="hidden" name="id" value="${project.id}"/>
             </c:if>
@@ -47,21 +47,25 @@
         <table>
             <c:forEach var="task" items="${project.taskList}">
                 <tr>
-                    <td><c:out value="${task.status}"/></td>
-                    <td><c:out value="${task.name}"/></td>
-                    <td><c:out value="${task.workTime}"/></td>
-                    <td><c:out value="${task.startDate}"/></td>
-                    <td><c:out value="${task.endDate}"/></td>
-                    <td><c:out value="${task.employee.firstName} ${task.employee.surName} ${task.employee.patronymic}"/></td>
-                    <td><button onclick="location.href='/task/edit?taskId=${task.id}&projectId=${project.id}'">Изменить</button></td>
-                    <td><button onclick="location.href='/task/delete?taskId=${task.id}'">Удалить</button></td>
+                    <td>${task.status.toString()}</td>
+                    <td>${task.name}</td>
+                    <td>${task.workTime}</td>
+                    <td>${task.startDate}</td>
+                    <td>${task.endDate}</td>
+                    <td>${task.employee.firstName} ${task.employee.surName} ${task.employee.patronymic}</td>
+                    <td>
+                        <button onclick="location.href='/task/edit?taskId=${task.id}&projectId=${project.id}'">
+                            Изменить
+                        </button>
+                    </td>
+                    <td>
+                        <button onclick="location.href='/task/delete?taskId=${task.id}'">Удалить</button>
+                    </td>
                 </tr>
             </c:forEach>
         </table>
         <br/>
         <button onclick="location.href='/task/new?projectId=${project.id}'">Добавить задачу</button>
-        <br/><br/>
-        <button onclick="location.href='/task'">Все задачи</button>
         <br/><br/>
         </c:if>
 </div>

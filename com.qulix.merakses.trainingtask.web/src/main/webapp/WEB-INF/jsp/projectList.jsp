@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <jsp:useBean id="projectList" scope="request" type="java.util.List<entity.Project>"/>
@@ -18,10 +18,14 @@
     <table>
         <c:forEach var="project" items="${projectList}">
             <tr>
-                <td><c:out value="${project.name}"/></td>
-                <td><c:out value="${project.description}" /></td>
-                <td><button onclick="location.href='project/edit?id=${project.id}'">Изменить</button></td>
-                <td><button onclick="location.href='project/delete?id=${project.id}'">Удалить</button></td>
+                <td>${project.name}</td>
+                <td>${project.description}</td>
+                <td>
+                    <button onclick="location.href='project/edit?id=${project.id}'">Изменить</button>
+                </td>
+                <td>
+                    <button onclick="location.href='project/delete?id=${project.id}'">Удалить</button>
+                </td>
             </tr>
         </c:forEach>
     </table>

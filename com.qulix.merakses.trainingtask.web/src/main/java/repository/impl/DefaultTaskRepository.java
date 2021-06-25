@@ -5,7 +5,10 @@ import entity.Employee;
 import entity.Project;
 import entity.Task;
 import entity.enums.Status;
-import repository.*;
+import repository.EmployeeRepository;
+import repository.ProjectRepository;
+import repository.RepositoryException;
+import repository.TaskRepository;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -116,7 +119,7 @@ public class DefaultTaskRepository implements TaskRepository {
 
             statement.setLong(1, taskId);
 
-            try (ResultSet result = statement.executeQuery()){
+            try (ResultSet result = statement.executeQuery()) {
                 return result.next() ? getTaskByResultSet(result) : null;
             }
         } catch (SQLException e) {

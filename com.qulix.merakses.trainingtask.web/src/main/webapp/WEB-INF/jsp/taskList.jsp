@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <jsp:useBean id="taskList" scope="request" type="java.util.List<entity.Task>"/>
@@ -18,15 +18,19 @@
     <table>
         <c:forEach var="task" items="${taskList}">
             <tr>
-                <td><c:out value="${task.status}"/></td>
-                <td><c:out value="${task.name}"/></td>
-                <td><c:out value="${task.project.name}"/></td>
-                <td><c:out value="${task.workTime}"/></td>
-                <td><c:out value="${task.startDate}"/></td>
-                <td><c:out value="${task.endDate}"/></td>
-                <td><c:out value="${task.employee.firstName} ${task.employee.surName} ${task.employee.patronymic}"/></td>
-                <td><button onclick="location.href='task/edit?taskId=${task.id}'">Изменить</button></td>
-                <td><button onclick="location.href='task/delete?taskId=${task.id}'">Удалить</button></td>
+                <td>${task.status.toString()}</td>
+                <td>${task.name}</td>
+                <td>${task.project.name}</td>
+                <td>${task.workTime}</td>
+                <td>${task.startDate}</td>
+                <td>${task.endDate}</td>
+                <td>${task.employee.firstName} ${task.employee.surName} ${task.employee.patronymic}</td>
+                <td>
+                    <button onclick="location.href='task/edit?taskId=${task.id}'">Изменить</button>
+                </td>
+                <td>
+                    <button onclick="location.href='task/delete?taskId=${task.id}'">Удалить</button>
+                </td>
             </tr>
         </c:forEach>
     </table>

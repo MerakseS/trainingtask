@@ -18,8 +18,8 @@
     <table>
         <c:forEach var="employee" items="${employeeList}">
             <tr>
-                <td><c:out value="${employee.firstName} ${employee.surName} ${employee.patronymic}"/></td>
-                <td><c:out value="${employee.position}"/></td>
+                <td>${employee.firstName} ${employee.surName} ${employee.patronymic}</td>
+                <td>${employee.position}</td>
                 <td>
                     <button onclick="location.href='employee/edit?id=${employee.id}'">Изменить</button>
                 </td>
@@ -33,7 +33,7 @@
     <button onclick="location.href='employee/new'">Добавить работника</button>
 </div>
 
-<jsp:include page="footer.jsp" />
+<jsp:include page="footer.jsp"/>
 
 </body>
 </html>

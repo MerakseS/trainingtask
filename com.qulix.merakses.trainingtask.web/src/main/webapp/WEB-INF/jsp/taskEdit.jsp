@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=utf-8"%>
+<%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="service.ProjectService" %>
 <%@ page import="entity.Project" %>
@@ -54,7 +54,7 @@
                 <input type="text" name="name" placeholder="Наименование" value="${task.name}"/>
             </label> <br/><br/>
             <label>Проект*<br/>
-                <select name="projectId" >
+                <select name="projectId">
                     <c:forEach var="project" items="${projectList}">
                         <option value="${project.id}"
                                 <c:if test="${project.id == selectedProject.id}">
@@ -76,14 +76,14 @@
                 <input type="date" name="endDate" placeholder="Дата окончания" value="${task.endDate}"/>
             </label> <br/><br/>
             <label>Статус*<br/>
-                <select name="status" >
+                <select name="status">
                     <c:forEach var="status" items="${Status.values()}">
                         <option value="${status}">${status.toString()}</option>
                     </c:forEach>
                 </select>
             </label> <br/><br/>
             <label>Сотрудник<br/>
-                <select name="employeeId" >
+                <select name="employeeId">
                     <c:forEach var="employee" items="${employeeList}">
                         <option value="${employee.id}">
                                 ${employee.firstName} ${employee.surName} ${employee.patronymic}

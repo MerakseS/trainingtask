@@ -6,8 +6,6 @@ import java.util.HashMap;
 
 public abstract class CommandProvider {
 
-    protected final HashMap<String, Command> commands;
-
     protected static final String EMPTY_COMMAND = null;
     protected static final String SHOW_LIST_COMMAND = "/";
     protected static final String SHOW_NEW_FORM_COMMAND = "/new";
@@ -15,6 +13,7 @@ public abstract class CommandProvider {
     protected static final String SHOW_EDIT_FORM_COMMAND = "/edit";
     protected static final String UPDATE_COMMAND = "/update";
     protected static final String DELETE_COMMAND = "/delete";
+    protected final HashMap<String, Command> commands;
 
     public CommandProvider() {
         commands = new HashMap<>();

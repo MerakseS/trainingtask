@@ -17,5 +17,5 @@ public interface ProjectService {
     long deleteProject(long projectId);
 
     void checkThatProjectExists(long projectId);
-    
+
 }
