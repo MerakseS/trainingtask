@@ -11,7 +11,7 @@ import java.io.IOException;
 public class DeleteTaskCommand implements controller.command.Command {
     private static final String TASK_LIST_PATH = "/task";
 
-    private static final String ID_PARAMETER = "id";
+    private static final String ID_PARAMETER = "taskId";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

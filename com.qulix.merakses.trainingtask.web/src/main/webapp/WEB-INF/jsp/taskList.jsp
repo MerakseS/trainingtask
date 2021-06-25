@@ -25,8 +25,8 @@
                 <td><c:out value="${task.startDate}"/></td>
                 <td><c:out value="${task.endDate}"/></td>
                 <td><c:out value="${task.employee.firstName} ${task.employee.surName} ${task.employee.patronymic}"/></td>
-                <td><button onclick="location.href='task/edit?id=${task.id}'">Изменить</button></td>
-                <td><button onclick="location.href='task/delete?id=${task.id}'">Удалить</button></td>
+                <td><button onclick="location.href='task/edit?taskId=${task.id}'">Изменить</button></td>
+                <td><button onclick="location.href='task/delete?taskId=${task.id}'">Удалить</button></td>
             </tr>
         </c:forEach>
     </table>

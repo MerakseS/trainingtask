@@ -5,10 +5,12 @@ import entity.Project;
 import entity.Task;
 import entity.enums.Status;
 import org.apache.log4j.Logger;
-import repository.*;
+import repository.EmployeeRepository;
+import repository.RepositoryException;
+import repository.RepositoryProvider;
+import repository.TaskRepository;
 import service.ProjectService;
 import service.ServiceException;
-import service.ServiceProvider;
 import service.TaskService;
 
 import java.text.DateFormat;
@@ -16,7 +18,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.List;
 public class DefaultTaskService implements TaskService {
     private static final Logger log = Logger.getLogger(DefaultTaskService.class);
 
-    private static final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
+    private static final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
     private final TaskRepository taskRepository;
     private final EmployeeRepository employeeRepository;
@@ -47,9 +48,9 @@ public class DefaultTaskService implements TaskService {
             Status status = parseStatus(strStatus);
             Project project = projectService.getProject(projectId);
             Employee employee = employeeRepository.getEmployeeById(employeeId);
-            
+
             validateValues(name, workTime, startDate, endDate, status);
-            
+
             Task task = new Task();
             task.setName(name);
             task.setProject(project);

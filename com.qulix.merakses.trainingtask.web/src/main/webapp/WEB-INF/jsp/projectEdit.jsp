@@ -1,10 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:set var="title" scope="page">
-    <c:if test="${employee != null}">
+    <c:if test="${project != null}">
         Изменить проект
     </c:if>
-    <c:if test="${employee == null}">
+    <c:if test="${project == null}">
         Добавить проект
     </c:if>
 </c:set>
@@ -38,30 +38,32 @@
                 <br/><textarea name="description" rows="5" placeholder="Описание">${project.description}</textarea>
             </label> <br/>
             <p>* – обязательные поля.</p>
-
-            <c:if test="${project != null}">
-                <table>
-                    <c:forEach var="task" items="${project.taskList}">
-                        <tr>
-                            <td><c:out value="${task.status}"/></td>
-                            <td><c:out value="${task.name}"/></td>
-                            <td><c:out value="${task.workTime}"/></td>
-                            <td><c:out value="${task.startDate}"/></td>
-                            <td><c:out value="${task.endDate}"/></td>
-                            <td><c:out value="${task.employee.firstName} ${task.employee.surName} ${task.employee.patronymic}"/></td>
-                            <td><button onclick="location.href='/task/edit?id=${task.id}&projectId=${project.id}'">Изменить</button></td>
-                            <td><button onclick="location.href='/task/delete?id=${task.id}'">Удалить</button></td>
-                        </tr>
-                    </c:forEach>
-                </table>
-                <br/>
-                <button onclick="location.href='/task/new?projectId=${project.id}'">Добавить задачу</button>
-                <br/><br/>
-            </c:if>
-
             <input type="submit" value="${title}">
             <input type="button" onclick="history.back()" value="Отмена">
         </form>
+
+        <c:if test="${project != null}">
+        <h3>Список задач проекта</h3>
+        <table>
+            <c:forEach var="task" items="${project.taskList}">
+                <tr>
+                    <td><c:out value="${task.status}"/></td>
+                    <td><c:out value="${task.name}"/></td>
+                    <td><c:out value="${task.workTime}"/></td>
+                    <td><c:out value="${task.startDate}"/></td>
+                    <td><c:out value="${task.endDate}"/></td>
+                    <td><c:out value="${task.employee.firstName} ${task.employee.surName} ${task.employee.patronymic}"/></td>
+                    <td><button onclick="location.href='/task/edit?taskId=${task.id}&projectId=${project.id}'">Изменить</button></td>
+                    <td><button onclick="location.href='/task/delete?taskId=${task.id}'">Удалить</button></td>
+                </tr>
+            </c:forEach>
+        </table>
+        <br/>
+        <button onclick="location.href='/task/new?projectId=${project.id}'">Добавить задачу</button>
+        <br/><br/>
+        <button onclick="location.href='/task'">Все задачи</button>
+        <br/><br/>
+        </c:if>
 </div>
 
 <jsp:include page="footer.jsp"/>

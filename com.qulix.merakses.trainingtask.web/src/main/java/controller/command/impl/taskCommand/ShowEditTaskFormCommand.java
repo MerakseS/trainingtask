@@ -31,14 +31,7 @@ public class ShowEditTaskFormCommand implements controller.command.Command {
         Task task = taskService.getTask(taskId);
         request.setAttribute("task", task);
 
-        EmployeeService employeeService = serviceProvider.getEmployeeService();
-        List<Employee> employeeList = employeeService.getAllEmployees();
-        request.setAttribute("employeeList", employeeList);
-
         ProjectService projectService = serviceProvider.getProjectService();
-        List<Project> projectList = projectService.getAllProjects();
-        request.setAttribute("projectList", projectList);
-
         String strProjectId = request.getParameter(PROJECT_ID_PARAMETER);
         if (strProjectId != null && !strProjectId.isBlank()) {
             long id = Long.parseLong(strProjectId);
@@ -46,7 +39,6 @@ public class ShowEditTaskFormCommand implements controller.command.Command {
             request.setAttribute("selectedProject", project);
         }
 
-        request.setAttribute("statuses", Status.values());
         request.getRequestDispatcher(TASK_EDIT_PATH).forward(request, response);
     }
 }

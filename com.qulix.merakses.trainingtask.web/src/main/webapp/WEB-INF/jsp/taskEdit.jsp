@@ -48,7 +48,7 @@
         <form action="insert" method="POST">
             </c:if>
             <c:if test="${task != null}">
-                <input type="hidden" name="id" value="${task.id}"/>
+                <input type="hidden" name="taskId" value="${task.id}"/>
             </c:if>
             <label>Наименование*<br/>
                 <input type="text" name="name" placeholder="Наименование" value="${task.name}"/>
@@ -70,10 +70,10 @@
                 <input type="text" name="workTime" placeholder="Работа" value="${task.workTime}"/>
             </label> <br/><br/>
             <label>Дата начала<br/>
-                <input type="datetime-local" name="startDate" placeholder="Дата начала" value="${task.startDate}"/>
+                <input type="date" name="startDate" placeholder="Дата начала" value="${task.startDate}"/>
             </label> <br/><br/>
             <label>Дата окончания<br/>
-                <input type="datetime-local" name="endDate" placeholder="Дата окончания" value="${task.endDate}"/>
+                <input type="date" name="endDate" placeholder="Дата окончания" value="${task.endDate}"/>
             </label> <br/><br/>
             <label>Статус*<br/>
                 <select name="status" >
