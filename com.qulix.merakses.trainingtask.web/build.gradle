@@ -1,5 +1,17 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'org.hsqldb', name: 'hsqldb', version: gradle.hsqldbVersion
+    }
+}
+
 plugins {
     id 'war'
+    id 'com.bmuschko.tomcat' version '2.6.0'
+    id 'java'
 }
 
 group 'com.qulix.merakses'
@@ -10,10 +22,26 @@ repositories {
 }
 
 dependencies {
-    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
-    compileOnly group: 'javax.servlet', name: 'jsp-api', version: '2.0'
-    implementation group: 'jstl', name: 'jstl', version: '1.2'
-    implementation group: 'org.hsqldb', name: 'hsqldb', version: '2.6.0'
-    implementation group: 'log4j', name: 'log4j', version: '1.2.17'
-    testImplementation group: 'junit', name: 'junit', version: '4.11'
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    implementation 'javax.servlet:jsp-api:2.0'
+    implementation 'jstl:jstl:1.2'
+    implementation group: 'org.hsqldb', name: 'hsqldb', version: gradle.hsqldbVersion
+    implementation 'log4j:log4j:1.2.17'
+    implementation 'junit:junit:4.13.2'
+    implementation 'org.apache.tomcat:tomcat:9.0.48'
+
+    def tomcatVersion = '9.0.4'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
+            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
 }
+
+tomcat {
+    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
+    daemon = true
+}
+
+tomcatRun.contextPath = '/'
+
+apply from: 'HSQLDB.gradle'
