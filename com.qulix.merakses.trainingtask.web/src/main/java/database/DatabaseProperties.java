@@ -1,11 +1,17 @@
 package database;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 public class DatabaseProperties {
 
-    private static final String HSQLDB_HOST_VARIABLE = "HSQLDB_PATH";
-    private static final String HSQLDB_NAME_VARIABLE = "HSQLDB_NAME";
-    private static final String HSQLDB_USER_VARIABLE = "HSQLDB_USER";
-    private static final String HSQLDB_PASSWORD_VARIABLE = "HSQLDB_PASSWORD";
+    private static final String PROPERTIES_PATH = "db/db.properties";
+
+    private static final String HSQLDB_HOST_VARIABLE = "db.host";
+    private static final String HSQLDB_NAME_VARIABLE = "db.name";
+    private static final String HSQLDB_USER_VARIABLE = "db.user";
+    private static final String HSQLDB_PASSWORD_VARIABLE = "db.password";
 
     private static final String DEFAULT_DB_HOST = "localhost";
     private static final String DEFAULT_DB_NAME = "taskdb";
@@ -14,21 +20,42 @@ public class DatabaseProperties {
 
     private static final String HSQLDB_URL_FORMAT = "jdbc:hsqldb:hsql://%s/%s";
 
+    private final Properties properties = new Properties();
+
     private final String url;
     private final String user;
     private final String password;
 
     public DatabaseProperties() {
-        String dbHost = getEnvVariable(HSQLDB_HOST_VARIABLE, DEFAULT_DB_HOST);
-        String dbName = getEnvVariable(HSQLDB_NAME_VARIABLE, DEFAULT_DB_NAME);
-        url = String.format(HSQLDB_URL_FORMAT, dbHost, dbName);
+        String dbHost;
+        String dbName;
+        String dbUser;
+        String dbPassword;
 
-        user = getEnvVariable(HSQLDB_USER_VARIABLE, DEFAULT_DB_USER);
-        password = getEnvVariable(HSQLDB_PASSWORD_VARIABLE, DEFAULT_DB_PASSWORD);
+        try {
+            properties.load(new FileInputStream(PROPERTIES_PATH));
+
+            dbHost = getPropVariable(HSQLDB_HOST_VARIABLE, DEFAULT_DB_HOST);
+            dbName = getPropVariable(HSQLDB_NAME_VARIABLE, DEFAULT_DB_NAME);
+
+            dbUser = getPropVariable(HSQLDB_USER_VARIABLE, DEFAULT_DB_USER);
+            dbPassword = getPropVariable(HSQLDB_PASSWORD_VARIABLE, DEFAULT_DB_PASSWORD);
+        } catch (IOException e) {
+            dbHost = DEFAULT_DB_HOST;
+            dbName = DEFAULT_DB_NAME;
+            dbUser = DEFAULT_DB_USER;
+            dbPassword = DEFAULT_DB_PASSWORD;
+
+            e.printStackTrace();
+        }
+
+        url = String.format(HSQLDB_URL_FORMAT, dbHost, dbName);
+        user = dbUser;
+        password = dbPassword;
     }
 
-    private static String getEnvVariable(String variableName, String defaultVariable) {
-        String variable = System.getenv(variableName);
+    private String getPropVariable(String variableName, String defaultVariable) {
+        String variable = properties.getProperty(variableName);
 
         if (variable == null || variable.isBlank()) {
             variable = defaultVariable;
