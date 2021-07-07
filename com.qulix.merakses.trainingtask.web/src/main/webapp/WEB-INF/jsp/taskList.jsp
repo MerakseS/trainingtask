@@ -16,6 +16,20 @@
 
 <div class="container">
     <table>
+        <thead>
+        <tr>
+            <th>Статус</th>
+            <th>Наименование</th>
+            <th>Наименование проекта</th>
+            <th>Работа</th>
+            <th>Дата начала</th>
+            <th>Дата окончания</th>
+            <th>Исполнитель</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
         <c:forEach var="task" items="${taskList}">
             <tr>
                 <td>${task.status.toString()}</td>
@@ -25,14 +39,15 @@
                 <td>${task.startDate}</td>
                 <td>${task.endDate}</td>
                 <td>${task.employee.firstName} ${task.employee.surName} ${task.employee.patronymic}</td>
-                <td>
+                <td class="thButton">
                     <button onclick="location.href='task/edit?taskId=${task.id}'">Изменить</button>
                 </td>
-                <td>
+                <td class="thButton">
                     <button onclick="location.href='task/delete?taskId=${task.id}'">Удалить</button>
                 </td>
             </tr>
         </c:forEach>
+        </tbody>
     </table>
     <br/>
     <button onclick="location.href='task/new'">Добавить задачу</button>

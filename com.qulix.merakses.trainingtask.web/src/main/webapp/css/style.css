@@ -3,8 +3,17 @@
     margin: auto
 }
 
-td {
-    padding: 5px;
+table {
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px 15px;
+    border-bottom: 1px solid grey;
+}
+
+.thButton {
+    padding: 10px 5px;
 }
 
 A {

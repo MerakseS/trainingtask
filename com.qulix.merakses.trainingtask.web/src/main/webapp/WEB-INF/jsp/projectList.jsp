@@ -16,18 +16,28 @@
 
 <div class="container">
     <table>
+        <thead>
+        <tr>
+            <th>Наименование</th>
+            <th>Описание</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
         <c:forEach var="project" items="${projectList}">
             <tr>
                 <td>${project.name}</td>
                 <td>${project.description}</td>
-                <td>
+                <td class="thButton">
                     <button onclick="location.href='project/edit?id=${project.id}'">Изменить</button>
                 </td>
-                <td>
+                <td class="thButton">
                     <button onclick="location.href='project/delete?id=${project.id}'">Удалить</button>
                 </td>
             </tr>
         </c:forEach>
+        </tbody>
     </table>
     <br/>
     <button onclick="location.href='project/new'">Добавить проект</button>

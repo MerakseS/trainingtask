@@ -16,18 +16,32 @@
 
 <div class="container">
     <table>
+        <thead>
+        <tr>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Должность</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
         <c:forEach var="employee" items="${employeeList}">
             <tr>
-                <td>${employee.firstName} ${employee.surName} ${employee.patronymic}</td>
+                <td>${employee.surName}</td>
+                <td>${employee.firstName}</td>
+                <td>${employee.patronymic}</td>
                 <td>${employee.position}</td>
-                <td>
+                <td class="thButton">
                     <button onclick="location.href='employee/edit?id=${employee.id}'">Изменить</button>
                 </td>
-                <td>
+                <td class="thButton">
                     <button onclick="location.href='employee/delete?id=${employee.id}'">Удалить</button>
                 </td>
             </tr>
         </c:forEach>
+        </tbody>
     </table>
     <br/>
     <button onclick="location.href='employee/new'">Добавить работника</button>
