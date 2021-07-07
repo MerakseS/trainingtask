@@ -167,13 +167,7 @@ public class DefaultTaskRepository implements TaskRepository {
     private void setValuesToStatement(Task task, PreparedStatement statement) throws SQLException {
         statement.setString(1, task.getStatus().name());
         statement.setString(2, task.getName());
-
-        if (task.getProject() != null) {
-            statement.setLong(3, task.getProject().getId());
-        } else {
-            statement.setNull(3, Types.BIGINT);
-        }
-
+        statement.setLong(3, task.getProject().getId());
         statement.setInt(4, task.getWorkTime());
         statement.setDate(5, Date.valueOf(task.getStartDate()));
         statement.setDate(6, Date.valueOf(task.getEndDate()));

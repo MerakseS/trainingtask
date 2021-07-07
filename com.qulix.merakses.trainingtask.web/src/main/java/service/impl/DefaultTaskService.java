@@ -67,7 +67,7 @@ public class DefaultTaskService implements TaskService {
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         } catch (NumberFormatException e) {
-            throw new ServiceException("Некорректный ввод работы.");
+            throw new ServiceException("Для добавления задачи сначала создайте проект.");
         } catch (DateTimeParseException | ParseException e) {
             throw new ServiceException("Некорректный ввод даты.");
         } catch (IllegalArgumentException e) {
@@ -221,14 +221,14 @@ public class DefaultTaskService implements TaskService {
         return integer;
     }
 
+    private Project parseProject(String strProjectId) {
+        long projectId = Long.parseLong(strProjectId);
+        return projectService.getProject(projectId);
+    }
+
     private Employee parseEmployee(String strEmployeeId) {
         Long employeeId = parseLongOrNull(strEmployeeId);
         return employeeId != null ? employeeService.getEmployee(employeeId) : null;
-    }
-
-    private Project parseProject(String strProjectId) {
-        Long projectId = parseLongOrNull(strProjectId);
-        return projectId != null ? projectService.getProject(projectId) : null;
     }
 
     private Long parseLongOrNull(String str) {

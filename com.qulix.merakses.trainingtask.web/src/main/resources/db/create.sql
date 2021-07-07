@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS task
     t_id         BIGINT IDENTITY PRIMARY KEY,
     t_status     VARCHAR(20) NOT NULL,
     t_name       VARCHAR(50) NOT NULL,
-    t_project    BIGINT,
+    t_project    BIGINT      NOT NULL,
     t_work_time  INT,
     t_start_date DATE,
     t_end_date   DATE,

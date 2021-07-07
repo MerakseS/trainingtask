@@ -56,7 +56,7 @@
             <label>Наименование*<br/>
                 <input type="text" name="name" placeholder="Наименование" value="${task.name}"/>
             </label> <br/><br/>
-            <label>Проект<br/>
+            <label>Проект*<br/>
                 <select name="projectId">
                     <c:if test="${selectedProject != null}">
                         <option value="${selectedProject.id}">${selectedProject.name}</option>
@@ -101,7 +101,8 @@
         </form>
 </div>
 <div class="container">
-    <p><%= new String(errorMessage.getBytes(), UTF_8)%></p>
+    <p><%= new String(errorMessage.getBytes(), UTF_8)%>
+    </p>
 </div>
 
 <jsp:include page="footer.jsp"/>
