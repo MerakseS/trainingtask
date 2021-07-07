@@ -19,12 +19,17 @@ CREATE TABLE IF NOT EXISTS task
     t_id         BIGINT IDENTITY PRIMARY KEY,
     t_status     VARCHAR(20) NOT NULL,
     t_name       VARCHAR(50) NOT NULL,
-    t_project    BIGINT      NOT NULL,
+    t_project    BIGINT,
     t_work_time  INT,
     t_start_date DATE,
     t_end_date   DATE,
     t_executor   BIGINT,
 
-    FOREIGN KEY (t_project) REFERENCES project (p_id) ON UPDATE CASCADE ON DELETE CASCADE ,
-    FOREIGN KEY (t_executor) REFERENCES employee (e_id) ON UPDATE CASCADE ON DELETE SET NULL
+    FOREIGN KEY (t_project) REFERENCES project (p_id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+    FOREIGN KEY (t_executor) REFERENCES employee (e_id)
+        ON UPDATE CASCADE
+        ON DELETE SET NULL
 );

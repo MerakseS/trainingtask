@@ -5,10 +5,10 @@ import entity.Project;
 import entity.Task;
 import entity.enums.Status;
 import org.apache.log4j.Logger;
-import repository.EmployeeRepository;
 import repository.RepositoryException;
 import repository.RepositoryProvider;
 import repository.TaskRepository;
+import service.EmployeeService;
 import service.ProjectService;
 import service.ServiceException;
 import service.TaskService;
@@ -28,26 +28,26 @@ public class DefaultTaskService implements TaskService {
     private static final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
     private final TaskRepository taskRepository;
-    private final EmployeeRepository employeeRepository;
+    private final EmployeeService employeeService;
     private final ProjectService projectService;
 
-    public DefaultTaskService(ProjectService projectService) {
+    public DefaultTaskService(EmployeeService employeeService, ProjectService projectService) {
         RepositoryProvider repositoryProvider = RepositoryProvider.getInstance();
         this.taskRepository = repositoryProvider.getTaskRepository();
-        this.employeeRepository = repositoryProvider.getEmployeeRepository();
+        this.employeeService = employeeService;
         this.projectService = projectService;
     }
 
     @Override
-    public Task createTask(String name, Long projectId, String strWorkTime, String strStartDate,
-                           String strEndDate, String strStatus, Long employeeId) {
+    public Task createTask(String name, String strProjectId, String strWorkTime, String strStartDate,
+                           String strEndDate, String strStatus, String strEmployeeId) {
         try {
             Integer workTime = parseInteger(strWorkTime);
             LocalDate startDate = parseDate(strStartDate);
             LocalDate endDate = parseDate(strEndDate);
             Status status = parseStatus(strStatus);
-            Project project = projectService.getProject(projectId);
-            Employee employee = employeeRepository.getEmployeeById(employeeId);
+            Project project = parseProject(strProjectId);
+            Employee employee = parseEmployee(strEmployeeId);
 
             validateValues(name, workTime, startDate, endDate, status);
 
@@ -111,8 +111,8 @@ public class DefaultTaskService implements TaskService {
     }
 
     @Override
-    public Task updateTask(long taskId, String name, Long projectId, String strWorkTime,
-                           String strStartDate, String strEndDate, String strStatus, Long employeeId) {
+    public Task updateTask(long taskId, String name, String strProjectId, String strWorkTime,
+                           String strStartDate, String strEndDate, String strStatus, String strEmployeeId) {
         try {
             checkThatTaskExists(taskId);
 
@@ -120,8 +120,8 @@ public class DefaultTaskService implements TaskService {
             LocalDate startDate = parseDate(strStartDate);
             LocalDate endDate = parseDate(strEndDate);
             Status status = parseStatus(strStatus);
-            Project project = projectService.getProject(projectId);
-            Employee employee = employeeRepository.getEmployeeById(employeeId);
+            Project project = parseProject(strProjectId);
+            Employee employee = parseEmployee(strEmployeeId);
 
             validateValues(name, workTime, startDate, endDate, status);
 
@@ -219,5 +219,23 @@ public class DefaultTaskService implements TaskService {
         }
 
         return integer;
+    }
+
+    private Employee parseEmployee(String strEmployeeId) {
+        Long employeeId = parseLongOrNull(strEmployeeId);
+        return employeeId != null ? employeeService.getEmployee(employeeId) : null;
+    }
+
+    private Project parseProject(String strProjectId) {
+        Long projectId = parseLongOrNull(strProjectId);
+        return projectId != null ? projectService.getProject(projectId) : null;
+    }
+
+    private Long parseLongOrNull(String str) {
+        try {
+            return Long.parseLong(str);
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 }

@@ -14,7 +14,7 @@ public class ServiceProvider {
     public ServiceProvider() {
         employeeService = new DefaultEmployeeService();
         projectService = new DefaultProjectService();
-        taskService = new DefaultTaskService(projectService);
+        taskService = new DefaultTaskService(employeeService, projectService);
     }
 
     public static ServiceProvider getInstance() {
