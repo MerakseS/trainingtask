@@ -56,7 +56,7 @@
             <label>Наименование*<br/>
                 <input type="text" name="name" placeholder="Наименование" value="${task.name}"/>
             </label> <br/><br/>
-            <label>Проект*<br/>
+            <label>Проект<br/>
                 <select name="projectId">
                     <c:if test="${selectedProject != null}">
                         <option value="${selectedProject.id}">${selectedProject.name}</option>

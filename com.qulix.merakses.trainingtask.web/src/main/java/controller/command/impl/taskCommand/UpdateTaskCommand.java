@@ -29,15 +29,15 @@ public class UpdateTaskCommand implements controller.command.Command {
 
         long taskId = Long.parseLong(request.getParameter(ID_PARAMETER));
         String name = request.getParameter(NAME_PARAMETER);
-        Long projectId = Long.valueOf(request.getParameter(PROJECT_ID_PARAMETER));
+        String strProjectId = request.getParameter(PROJECT_ID_PARAMETER);
         String workTime = request.getParameter(WORK_TIME_PARAMETER);
         String startDate = request.getParameter(START_DATE_PARAMETER);
         String endDate = request.getParameter(END_DATE_PARAMETER);
         String status = request.getParameter(STATUS_PARAMETER);
-        Long employeeId = Long.valueOf(request.getParameter(EMPLOYEE_ID_PARAMETER));
+        String strEmployeeId = request.getParameter(EMPLOYEE_ID_PARAMETER);
 
         try {
-            taskService.updateTask(taskId, name, projectId, workTime, startDate, endDate, status, employeeId);
+            taskService.updateTask(taskId, name, strProjectId, workTime, startDate, endDate, status, strEmployeeId);
             response.sendRedirect(TASK_LIST_PATH);
         } catch (ServiceException e) {
             request.setAttribute("errorMessage", e.getMessage());

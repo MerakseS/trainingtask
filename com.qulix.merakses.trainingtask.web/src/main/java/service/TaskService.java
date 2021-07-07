@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface TaskService {
 
-    Task createTask(String name, Long projectId, String workTime, String startDate,
-                    String endDate, String status, Long employeeId);
+    Task createTask(String name, String strProjectId, String workTime, String startDate,
+                    String endDate, String status, String  strEmployeeId);
 
     List<Task> getAllTasks();
 
@@ -15,8 +15,8 @@ public interface TaskService {
 
     Task getTask(long taskId);
 
-    Task updateTask(long taskId, String name, Long projectId, String workTime, String startDate,
-                    String endDate, String status, Long employeeId);
+    Task updateTask(long taskId, String name, String strProjectId, String workTime, String startDate,
+                    String endDate, String status, String strEmployeeId);
 
     long deleteTask(long taskId);
 }

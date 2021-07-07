@@ -60,7 +60,7 @@ public class DefaultProjectService implements ProjectService {
             Project project = projectRepository.getProjectById(id);
             if (project == null) {
                 log.error("Project with id " + id + " doesn't exist.");
-                throw new ServiceException("Проект с id " + id + " не сущесвует!");
+                throw new ServiceException("Проект с id " + id + " не существует!");
             }
 
             List<Task> taskList = taskRepository.getTaskListByProjectId(id);
