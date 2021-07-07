@@ -168,9 +168,24 @@ public class DefaultTaskRepository implements TaskRepository {
         statement.setString(1, task.getStatus().name());
         statement.setString(2, task.getName());
         statement.setLong(3, task.getProject().getId());
-        statement.setInt(4, task.getWorkTime());
-        statement.setDate(5, Date.valueOf(task.getStartDate()));
-        statement.setDate(6, Date.valueOf(task.getEndDate()));
+
+        if (task.getWorkTime() != null) {
+            statement.setInt(4, task.getWorkTime());
+        } else {
+            statement.setNull(4, Types.INTEGER);
+        }
+
+        if (task.getStartDate() != null) {
+            statement.setDate(5, Date.valueOf(task.getStartDate()));
+        } else {
+            statement.setNull(5, Types.DATE);
+        }
+
+        if (task.getEndDate() != null) {
+            statement.setDate(6, Date.valueOf(task.getEndDate()));
+        } else {
+            statement.setNull(6, Types.DATE);
+        }
 
         if (task.getEmployee() != null) {
             statement.setLong(7, task.getEmployee().getId());
@@ -189,9 +204,14 @@ public class DefaultTaskRepository implements TaskRepository {
         Project project = projectRepository.getProjectById(projectId);
         task.setProject(project);
 
-        task.setWorkTime(result.getInt(TASK_WORK_TIME_COLUMN_NAME));
-        task.setStartDate(result.getDate(TASK_START_DATE_COLUMN_NAME).toLocalDate());
-        task.setEndDate(result.getDate(TASK_END_DATE_COLUMN_NAME).toLocalDate());
+        int workTime = result.getInt(TASK_WORK_TIME_COLUMN_NAME);
+        task.setWorkTime(result.wasNull() ? null : workTime);
+
+        Date sqlStartDate = result.getDate(TASK_START_DATE_COLUMN_NAME);
+        task.setStartDate(sqlStartDate != null ? sqlStartDate.toLocalDate() : null);
+
+        Date sqlEndDate = result.getDate(TASK_END_DATE_COLUMN_NAME);
+        task.setEndDate(sqlEndDate != null ? sqlEndDate.toLocalDate() : null);
 
         long employeeId = result.getLong(TASK_EXECUTOR_COLUMN_NAME);
         Employee employee = employeeRepository.getEmployeeById(employeeId);

@@ -213,12 +213,15 @@ public class DefaultTaskService implements TaskService {
     }
 
     private Integer parseInteger(String strInt) {
-        Integer integer = null;
-        if (strInt != null && !strInt.isBlank()) {
-            integer = Integer.valueOf(strInt);
+        if (strInt == null || strInt.isBlank()) {
+            return null;
         }
 
-        return integer;
+        try {
+            return Integer.parseInt(strInt);
+        } catch (NumberFormatException e) {
+            throw new ServiceException("Некорректный ввод работы.");
+        }
     }
 
     private Project parseProject(String strProjectId) {

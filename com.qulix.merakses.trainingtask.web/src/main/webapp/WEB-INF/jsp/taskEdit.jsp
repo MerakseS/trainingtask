@@ -45,11 +45,11 @@
 
 <div class="container">
     <c:if test="${task != null}">
-    <form action="update" method="POST">
-        </c:if>
-        <c:if test="${task == null}">
+        <form action="update" method="POST">
+    </c:if>
+    <c:if test="${task == null}">
         <form action="insert" method="POST">
-            </c:if>
+    </c:if>
             <c:if test="${task != null}">
                 <input type="hidden" name="taskId" value="${task.id}"/>
             </c:if>
@@ -70,7 +70,8 @@
                 </select>
             </label> <br/><br/>
             <label>Работа (часы)<br/>
-                <input type="text" name="workTime" placeholder="Работа" value="${task.workTime}"/>
+                <input type="text" name="workTime" placeholder="Работа"
+                       value="${task.workTime == null ? "" : task.workTime}"/>
             </label> <br/><br/>
             <label>Дата начала<br/>
                 <input type="date" name="startDate" placeholder="Дата начала" value="${task.startDate}"/>

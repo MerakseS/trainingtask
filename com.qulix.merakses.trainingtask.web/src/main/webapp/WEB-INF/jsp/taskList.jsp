@@ -35,7 +35,7 @@
                 <td>${task.status.toString()}</td>
                 <td>${task.name}</td>
                 <td>${task.project.name}</td>
-                <td>${task.workTime}</td>
+                <td>${task.workTime == null ? "" : task.workTime}</td>
                 <td>${task.startDate}</td>
                 <td>${task.endDate}</td>
                 <td>${task.employee.firstName} ${task.employee.surName} ${task.employee.patronymic}</td>
