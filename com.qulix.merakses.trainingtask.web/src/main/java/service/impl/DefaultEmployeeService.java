@@ -58,7 +58,7 @@ public class DefaultEmployeeService implements EmployeeService {
             Employee employee = employeeRepository.getEmployeeById(employeeId);
             if (employee == null) {
                 log.error("Employee with id " + employeeId + " doesn't exist.");
-                throw new ServiceException("Работник с id " + employeeId + " не сущесвует!");
+                throw new ServiceException("Сотрудник с id " + employeeId + " не сущесвует!");
             }
 
             return employee;
@@ -109,7 +109,7 @@ public class DefaultEmployeeService implements EmployeeService {
         Employee employee = employeeRepository.getEmployeeById(employeeId);
         if (employee == null) {
             log.error("Employee with id " + employeeId + " doesn't exist.");
-            throw new ServiceException("Работник с id " + employeeId + " не сущесвует!");
+            throw new ServiceException("Сотрудник с id " + employeeId + " не сущесвует!");
         }
     }
 

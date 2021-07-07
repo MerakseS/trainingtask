@@ -15,7 +15,7 @@
 <div class="container">
     <h2 class="container"><a href="project">Проекты</a></h2><br/>
     <h2 class="container"><a href="task">Задачи</a></h2><br/>
-    <h2 class="container"><a href="employee">Работники</a></h2>
+    <h2 class="container"><a href="employee">Сотрудники</a></h2>
 </div>
 
 <jsp:include page="WEB-INF/jsp/footer.jsp"/>

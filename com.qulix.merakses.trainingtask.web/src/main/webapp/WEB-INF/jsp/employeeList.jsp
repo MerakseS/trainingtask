@@ -11,7 +11,7 @@
 <body>
 
 <jsp:include page="header.jsp">
-    <jsp:param name="title" value="Список работников"/>
+    <jsp:param name="title" value="Список сотрудников"/>
 </jsp:include>
 
 <div class="container">
@@ -44,7 +44,7 @@
         </tbody>
     </table>
     <br/>
-    <button onclick="location.href='employee/new'">Добавить работника</button>
+    <button onclick="location.href='employee/new'">Добавить сотрудника</button>
 </div>
 
 <jsp:include page="footer.jsp"/>

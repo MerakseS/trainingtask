@@ -5,10 +5,10 @@
 
 <c:set var="title" scope="page">
     <c:if test="${employee != null}">
-        Изменить работника
+        Изменить сотрудника
     </c:if>
     <c:if test="${employee == null}">
-        Добавить работника
+        Добавить сотрудника
     </c:if>
 </c:set>
 

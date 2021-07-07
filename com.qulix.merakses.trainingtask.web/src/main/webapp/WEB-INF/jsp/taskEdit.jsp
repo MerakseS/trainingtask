@@ -85,7 +85,7 @@
                     </c:forEach>
                 </select>
             </label> <br/><br/>
-            <label>Сотрудник<br/>
+            <label>Исполнитель<br/>
                 <select name="employeeId">
                     <option value=" "></option>
                     <c:forEach var="employee" items="${employeeList}">
