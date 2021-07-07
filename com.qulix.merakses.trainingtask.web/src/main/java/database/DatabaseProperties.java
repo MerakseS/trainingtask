@@ -1,12 +1,12 @@
 package database;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class DatabaseProperties {
 
-    private static final String PROPERTIES_PATH = "db/db.properties";
+    private static final String PROPERTIES_PATH = "/db/db.properties";
 
     private static final String HSQLDB_HOST_VARIABLE = "db.host";
     private static final String HSQLDB_NAME_VARIABLE = "db.name";
@@ -32,8 +32,8 @@ public class DatabaseProperties {
         String dbUser;
         String dbPassword;
 
-        try {
-            properties.load(new FileInputStream(PROPERTIES_PATH));
+        try (InputStream inputStream = DatabaseProperties.class.getResourceAsStream(PROPERTIES_PATH)){
+            properties.load(inputStream);
 
             dbHost = getPropVariable(HSQLDB_HOST_VARIABLE, DEFAULT_DB_HOST);
             dbName = getPropVariable(HSQLDB_NAME_VARIABLE, DEFAULT_DB_NAME);

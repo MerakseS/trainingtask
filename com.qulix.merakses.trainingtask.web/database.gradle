@@ -16,7 +16,7 @@ task startDatabase() {
 
         def process = buildProcess(className, filePath, dbName)
         wait(process)
-        createTables(dbUser, dbPassword)
+        createDatabaseTables(dbUser, dbPassword)
     }
 }
 
@@ -47,7 +47,7 @@ def wait(Process process) {
     }
 }
 
-def createTables(dbUser, dbPassword) {
+def createDatabaseTables(dbUser, dbPassword) {
     def dbUrl = project.properties['dbUrl'] ?: gradle.dbUrl
     def dbDrive = project.properties['dbDrive'] ?: gradle.dbDrive
 
@@ -80,6 +80,32 @@ task stopDatabase() {
         }
         //noinspection GroovyAssignabilityCheck
         Sql sql = Sql.newInstance(dbUrl, dbUser, dbPassword, dbDrive) as Sql
+        sql.execute('SHUTDOWN;')
+        sql.close()
+    }
+}
+
+task dropDatabaseTables() {
+    group = 'develop'
+    outputs.upToDateWhen {
+        return available()
+    }
+    doLast {
+        def dbUser = project.properties['dbUser'] ?: gradle.dbUser
+        def dbPassword = project.properties['dbPassword'] ?: gradle.dbPassword
+        def dbUrl = project.properties['dbUrl'] ?: gradle.dbUrl
+        def dbDrive = project.properties['dbDrive'] ?: gradle.dbDrive
+
+        ClassLoader loader = Sql.class.classLoader
+        project.buildscript.configurations.classpath.each { File file ->
+            loader.addURL(file.toURI().toURL())
+        }
+
+        String query = new File("${project.projectDir}/src/main/resources/db/drop.sql").text
+
+        //noinspection GroovyAssignabilityCheck
+        Sql sql = Sql.newInstance(dbUrl, dbUser, dbPassword, dbDrive) as Sql
+        sql.execute(query)
         sql.execute('SHUTDOWN;')
         sql.close()
     }

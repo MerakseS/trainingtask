@@ -25,6 +25,6 @@ CREATE TABLE IF NOT EXISTS task
     t_end_date   DATE,
     t_executor   BIGINT,
 
-    FOREIGN KEY (t_project) REFERENCES project (p_id),
-    FOREIGN KEY (t_executor) REFERENCES employee (e_id)
+    FOREIGN KEY (t_project) REFERENCES project (p_id) ON UPDATE CASCADE ON DELETE CASCADE ,
+    FOREIGN KEY (t_executor) REFERENCES employee (e_id) ON UPDATE CASCADE ON DELETE SET NULL
 );

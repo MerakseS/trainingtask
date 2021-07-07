@@ -16,9 +16,11 @@ tomcat {
 tomcatRun.contextPath = '/'
 
 task startServer() {
+    group = 'develop'
     finalizedBy(tomcatRun)
 }
 
 task stopServer() {
+    group = 'develop'
     finalizedBy(tomcatStop)
 }
