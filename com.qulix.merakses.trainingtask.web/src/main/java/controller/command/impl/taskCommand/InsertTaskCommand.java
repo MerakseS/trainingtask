@@ -1,5 +1,6 @@
 package controller.command.impl.taskCommand;
 
+import service.ServiceException;
 import service.ServiceProvider;
 import service.TaskService;
 
@@ -10,6 +11,7 @@ import java.io.IOException;
 
 public class InsertTaskCommand implements controller.command.Command {
     private static final String TASK_LIST_PATH = "/task";
+    private static final String NEW_TASK_FORM_PATH = "/task/new";
 
     private static final String NAME_PARAMETER = "name";
     private static final String PROJECT_ID_PARAMETER = "projectId";
@@ -32,8 +34,12 @@ public class InsertTaskCommand implements controller.command.Command {
         String status = request.getParameter(STATUS_PARAMETER);
         Long employeeId = Long.valueOf(request.getParameter(EMPLOYEE_ID_PARAMETER));
 
-        taskService.createTask(name, projectId, workTime, startDate, endDate, status, employeeId);
-
-        response.sendRedirect(TASK_LIST_PATH);
+        try {
+            taskService.createTask(name, projectId, workTime, startDate, endDate, status, employeeId);
+            response.sendRedirect(TASK_LIST_PATH);
+        } catch (ServiceException e) {
+            request.setAttribute("errorMessage", e.getMessage());
+            request.getRequestDispatcher(NEW_TASK_FORM_PATH).forward(request, response);
+        }
     }
 }

@@ -19,9 +19,6 @@ public class ShowNewTaskFormCommand implements controller.command.Command {
         ServiceProvider provider = ServiceProvider.getInstance();
         ProjectService projectService = provider.getProjectService();
 
-//        List<Project> projectList = projectService.getAllProjects();
-//        request.setAttribute("projectList", projectList);
-
         String strProjectId = request.getParameter(PROJECT_ID_PARAMETER);
         if (strProjectId != null && !strProjectId.isBlank()) {
             long id = Long.parseLong(strProjectId);
@@ -29,11 +26,6 @@ public class ShowNewTaskFormCommand implements controller.command.Command {
             request.setAttribute("selectedProject", project);
         }
 
-//        EmployeeService employeeService = provider.getEmployeeService();
-//        List<Employee> employeeList = employeeService.getAllEmployees();
-//        request.setAttribute("employeeList", employeeList);
-//
-//        request.setAttribute("statuses", Status.values());
         request.getRequestDispatcher(TASK_EDIT_PATH).forward(request, response);
     }
 }

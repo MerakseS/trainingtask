@@ -1,5 +1,6 @@
 package controller.command.impl.taskCommand;
 
+import service.ServiceException;
 import service.ServiceProvider;
 import service.TaskService;
 
@@ -10,6 +11,7 @@ import java.io.IOException;
 
 public class UpdateTaskCommand implements controller.command.Command {
     private static final String TASK_LIST_PATH = "/task";
+    private static final String EDIT_TASK_FORM_PATH = "/task/edit";
 
     private static final String ID_PARAMETER = "taskId";
     private static final String NAME_PARAMETER = "name";
@@ -34,8 +36,12 @@ public class UpdateTaskCommand implements controller.command.Command {
         String status = request.getParameter(STATUS_PARAMETER);
         Long employeeId = Long.valueOf(request.getParameter(EMPLOYEE_ID_PARAMETER));
 
-        taskService.updateTask(taskId, name, projectId, workTime, startDate, endDate, status, employeeId);
-
-        response.sendRedirect(TASK_LIST_PATH);
+        try {
+            taskService.updateTask(taskId, name, projectId, workTime, startDate, endDate, status, employeeId);
+            response.sendRedirect(TASK_LIST_PATH);
+        } catch (ServiceException e) {
+            request.setAttribute("errorMessage", e.getMessage());
+            request.getRequestDispatcher(EDIT_TASK_FORM_PATH).forward(request, response);
+        }
     }
 }

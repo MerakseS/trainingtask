@@ -1,4 +1,7 @@
+<%@ page import="static java.nio.charset.StandardCharsets.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<jsp:useBean id="errorMessage" class="java.lang.String" scope="request"/>
 
 <c:set var="title" scope="page">
     <c:if test="${project != null}">
@@ -39,8 +42,11 @@
             </label> <br/>
             <p>* – обязательные поля.</p>
             <input type="submit" value="${title}">
-            <input type="button" onclick="history.back()" value="Отмена">
+            <input type="button" onclick="location.href='/project'" value="Отмена">
         </form>
+</div>
+<div class="container">
+    <p><%= new String(errorMessage.getBytes(), UTF_8)%></p>
 </div>
 
 <div class="container">

@@ -7,6 +7,9 @@
 <%@ page import="service.EmployeeService" %>
 <%@ page import="entity.Employee" %>
 <%@ page import="entity.enums.Status" %>
+<%@ page import="static java.nio.charset.StandardCharsets.UTF_8" %>
+
+<jsp:useBean id="errorMessage" class="java.lang.String" scope="request"/>
 
 <c:set var="title" scope="page">
     <c:if test="${task != null}">
@@ -84,6 +87,7 @@
             </label> <br/><br/>
             <label>Сотрудник<br/>
                 <select name="employeeId">
+                    <option value=" "></option>
                     <c:forEach var="employee" items="${employeeList}">
                         <option value="${employee.id}">
                                 ${employee.firstName} ${employee.surName} ${employee.patronymic}
@@ -95,6 +99,9 @@
             <input type="submit" value="${title}">
             <input type="button" onclick="history.back()" value="Отмена">
         </form>
+</div>
+<div class="container">
+    <p><%= new String(errorMessage.getBytes(), UTF_8)%></p>
 </div>
 
 <jsp:include page="footer.jsp"/>
