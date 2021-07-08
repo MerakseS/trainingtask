@@ -26,25 +26,29 @@
 
 <div class="container">
     <c:if test="${employee != null}">
-        <form action="update" method="POST">
-    </c:if>
-    <c:if test="${employee == null}">
+    <form action="update" method="POST">
+        </c:if>
+        <c:if test="${employee == null}">
         <form action="insert" method="POST">
-    </c:if>
+            </c:if>
             <c:if test="${employee != null}">
                 <input type="hidden" name="id" value="${employee.id}"/>
             </c:if>
             <label>Имя*
-                <br/><input type="text" name="firstname" placeholder="Имя" value="${employee.firstName}"/>
+                <br/><input type="text" name="firstname" placeholder="Имя"
+                            value="${param.firstname != null ? param.firstname : employee.firstName}"/>
             </label> <br/><br/>
             <label>Фамилия*
-                <br/><input type="text" name="surname" placeholder="Фамилия" value="${employee.surName}"/>
+                <br/><input type="text" name="surname" placeholder="Фамилия"
+                            value="${param.surname != null ? param.surname : employee.surName}"/>
             </label> <br/><br/>
             <label>Отчество
-                <br/><input type="text" name="patronymic" placeholder="Отчество" value="${employee.patronymic}"/>
+                <br/><input type="text" name="patronymic" placeholder="Отчество"
+                            value="${param.patronymic != null ? param.patronymic : employee.patronymic}"/>
             </label> <br/><br/>
             <label>Должность*
-                <br/><input type="text" name="position" placeholder="Должность" value="${employee.position}"/>
+                <br/><input type="text" name="position" placeholder="Должность"
+                            value="${param.position != null ? param.position : employee.position}"/>
             </label> <br/>
             <p>* – обязательные поля.</p>
             <input type="submit" value="${title}">
@@ -52,7 +56,8 @@
         </form>
 </div>
 <div class="container">
-    <p><%= new String(errorMessage.getBytes(), UTF_8)%></p>
+    <p><%= new String(errorMessage.getBytes(), UTF_8)%>
+    </p>
 </div>
 
 <jsp:include page="footer.jsp"/>

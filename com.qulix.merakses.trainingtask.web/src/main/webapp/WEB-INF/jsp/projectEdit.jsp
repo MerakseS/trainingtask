@@ -35,10 +35,12 @@
                 <input type="hidden" name="id" value="${project.id}"/>
             </c:if>
             <label>Наименование*
-                <br/><input type="text" name="name" placeholder="Наименование" value="${project.name}"/>
+                <br/><input type="text" name="name" placeholder="Наименование"
+                            value="${param.name != null ? param.name : project.name}"/>
             </label> <br/><br/>
             <label>Описание
-                <br/><textarea name="description" rows="5" placeholder="Описание">${project.description}</textarea>
+                <br/><textarea name="description" rows="5"
+                               placeholder="Описание">${param.description != null ? param.description : project.description}</textarea>
             </label> <br/>
             <p>* – обязательные поля.</p>
             <input type="submit" value="${title}">
@@ -46,7 +48,8 @@
         </form>
 </div>
 <div class="container">
-    <p><%= new String(errorMessage.getBytes(), UTF_8)%></p>
+    <p><%= new String(errorMessage.getBytes(), UTF_8)%>
+    </p>
 </div>
 
 <div class="container">
