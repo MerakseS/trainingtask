@@ -31,12 +31,8 @@ public class UpdateEmployeeCommand implements Command {
         String patronymic = request.getParameter(PATRONYMIC_PARAMETER);
         String position = request.getParameter(POSITION_PARAMETER);
 
-        employeeService.updateEmployee(id, firsName, surname, patronymic, position);
-
-        response.sendRedirect(EMPLOYEE_LIST_PATH);
-
         try {
-            employeeService.createEmployee(firsName, surname, patronymic, position);
+            employeeService.updateEmployee(id, firsName, surname, patronymic, position);
             response.sendRedirect(EMPLOYEE_LIST_PATH);
         } catch (ServiceException e) {
             request.setAttribute("errorMessage", e.getMessage());
