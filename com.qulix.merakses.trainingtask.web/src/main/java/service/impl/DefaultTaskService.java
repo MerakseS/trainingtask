@@ -173,12 +173,12 @@ public class DefaultTaskService implements TaskService {
 
     private void validateValues(String name, Integer workTime, LocalDate startDate,
                                 LocalDate endDate, Status status) {
-        if (name == null || status == null) {
+        if (name == null || name.isBlank() || status == null) {
             throw new ServiceException("Введите обязательные поля.");
         }
 
         if (name.length() > 50) {
-            throw new ServiceException("Длина наименования не больше 30 символов.");
+            throw new ServiceException("Длина наименования не больше 50 символов.");
         }
 
         if (workTime != null && workTime < 0) {
@@ -230,13 +230,9 @@ public class DefaultTaskService implements TaskService {
     }
 
     private Employee parseEmployee(String strEmployeeId) {
-        Long employeeId = parseLongOrNull(strEmployeeId);
-        return employeeId != null ? employeeService.getEmployee(employeeId) : null;
-    }
-
-    private Long parseLongOrNull(String str) {
         try {
-            return Long.parseLong(str);
+            long employeeId = Long.parseLong(strEmployeeId);
+            return employeeService.getEmployee(employeeId);
         } catch (NumberFormatException e) {
             return null;
         }
