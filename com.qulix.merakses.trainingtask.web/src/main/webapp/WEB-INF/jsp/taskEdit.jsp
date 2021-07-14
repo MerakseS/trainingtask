@@ -139,7 +139,13 @@
 
             <p>* – обязательные поля.</p>
             <input type="submit" value="${title}">
-            <input type="button" onclick="history.back()" value="Отмена">
+
+            <c:if test="${selectedProject != null}">
+                <input type="button" value="Отмена" onclick="location.href='/project/edit?id=${selectedProject.id}'">
+            </c:if>
+            <c:if test="${selectedProject == null}">
+                <input type="button" value="Отмена" onclick="location.href='/task'">
+            </c:if>
         </form>
 </div>
 <div class="container">

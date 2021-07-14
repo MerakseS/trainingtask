@@ -53,7 +53,7 @@
             </label> <br/>
             <p>* – обязательные поля.</p>
             <input type="submit" value="${title}">
-            <input type="button" onclick="history.back()" value="Отмена">
+            <input type="button" onclick="location.href='/employee'" value="Отмена">
         </form>
 </div>
 <div class="container">
