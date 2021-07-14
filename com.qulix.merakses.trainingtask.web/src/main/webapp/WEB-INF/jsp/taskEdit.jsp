@@ -10,6 +10,7 @@
 <%@ page import="static java.nio.charset.StandardCharsets.UTF_8" %>
 
 <jsp:useBean id="errorMessage" class="java.lang.String" scope="request"/>
+<jsp:useBean id="htmlUtils" class="utils.HtmlUtils"/>
 
 <c:set var="title" scope="page">
     <c:if test="${task != null}">
@@ -55,13 +56,13 @@
             </c:if>
             <label>Наименование*<br/>
                 <input type="text" name="name" placeholder="Наименование"
-                       value="${param.name != null ? param.name : task.name}"/>
+                       value="${htmlUtils.escapeHtml(param.name != null ? param.name : task.name)}"/>
             </label> <br/><br/>
 
             <label>Проект*<br/>
                 <select name="projectId">
                     <c:if test="${selectedProject != null}">
-                        <option value="${selectedProject.id}">${selectedProject.name}</option>
+                        <option value="${selectedProject.id}">${htmlUtils.escapeHtml(selectedProject.name)}</option>
                     </c:if>
 
                     <c:if test="${selectedProject == null}">
@@ -71,7 +72,11 @@
                                     && param.projectId.equals(Long.toString(project.id))}">
                                         selected
                                     </c:if>
-                            >${project.name}</option>
+
+                                    <c:if test="${param.projectId == null && project.id == task.project.id}">
+                                        selected
+                                    </c:if>
+                            >${htmlUtils.escapeHtml(project.name)}</option>
                         </c:forEach>
                     </c:if>
                 </select>
@@ -79,7 +84,7 @@
 
             <label>Работа (часы)<br/>
                 <input type="text" name="workTime" placeholder="Работа"
-                       value="${param.workTime != null ? param.workTime :
+                       value="${param.workTime != null ? htmlUtils.escapeHtml(param.workTime) :
                        (task.workTime == null ? "" : task.workTime)}"/>
             </label> <br/><br/>
 
@@ -97,8 +102,12 @@
                 <select name="status">
                     <c:forEach var="status" items="${Status.values()}">
                         <option value="${status}"
-                                <c:if test="${param.status != null
-                                && status == Status.valueOf(param.status)}">
+                                <c:if test="${param.status != null &&
+                                status == Status.valueOf(param.status)}">
+                                    selected
+                                </c:if>
+
+                                <c:if test="${param.status == null && status == task.status}">
                                     selected
                                 </c:if>
                         >${status.toString()}</option>
@@ -111,12 +120,18 @@
                     <option value=" "></option>
                     <c:forEach var="employee" items="${employeeList}">
                         <option value="${employee.id}"
-                                <c:if test="${param.employeeId != null
-                                && param.employeeId.equals(Long.toString(employee.id))}">
+                                <c:if test="${param.employeeId != null &&
+                                param.employeeId.equals(Long.toString(employee.id))}">
+                                    selected
+                                </c:if>
+
+                                <c:if test="${param.employeeId == null && employee.id == task.employee.id}">
                                     selected
                                 </c:if>
                         >
-                                ${employee.firstName} ${employee.surName} ${employee.patronymic}
+                                ${htmlUtils.escapeHtml(employee.firstName)}
+                                ${htmlUtils.escapeHtml(employee.surName)}
+                                ${htmlUtils.escapeHtml(employee.patronymic)}
                         </option>
                     </c:forEach>
                 </select>

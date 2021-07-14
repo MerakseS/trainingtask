@@ -2,11 +2,13 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <jsp:useBean id="projectList" scope="request" type="java.util.List<entity.Project>"/>
+<jsp:useBean id="htmlUtils" class="utils.HtmlUtils"/>
 
 <html>
 <head>
     <title>Проекты</title>
     <link href="../../css/style.css" rel="stylesheet" type="text/css" media="all"/>
+    <script type="javascript" src="../../js/index.js"></script>
 </head>
 <body>
 
@@ -27,8 +29,8 @@
         <tbody>
         <c:forEach var="project" items="${projectList}">
             <tr>
-                <td>${project.name}</td>
-                <td>${project.description}</td>
+                <td>${htmlUtils.escapeHtml(project.name)}</td>
+                <td>${htmlUtils.escapeHtml(project.description)}</td>
                 <td class="thButton">
                     <button onclick="location.href='project/edit?id=${project.id}'">Изменить</button>
                 </td>

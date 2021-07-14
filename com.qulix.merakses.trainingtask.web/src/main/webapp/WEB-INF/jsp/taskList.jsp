@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <jsp:useBean id="taskList" scope="request" type="java.util.List<entity.Task>"/>
+<jsp:useBean id="htmlUtils" class="utils.HtmlUtils"/>
 
 <html>
 <head>
@@ -33,12 +34,16 @@
         <c:forEach var="task" items="${taskList}">
             <tr>
                 <td>${task.status.toString()}</td>
-                <td>${task.name}</td>
-                <td>${task.project.name}</td>
+                <td>${htmlUtils.escapeHtml(task.name)}</td>
+                <td>${htmlUtils.escapeHtml(task.project.name)}</td>
                 <td>${task.workTime == null ? "" : task.workTime}</td>
                 <td>${task.startDate}</td>
                 <td>${task.endDate}</td>
-                <td>${task.employee.firstName} ${task.employee.surName} ${task.employee.patronymic}</td>
+                <td>
+                        ${htmlUtils.escapeHtml(task.employee.firstName)}
+                        ${htmlUtils.escapeHtml(task.employee.surName)}
+                        ${htmlUtils.escapeHtml(task.employee.patronymic)}
+                </td>
                 <td class="thButton">
                     <button onclick="location.href='task/edit?taskId=${task.id}'">Изменить</button>
                 </td>

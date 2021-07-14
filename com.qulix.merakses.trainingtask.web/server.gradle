@@ -11,9 +11,8 @@ tomcat {
     httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
     ajpProtocol = 'org.apache.coyote.ajp.AjpNio2Protocol'
     daemon = true
+    contextPath = '/'
 }
-
-tomcatRun.contextPath = '/'
 
 task startServer() {
     group = 'develop'

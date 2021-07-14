@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="errorMessage" class="java.lang.String" scope="request"/>
+<jsp:useBean id="htmlUtils" class="utils.HtmlUtils"/>
 
 <c:set var="title" scope="page">
     <c:if test="${project != null}">
@@ -36,11 +37,11 @@
             </c:if>
             <label>Наименование*
                 <br/><input type="text" name="name" placeholder="Наименование"
-                            value="${param.name != null ? param.name : project.name}"/>
+                            value="${htmlUtils.escapeHtml(param.name != null ? param.name : project.name)}"/>
             </label> <br/><br/>
             <label>Описание
                 <br/><textarea name="description" rows="5"
-                               placeholder="Описание">${param.description != null ? param.description : project.description}</textarea>
+                               placeholder="Описание">${htmlUtils.escapeHtml(param.description != null ? param.description : project.description)}</textarea>
             </label> <br/>
             <p>* – обязательные поля.</p>
             <input type="submit" value="${title}">

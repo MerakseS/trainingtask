@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:useBean id="errorMessage" class="java.lang.String" scope="request"/>
+<jsp:useBean id="htmlUtils" class="utils.HtmlUtils"/>
 
 <c:set var="title" scope="page">
     <c:if test="${employee != null}">
@@ -36,19 +37,19 @@
             </c:if>
             <label>Имя*
                 <br/><input type="text" name="firstname" placeholder="Имя"
-                            value="${param.firstname != null ? param.firstname : employee.firstName}"/>
+                            value="${htmlUtils.escapeHtml(param.firstname != null ? param.firstname : employee.firstName)}"/>
             </label> <br/><br/>
             <label>Фамилия*
                 <br/><input type="text" name="surname" placeholder="Фамилия"
-                            value="${param.surname != null ? param.surname : employee.surName}"/>
+                            value="${htmlUtils.escapeHtml(param.surname != null ? param.surname : employee.surName)}"/>
             </label> <br/><br/>
             <label>Отчество
                 <br/><input type="text" name="patronymic" placeholder="Отчество"
-                            value="${param.patronymic != null ? param.patronymic : employee.patronymic}"/>
+                            value="${htmlUtils.escapeHtml(param.patronymic != null ? param.patronymic : employee.patronymic)}"/>
             </label> <br/><br/>
             <label>Должность*
                 <br/><input type="text" name="position" placeholder="Должность"
-                            value="${param.position != null ? param.position : employee.position}"/>
+                            value="${htmlUtils.escapeHtml(param.position != null ? param.position : employee.position)}"/>
             </label> <br/>
             <p>* – обязательные поля.</p>
             <input type="submit" value="${title}">

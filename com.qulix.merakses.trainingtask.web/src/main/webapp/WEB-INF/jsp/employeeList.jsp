@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
 <jsp:useBean id="employeeList" scope="request" type="java.util.List<entity.Employee>"/>
+<jsp:useBean id="htmlUtils" class="utils.HtmlUtils"/>
 
 <html>
 <head>
@@ -28,11 +29,12 @@
         </thead>
         <tbody>
         <c:forEach var="employee" items="${employeeList}">
+            <jsp:useBean id="employee" class="entity.Employee"/>
             <tr>
-                <td>${employee.surName}</td>
-                <td>${employee.firstName}</td>
-                <td>${employee.patronymic}</td>
-                <td>${employee.position}</td>
+                <td>${htmlUtils.escapeHtml(employee.surName)}</td>
+                <td>${htmlUtils.escapeHtml(employee.firstName)}</td>
+                <td>${htmlUtils.escapeHtml(employee.patronymic)}</td>
+                <td>${htmlUtils.escapeHtml(employee.position)}</td>
                 <td class="thButton">
                     <button onclick="location.href='employee/edit?id=${employee.id}'">Изменить</button>
                 </td>
