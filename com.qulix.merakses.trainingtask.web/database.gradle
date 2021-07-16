@@ -85,7 +85,7 @@ task stopDatabase() {
     }
 }
 
-task dropDatabaseTables() {
+task dropDatabase() {
     group = 'develop'
     outputs.upToDateWhen {
         return available()

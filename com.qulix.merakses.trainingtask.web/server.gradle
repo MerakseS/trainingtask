@@ -1,25 +1,13 @@
-dependencies {
-    implementation 'org.apache.tomcat:tomcat:9.0.48'
-
-    def tomcatVersion = '9.0.4'
-    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-            "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
-            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
-}
-
 tomcat {
-    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
-    ajpProtocol = 'org.apache.coyote.ajp.AjpNio2Protocol'
-    daemon = true
-    contextPath = '/'
+    version = 9.0
+    port = 8080
+
+    webapp('build/libs/com.qulix.merakses.trainingtask.web-1.0-SNAPSHOT.war') {
+        contextPath = ''
+    }
 }
 
-task startServer() {
+task startServer {
     group = 'develop'
-    finalizedBy(tomcatRun)
-}
-
-task stopServer() {
-    group = 'develop'
-    finalizedBy(tomcatStop)
+    finalizedBy tomcatRun
 }
