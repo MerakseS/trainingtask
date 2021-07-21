@@ -22,6 +22,9 @@ import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * The default implementation of the {@link TaskService}
+ */
 public class DefaultTaskService implements TaskService {
     private static final Logger log = Logger.getLogger(DefaultTaskService.class);
 
@@ -31,6 +34,12 @@ public class DefaultTaskService implements TaskService {
     private final EmployeeService employeeService;
     private final ProjectService projectService;
 
+    /**
+     * Instantiates a new Default task service.
+     *
+     * @param employeeService the employee service
+     * @param projectService  the project service
+     */
     public DefaultTaskService(EmployeeService employeeService, ProjectService projectService) {
         RepositoryProvider repositoryProvider = RepositoryProvider.getInstance();
         this.taskRepository = repositoryProvider.getTaskRepository();

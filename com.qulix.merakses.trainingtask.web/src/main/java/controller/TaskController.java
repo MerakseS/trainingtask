@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The Controller for task.
+ */
 @WebServlet(name = "TaskController", value = "/task/*")
 public class TaskController extends HttpServlet {
     private final CommandProvider taskCommandProvider = new TaskCommandProvider();

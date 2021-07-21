@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * The type Show task list command.
+ */
 public class ShowTaskListCommand implements Command {
     private static final String TASK_LIST_PATH = "/WEB-INF/jsp/taskList.jsp";
 

@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The Show new project form command.
+ */
 public class ShowNewProjectFormCommand implements Command {
     private static final String PROJECT_EDIT_PATH = "/WEB-INF/jsp/projectEdit.jsp";
 

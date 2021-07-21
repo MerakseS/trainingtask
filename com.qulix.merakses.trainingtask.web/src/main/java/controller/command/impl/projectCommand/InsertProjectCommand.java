@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The Insert project command.
+ */
 public class InsertProjectCommand implements Command {
     private static final String PROJECT_LIST_PATH = "/project";
     private static final String NEW_PROJECT_FORM_PATH = "/project/new";

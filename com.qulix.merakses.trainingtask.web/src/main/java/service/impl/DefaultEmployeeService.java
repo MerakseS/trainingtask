@@ -10,10 +10,16 @@ import service.ServiceException;
 
 import java.util.List;
 
+/**
+ * The default implementation of {@link EmployeeService}
+ */
 public class DefaultEmployeeService implements EmployeeService {
     private static final Logger log = Logger.getLogger(DefaultEmployeeService.class);
     private final EmployeeRepository employeeRepository;
 
+    /**
+     * Instantiates a new Default employee service.
+     */
     public DefaultEmployeeService() {
         RepositoryProvider provider = RepositoryProvider.getInstance();
         employeeRepository = provider.getEmployeeRepository();

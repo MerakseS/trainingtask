@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The Delete employee command.
+ */
 public class DeleteEmployeeCommand implements Command {
     private static final String EMPLOYEE_LIST_PATH = "/employee";
 

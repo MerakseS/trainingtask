@@ -4,8 +4,14 @@ import controller.command.Command;
 import controller.command.CommandProvider;
 import controller.command.impl.taskCommand.*;
 
+/**
+ * Provider for task commands.
+ */
 public class TaskCommandProvider extends CommandProvider {
 
+    /**
+     * Instantiates a new Task command provider.
+     */
     public TaskCommandProvider() {
         super();
         Command showListCommand = new ShowTaskListCommand();

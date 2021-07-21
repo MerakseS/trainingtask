@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The type Delete task command.
+ */
 public class DeleteTaskCommand implements controller.command.Command {
     private static final String ID_PARAMETER = "taskId";
 

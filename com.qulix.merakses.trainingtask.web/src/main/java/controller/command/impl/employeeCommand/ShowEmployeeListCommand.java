@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * The command that show employee list.
+ */
 public class ShowEmployeeListCommand implements Command {
     private static final String EMPLOYEE_LIST_PATH = "/WEB-INF/jsp/employeeList.jsp";
 

@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The type Show edit task form command.
+ */
 public class ShowEditTaskFormCommand implements controller.command.Command {
     private static final String TASK_EDIT_PATH = "/WEB-INF/jsp/taskEdit.jsp";
 

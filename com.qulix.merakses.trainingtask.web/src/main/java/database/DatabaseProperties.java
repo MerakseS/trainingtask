@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Represents database connection properties.
+ * Sets all connection parameters according to db.properties file
+ * If db.properties is missing, class uses default connection parameters.
+ */
 public class DatabaseProperties {
 
     private static final String PROPERTIES_PATH = "/db/db.properties";
@@ -26,13 +31,16 @@ public class DatabaseProperties {
     private final String user;
     private final String password;
 
+    /**
+     * Instantiates a new Database properties.
+     */
     public DatabaseProperties() {
         String dbHost;
         String dbName;
         String dbUser;
         String dbPassword;
 
-        try (InputStream inputStream = DatabaseProperties.class.getResourceAsStream(PROPERTIES_PATH)){
+        try (InputStream inputStream = DatabaseProperties.class.getResourceAsStream(PROPERTIES_PATH)) {
             properties.load(inputStream);
 
             dbHost = getPropVariable(HSQLDB_HOST_VARIABLE, DEFAULT_DB_HOST);
@@ -64,14 +72,29 @@ public class DatabaseProperties {
         return variable;
     }
 
+    /**
+     * Gets url.
+     *
+     * @return the url
+     */
     public String getUrl() {
         return url;
     }
 
+    /**
+     * Gets user.
+     *
+     * @return the user
+     */
     public String getUser() {
         return user;
     }
 
+    /**
+     * Gets password.
+     *
+     * @return the password
+     */
     public String getPassword() {
         return password;
     }

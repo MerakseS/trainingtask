@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The Update employee command.
+ */
 public class UpdateEmployeeCommand implements Command {
     private static final String EMPLOYEE_LIST_PATH = "/employee";
     private static final String EDIT_EMPLOYEE_FORM_PATH = "/employee/edit";

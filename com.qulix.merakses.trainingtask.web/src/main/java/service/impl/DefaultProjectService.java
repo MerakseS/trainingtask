@@ -9,14 +9,21 @@ import repository.RepositoryProvider;
 import repository.TaskRepository;
 import service.ProjectService;
 import service.ServiceException;
+import service.TaskService;
 
 import java.util.List;
 
+/**
+ * The default implementation of the {@link ProjectService}
+ */
 public class DefaultProjectService implements ProjectService {
     private static final Logger log = Logger.getLogger(DefaultProjectService.class);
     private final ProjectRepository projectRepository;
     private final TaskRepository taskRepository;
 
+    /**
+     * Instantiates a new Default project service.
+     */
     public DefaultProjectService() {
         RepositoryProvider provider = RepositoryProvider.getInstance();
         projectRepository = provider.getProjectRepository();

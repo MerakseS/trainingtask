@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The Controller for project.
+ */
 @WebServlet(name = "ProjectController", value = "/project/*")
 public class ProjectController extends HttpServlet {
     private final CommandProvider projectCommandProvider = new ProjectCommandProvider();

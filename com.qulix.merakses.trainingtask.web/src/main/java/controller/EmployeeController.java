@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The Controller for employee.
+ */
 @WebServlet(name = "EmployeeController", value = "/employee/*")
 public class EmployeeController extends HttpServlet {
     private final CommandProvider employeeCommandProvider = new EmployeeCommandProvider();

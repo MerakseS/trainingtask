@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The type Insert task command.
+ */
 public class InsertTaskCommand implements controller.command.Command {
     private static final String TASK_LIST_PATH = "/task";
     private static final String PROJECT_EDIT_FORM_PATH = "/project/edit?id=";

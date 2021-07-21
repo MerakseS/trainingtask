@@ -3,6 +3,9 @@ package filter;
 import javax.servlet.*;
 import java.io.IOException;
 
+/**
+ * The type Character encoding filter using to set encoding to UTF-8.
+ */
 public class CharacterEncodingFilter implements Filter {
 
     private static final String charsetEncoding = "UTF-8";

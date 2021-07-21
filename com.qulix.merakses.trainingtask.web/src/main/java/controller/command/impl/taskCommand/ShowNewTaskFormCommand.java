@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The type Show new task form command.
+ */
 public class ShowNewTaskFormCommand implements controller.command.Command {
     private static final String TASK_EDIT_PATH = "/WEB-INF/jsp/taskEdit.jsp";
 

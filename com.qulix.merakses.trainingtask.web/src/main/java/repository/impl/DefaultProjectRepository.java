@@ -2,6 +2,7 @@ package repository.impl;
 
 import database.DatabaseConnection;
 import entity.Project;
+import repository.EmployeeRepository;
 import repository.ProjectRepository;
 import repository.RepositoryException;
 
@@ -15,6 +16,9 @@ import java.util.List;
 import static java.lang.String.format;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
+/**
+ * The default implementation of {@link ProjectRepository}
+ */
 public class DefaultProjectRepository implements ProjectRepository {
 
     private static final String PROJECT_ID_COLUMN_NAME = "P_ID";

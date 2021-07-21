@@ -15,6 +15,9 @@ import java.util.List;
 import static java.lang.String.format;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
+/**
+ * The default implementation of {@link EmployeeRepository}
+ */
 public class DefaultEmployeeRepository implements EmployeeRepository {
 
     private static final String EMPLOYEE_ID_COLUMN_NAME = "E_ID";

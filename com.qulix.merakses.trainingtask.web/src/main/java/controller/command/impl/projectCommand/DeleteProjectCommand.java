@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The Delete project command.
+ */
 public class DeleteProjectCommand implements Command {
     private static final String PROJECT_LIST_PATH = "/project";
 

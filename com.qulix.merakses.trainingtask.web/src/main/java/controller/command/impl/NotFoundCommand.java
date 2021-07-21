@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Command if no command was found for command name
+ */
 public class NotFoundCommand implements Command {
     private static final Logger log = Logger.getLogger(NotFoundCommand.class);
 

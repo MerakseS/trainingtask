@@ -4,8 +4,14 @@ import controller.command.Command;
 import controller.command.CommandProvider;
 import controller.command.impl.employeeCommand.*;
 
+/**
+ * Provider for employee commands.
+ */
 public class EmployeeCommandProvider extends CommandProvider {
 
+    /**
+     * Initialize employee commands with command names
+     */
     public EmployeeCommandProvider() {
         super();
         Command showListCommand = new ShowEmployeeListCommand();

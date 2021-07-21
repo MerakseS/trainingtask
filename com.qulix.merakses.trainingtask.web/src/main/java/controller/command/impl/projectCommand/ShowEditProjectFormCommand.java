@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * The Show edit project form command.
+ */
 public class ShowEditProjectFormCommand implements Command {
     private static final String PROJECT_EDIT_PATH = "/WEB-INF/jsp/projectEdit.jsp";
 

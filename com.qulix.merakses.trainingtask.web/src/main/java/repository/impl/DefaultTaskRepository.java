@@ -16,6 +16,9 @@ import java.util.List;
 import static java.lang.String.format;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
+/**
+ * The default implementation of {@link Task}
+ */
 public class DefaultTaskRepository implements TaskRepository {
 
     private static final String TASK_ID_COLUMN_NAME = "T_ID";
@@ -39,6 +42,12 @@ public class DefaultTaskRepository implements TaskRepository {
     private final EmployeeRepository employeeRepository;
     private final ProjectRepository projectRepository;
 
+    /**
+     * Instantiates a new Default task repository.
+     *
+     * @param employeeRepository the employee repository
+     * @param projectRepository  the project repository
+     */
     public DefaultTaskRepository(EmployeeRepository employeeRepository, ProjectRepository projectRepository) {
         this.employeeRepository = employeeRepository;
         this.projectRepository = projectRepository;
