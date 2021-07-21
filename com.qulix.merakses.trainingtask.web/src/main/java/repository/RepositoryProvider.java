@@ -1,6 +1,8 @@
 package repository;
 
-import repository.impl.*;
+import repository.impl.DefaultEmployeeRepository;
+import repository.impl.DefaultProjectRepository;
+import repository.impl.DefaultTaskRepository;
 
 public class RepositoryProvider {
     private static final RepositoryProvider instance = new RepositoryProvider();

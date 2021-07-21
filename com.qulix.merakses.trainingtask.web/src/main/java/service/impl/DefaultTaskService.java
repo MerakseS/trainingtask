@@ -86,15 +86,6 @@ public class DefaultTaskService implements TaskService {
     }
 
     @Override
-    public List<Task> getTasksByProject(long projectId) {
-        log.info("Getting tasks list by project with id " + projectId);
-
-        projectService.checkThatProjectExists(projectId);
-
-        return taskRepository.getTaskListByProjectId(projectId);
-    }
-
-    @Override
     public Task getTask(long taskId) {
         try {
             log.info("Getting task with id " + taskId);
@@ -230,6 +221,10 @@ public class DefaultTaskService implements TaskService {
     }
 
     private Employee parseEmployee(String strEmployeeId) {
+        if (strEmployeeId == null || strEmployeeId.isBlank()) {
+            return null;
+        }
+
         try {
             long employeeId = Long.parseLong(strEmployeeId);
             return employeeService.getEmployee(employeeId);

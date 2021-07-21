@@ -54,6 +54,11 @@
             <c:if test="${task != null}">
                 <input type="hidden" name="taskId" value="${task.id}"/>
             </c:if>
+
+           <c:if test="${selectedProject != null}">
+               <input type="hidden" name="selectedProjectId" value="${selectedProject.id}">
+           </c:if>
+
             <label>Наименование*<br/>
                 <input type="text" name="name" placeholder="Наименование"
                        value="${htmlUtils.escapeHtml(param.name != null ? param.name : task.name)}"/>

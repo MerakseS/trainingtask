@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class UpdateTaskCommand implements controller.command.Command {
     private static final String TASK_LIST_PATH = "/task";
+    private static final String PROJECT_EDIT_FORM_PATH = "/project/edit?id=";
     private static final String EDIT_TASK_FORM_PATH = "/task/edit";
 
     private static final String ID_PARAMETER = "taskId";
@@ -21,6 +22,7 @@ public class UpdateTaskCommand implements controller.command.Command {
     private static final String END_DATE_PARAMETER = "endDate";
     private static final String STATUS_PARAMETER = "status";
     private static final String EMPLOYEE_ID_PARAMETER = "employeeId";
+    private static final String SELECTED_PROJECT_ID_PARAMETER = "selectedProjectId";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,10 +37,13 @@ public class UpdateTaskCommand implements controller.command.Command {
         String endDate = request.getParameter(END_DATE_PARAMETER);
         String status = request.getParameter(STATUS_PARAMETER);
         String strEmployeeId = request.getParameter(EMPLOYEE_ID_PARAMETER);
+        String strSelectedProjectId = request.getParameter(SELECTED_PROJECT_ID_PARAMETER);
 
         try {
             taskService.updateTask(taskId, name, strProjectId, workTime, startDate, endDate, status, strEmployeeId);
-            response.sendRedirect(TASK_LIST_PATH);
+            response.sendRedirect(strSelectedProjectId != null ?
+                    PROJECT_EDIT_FORM_PATH + strSelectedProjectId :
+                    TASK_LIST_PATH);
         } catch (ServiceException e) {
             request.setAttribute("errorMessage", e.getMessage());
             request.getRequestDispatcher(EDIT_TASK_FORM_PATH).forward(request, response);

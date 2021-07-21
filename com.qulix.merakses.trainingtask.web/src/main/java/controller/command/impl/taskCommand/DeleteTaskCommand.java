@@ -9,8 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class DeleteTaskCommand implements controller.command.Command {
-    private static final String TASK_LIST_PATH = "/task";
-
     private static final String ID_PARAMETER = "taskId";
 
     @Override
@@ -21,6 +19,7 @@ public class DeleteTaskCommand implements controller.command.Command {
         long id = Long.parseLong(request.getParameter(ID_PARAMETER));
         taskService.deleteTask(id);
 
-        response.sendRedirect(TASK_LIST_PATH);
+        String referer = request.getHeader("Referer");
+        response.sendRedirect(referer);
     }
 }

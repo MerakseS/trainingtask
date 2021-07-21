@@ -1,7 +1,6 @@
 package repository.impl;
 
 import database.DatabaseConnection;
-import entity.Employee;
 import entity.Project;
 import entity.Task;
 import entity.enums.Status;
@@ -214,8 +213,7 @@ public class DefaultTaskRepository implements TaskRepository {
         task.setEndDate(sqlEndDate != null ? sqlEndDate.toLocalDate() : null);
 
         long employeeId = result.getLong(TASK_EXECUTOR_COLUMN_NAME);
-        Employee employee = employeeRepository.getEmployeeById(employeeId);
-        task.setEmployee(employee);
+        task.setEmployee(result.wasNull() ? null : employeeRepository.getEmployeeById(employeeId));
 
         return task;
     }

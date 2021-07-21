@@ -11,8 +11,6 @@ public interface TaskService {
 
     List<Task> getAllTasks();
 
-    List<Task> getTasksByProject(long projectId);
-
     Task getTask(long taskId);
 
     Task updateTask(long taskId, String name, String strProjectId, String workTime, String startDate,
