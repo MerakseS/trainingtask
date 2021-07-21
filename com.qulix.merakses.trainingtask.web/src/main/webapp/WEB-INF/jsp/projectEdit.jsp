@@ -66,7 +66,7 @@
                     <td>${task.endDate}</td>
                     <td>${task.employee.firstName} ${task.employee.surName} ${task.employee.patronymic}</td>
                     <td>
-                        <button onclick="location.href='/task/edit?taskId=${task.id}&projectId=${project.id}'">
+                        <button onclick="location.href='/task/edit?taskId=${task.id}&selectedProjectId=${project.id}'">
                             Изменить
                         </button>
                     </td>
