@@ -55,9 +55,9 @@
                 <input type="hidden" name="taskId" value="${task.id}"/>
             </c:if>
 
-           <c:if test="${selectedProject != null}">
-               <input type="hidden" name="selectedProjectId" value="${selectedProject.id}">
-           </c:if>
+            <c:if test="${selectedProject != null}">
+                <input type="hidden" name="selectedProjectId" value="${selectedProject.id}">
+            </c:if>
 
             <label>Наименование*<br/>
                 <input type="text" name="name" placeholder="Наименование"
@@ -143,14 +143,17 @@
             </label> <br/>
 
             <p>* – обязательные поля.</p>
-            <input type="submit" value="${title}">
-
-            <c:if test="${selectedProject != null}">
-                <input type="button" value="Отмена" onclick="location.href='/project/edit?id=${selectedProject.id}'">
-            </c:if>
-            <c:if test="${selectedProject == null}">
-                <input type="button" value="Отмена" onclick="location.href='/task'">
-            </c:if>
+            <input type="submit" value="${title}"/>
+            <a
+                    <c:if test="${selectedProject != null}">
+                        href="<c:url value="/project/edit?id=${selectedProject.id}"/>"
+                    </c:if>
+                    <c:if test="${selectedProject == null}">
+                        href="<c:url value="/task"/>"
+                    </c:if>
+            >
+                <input type="button" value="Отмена"/>
+            </a>
         </form>
 </div>
 <div class="container">

@@ -32,17 +32,23 @@
                 <td>${htmlUtils.escapeHtml(project.name)}</td>
                 <td>${htmlUtils.escapeHtml(project.description)}</td>
                 <td class="thButton">
-                    <button onclick="location.href='project/edit?id=${project.id}'">Изменить</button>
+                    <a href="project/edit?id=${project.id}">
+                        <button>Изменить</button>
+                    </a>
                 </td>
                 <td class="thButton">
-                    <button onclick="location.href='project/delete?id=${project.id}'">Удалить</button>
+                    <a href="project/delete?id=${project.id}">
+                        <button>Удалить</button>
+                    </a>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
     <br/>
-    <button onclick="location.href='project/new'">Добавить проект</button>
+    <a href="project/new">
+        <button>Добавить проект</button>
+    </a>
 </div>
 
 <jsp:include page="footer.jsp"/>

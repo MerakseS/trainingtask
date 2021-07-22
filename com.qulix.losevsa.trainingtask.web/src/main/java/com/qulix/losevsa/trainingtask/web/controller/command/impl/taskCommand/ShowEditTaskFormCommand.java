@@ -17,7 +17,7 @@ import java.io.IOException;
 public class ShowEditTaskFormCommand implements com.qulix.losevsa.trainingtask.web.controller.command.Command {
     private static final String TASK_EDIT_PATH = "/WEB-INF/jsp/taskEdit.jsp";
 
-    private static final String PROJECT_ID_PARAMETER = "projectId";
+    private static final String PROJECT_ID_PARAMETER = "selectedProjectId";
 
     private static final String TASK_ID_PARAMETER = "taskId";
 

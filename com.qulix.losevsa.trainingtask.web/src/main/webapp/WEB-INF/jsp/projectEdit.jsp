@@ -45,7 +45,9 @@
             </label> <br/>
             <p>* – обязательные поля.</p>
             <input type="submit" value="${title}">
-            <input type="button" onclick="location.href='/project'" value="Отмена">
+            <a href="<c:url value="/project"/>">
+                <input type="button" value="Отмена"/>
+            </a>
         </form>
 </div>
 <div class="container">
@@ -66,18 +68,22 @@
                     <td>${task.endDate}</td>
                     <td>${task.employee.firstName} ${task.employee.surName} ${task.employee.patronymic}</td>
                     <td>
-                        <button onclick="location.href='/task/edit?taskId=${task.id}&selectedProjectId=${project.id}'">
-                            Изменить
-                        </button>
+                        <a href="<c:url value="/task/edit?taskId=${task.id}&selectedProjectId=${project.id}"/>">
+                            <button>Изменить</button>
+                        </a>
                     </td>
                     <td>
-                        <button onclick="location.href='/task/delete?taskId=${task.id}'">Удалить</button>
+                        <a href="<c:url value="/task/delete?taskId=${task.id}"/>">
+                            <button>Удалить</button>
+                        </a>
                     </td>
                 </tr>
             </c:forEach>
         </table>
         <br/>
-        <button onclick="location.href='/task/new?projectId=${project.id}'">Добавить задачу</button>
+        <a href="<c:url value="/task/new?selectedProjectId=${project.id}"/>">
+            <button>Добавить задачу</button>
+        </a>
         <br/><br/>
     </c:if>
 </div>

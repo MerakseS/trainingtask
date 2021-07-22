@@ -52,8 +52,10 @@
                             value="${htmlUtils.escapeHtml(param.position != null ? param.position : employee.position)}"/>
             </label> <br/>
             <p>* – обязательные поля.</p>
-            <input type="submit" value="${title}">
-            <input type="button" onclick="location.href='/employee'" value="Отмена">
+            <input type="submit" value="${title}"/>
+            <a href="<c:url value="/employee"/>">
+                <input type="button" value="Отмена"/>
+            </a>
         </form>
 </div>
 <div class="container">

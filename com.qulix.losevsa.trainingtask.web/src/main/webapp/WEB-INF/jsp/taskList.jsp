@@ -45,17 +45,23 @@
                         ${htmlUtils.escapeHtml(task.employee.patronymic)}
                 </td>
                 <td class="thButton">
-                    <button onclick="location.href='task/edit?taskId=${task.id}'">Изменить</button>
+                    <a href="task/edit?taskId=${task.id}">
+                        <button>Изменить</button>
+                    </a>
                 </td>
                 <td class="thButton">
-                    <button onclick="location.href='task/delete?taskId=${task.id}'">Удалить</button>
+                    <a href="task/delete?taskId=${task.id}">
+                        <button>Удалить</button>
+                    </a>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
     <br/>
-    <button onclick="location.href='task/new'">Добавить задачу</button>
+    <a href="task/new">
+        <button>Добавить задачу</button>
+    </a>
 </div>
 
 <jsp:include page="footer.jsp"/>

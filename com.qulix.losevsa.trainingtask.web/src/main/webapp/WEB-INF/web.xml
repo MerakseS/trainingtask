@@ -8,27 +8,53 @@
         <filter-name>CharacterEncodingFilter</filter-name>
         <filter-class>com.qulix.losevsa.trainingtask.web.filter.CharacterEncodingFilter</filter-class>
     </filter>
-
     <filter-mapping>
         <filter-name>CharacterEncodingFilter</filter-name>
         <url-pattern>*</url-pattern>
     </filter-mapping>
 
     <servlet>
+        <servlet-name>EmployeeController</servlet-name>
+        <servlet-class>com.qulix.losevsa.trainingtask.web.controller.EmployeeController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EmployeeController</servlet-name>
+        <url-pattern>/employee/*</url-pattern>
+        <url-pattern>/employee</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ProjectController</servlet-name>
+        <servlet-class>com.qulix.losevsa.trainingtask.web.controller.ProjectController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProjectController</servlet-name>
+        <url-pattern>/project/*</url-pattern>
+        <url-pattern>/project</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>TaskController</servlet-name>
+        <servlet-class>com.qulix.losevsa.trainingtask.web.controller.TaskController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TaskController</servlet-name>
+        <url-pattern>/task/*</url-pattern>
+        <url-pattern>/task</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>ExceptionHandler</servlet-name>
         <servlet-class>com.qulix.losevsa.trainingtask.web.controller.ExceptionHandler</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>ExceptionHandler</servlet-name>
         <url-pattern>/ExceptionHandler</url-pattern>
     </servlet-mapping>
-
     <error-page>
         <error-code>404</error-code>
         <location>/ExceptionHandler</location>
     </error-page>
-
     <error-page>
         <exception-type>java.lang.Exception</exception-type>
         <location>/ExceptionHandler</location>
