@@ -1,0 +1,13 @@
+tomcat {
+    version = 9.0
+    port = 8080
+
+    webapp('build/libs/com.qulix.losevsa.trainingtask.web-1.0-SNAPSHOT.war') {
+        contextPath = ''
+    }
+}
+
+task startServer {
+    group = 'develop'
+    finalizedBy tomcatRun
+}

@@ -1,0 +1,28 @@
+package com.qulix.losevsa.trainingtask.web.controller.command.impl.taskCommand;
+
+import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
+import com.qulix.losevsa.trainingtask.web.service.TaskService;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+/**
+ * The type Delete task command.
+ */
+public class DeleteTaskCommand implements com.qulix.losevsa.trainingtask.web.controller.command.Command {
+    private static final String ID_PARAMETER = "taskId";
+
+    @Override
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ServiceProvider serviceProvider = ServiceProvider.getInstance();
+        TaskService taskService = serviceProvider.getTaskService();
+
+        long id = Long.parseLong(request.getParameter(ID_PARAMETER));
+        taskService.deleteTask(id);
+
+        String referer = request.getHeader("Referer");
+        response.sendRedirect(referer);
+    }
+}

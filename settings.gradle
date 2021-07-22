@@ -1,5 +1,5 @@
 rootProject.name = 'trainingtask'
-include 'com.qulix.merakses.trainingtask.web'
+include 'com.qulix.losevsa.trainingtask.web'
 
 gradle.ext.hsqldbVersion = '2.6.0'
 gradle.ext.dbName = "taskdb"
