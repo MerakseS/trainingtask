@@ -1,19 +1,18 @@
 package com.qulix.losevsa.trainingtask.web.repository.impl;
 
-import com.qulix.losevsa.trainingtask.web.database.DatabaseConnection;
-import com.qulix.losevsa.trainingtask.web.entity.Employee;
-import com.qulix.losevsa.trainingtask.web.repository.EmployeeRepository;
-import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import static java.lang.String.format;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
+
+import com.qulix.losevsa.trainingtask.web.database.DatabaseConnection;
+import com.qulix.losevsa.trainingtask.web.entity.Employee;
+import com.qulix.losevsa.trainingtask.web.repository.EmployeeRepository;
+import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
 
 /**
  * The default implementation of {@link EmployeeRepository}
@@ -27,11 +26,11 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
     private static final String EMPLOYEE_POSITION_COLUMN_NAME = "E_POSITION";
 
     private static final String SAVE_EMPLOYEE_QUERY =
-            "INSERT INTO EMPLOYEE (E_FIRST_NAME, E_SURNAME, E_PATRONYMIC, E_POSITION) VALUES (?, ?, ?, ?)";
+        "INSERT INTO EMPLOYEE (E_FIRST_NAME, E_SURNAME, E_PATRONYMIC, E_POSITION) VALUES (?, ?, ?, ?)";
     private static final String GET_ALL_EMPLOYEES_QUERY = "SELECT * FROM EMPLOYEE";
     private static final String GET_EMPLOYEE_BY_ID_QUERY = "SELECT * FROM EMPLOYEE WHERE E_ID = ?";
     private static final String UPDATE_EMPLOYEE_QUERY =
-            "UPDATE EMPLOYEE SET E_FIRST_NAME = ?, E_SURNAME = ?, E_PATRONYMIC = ?, E_POSITION = ? WHERE E_ID = ?";
+        "UPDATE EMPLOYEE SET E_FIRST_NAME = ?, E_SURNAME = ?, E_PATRONYMIC = ?, E_POSITION = ? WHERE E_ID = ?";
     private static final String DELETE_EMPLOYEE_QUERY = "DELETE FROM EMPLOYEE WHERE E_ID = ?";
 
     @Override
@@ -49,13 +48,15 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     employee.setId(generatedKeys.getLong(1));
-                } else {
+                }
+                else {
                     throw new SQLException(format("Can't save employee. No ID obtained. Employee: %s", employee));
                 }
             }
 
             return employee;
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RepositoryException(e);
         }
     }
@@ -74,7 +75,8 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
 
                 return employeeList;
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RepositoryException(e);
         }
     }
@@ -89,7 +91,8 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
             try (ResultSet result = statement.executeQuery()) {
                 return result.next() ? getEmployeeByResultSet(result) : null;
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RepositoryException(e);
         }
     }
@@ -108,7 +111,8 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
             }
 
             return employee;
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RepositoryException(e);
         }
     }
@@ -126,7 +130,8 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
             }
 
             return id;
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RepositoryException(e);
         }
     }

@@ -6,6 +6,7 @@ import java.io.Serializable;
  * The type Employee.
  */
 public class Employee implements Serializable {
+
     /**
      * Identifier of the employee
      */

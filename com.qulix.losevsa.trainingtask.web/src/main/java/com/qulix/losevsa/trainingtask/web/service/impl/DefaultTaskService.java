@@ -1,18 +1,5 @@
 package com.qulix.losevsa.trainingtask.web.service.impl;
 
-import com.qulix.losevsa.trainingtask.web.entity.Employee;
-import com.qulix.losevsa.trainingtask.web.entity.Project;
-import com.qulix.losevsa.trainingtask.web.entity.Task;
-import com.qulix.losevsa.trainingtask.web.entity.enums.Status;
-import org.apache.log4j.Logger;
-import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
-import com.qulix.losevsa.trainingtask.web.repository.RepositoryProvider;
-import com.qulix.losevsa.trainingtask.web.repository.TaskRepository;
-import com.qulix.losevsa.trainingtask.web.service.EmployeeService;
-import com.qulix.losevsa.trainingtask.web.service.ProjectService;
-import com.qulix.losevsa.trainingtask.web.service.ServiceException;
-import com.qulix.losevsa.trainingtask.web.service.TaskService;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,10 +9,25 @@ import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
+import com.qulix.losevsa.trainingtask.web.entity.Employee;
+import com.qulix.losevsa.trainingtask.web.entity.Project;
+import com.qulix.losevsa.trainingtask.web.entity.Task;
+import com.qulix.losevsa.trainingtask.web.entity.enums.Status;
+import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
+import com.qulix.losevsa.trainingtask.web.repository.RepositoryProvider;
+import com.qulix.losevsa.trainingtask.web.repository.TaskRepository;
+import com.qulix.losevsa.trainingtask.web.service.EmployeeService;
+import com.qulix.losevsa.trainingtask.web.service.ProjectService;
+import com.qulix.losevsa.trainingtask.web.service.ServiceException;
+import com.qulix.losevsa.trainingtask.web.service.TaskService;
+
 /**
  * The default implementation of the {@link TaskService}
  */
 public class DefaultTaskService implements TaskService {
+
     private static final Logger log = Logger.getLogger(DefaultTaskService.class);
 
     private static final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -49,7 +51,7 @@ public class DefaultTaskService implements TaskService {
 
     @Override
     public Task createTask(String name, String strProjectId, String strWorkTime, String strStartDate,
-                           String strEndDate, String strStatus, String strEmployeeId) {
+        String strEndDate, String strStatus, String strEmployeeId) {
         try {
             Integer workTime = parseInteger(strWorkTime);
             LocalDate startDate = parseDate(strStartDate);
@@ -73,13 +75,17 @@ public class DefaultTaskService implements TaskService {
             log.info("Successfully created task with id " + task.getId());
 
             return task;
-        } catch (RepositoryException e) {
+        }
+        catch (RepositoryException e) {
             throw new ServiceException(e);
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
             throw new ServiceException("Для добавления задачи сначала создайте проект.");
-        } catch (DateTimeParseException | ParseException e) {
+        }
+        catch (DateTimeParseException | ParseException e) {
             throw new ServiceException("Некорректный ввод даты.");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             throw new ServiceException("Некорректный статус.");
         }
     }
@@ -89,7 +95,8 @@ public class DefaultTaskService implements TaskService {
         try {
             log.info("Getting all tasks");
             return taskRepository.getAllTasks();
-        } catch (RepositoryException e) {
+        }
+        catch (RepositoryException e) {
             throw new ServiceException(e);
         }
     }
@@ -105,14 +112,15 @@ public class DefaultTaskService implements TaskService {
             }
 
             return task;
-        } catch (RepositoryException e) {
+        }
+        catch (RepositoryException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
     public Task updateTask(long taskId, String name, String strProjectId, String strWorkTime,
-                           String strStartDate, String strEndDate, String strStatus, String strEmployeeId) {
+        String strStartDate, String strEndDate, String strStatus, String strEmployeeId) {
         try {
             checkThatTaskExists(taskId);
 
@@ -139,13 +147,17 @@ public class DefaultTaskService implements TaskService {
             log.info("Successfully updated task with id " + task.getId());
 
             return task;
-        } catch (RepositoryException e) {
+        }
+        catch (RepositoryException e) {
             throw new ServiceException(e);
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
             throw new ServiceException("Некорректный ввод работы.");
-        } catch (DateTimeParseException | ParseException e) {
+        }
+        catch (DateTimeParseException | ParseException e) {
             throw new ServiceException("Некорректный ввод даты.");
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             throw new ServiceException("Некорректный статус.");
         }
     }
@@ -158,7 +170,8 @@ public class DefaultTaskService implements TaskService {
             log.info("Successfully deleted task with id " + taskId);
 
             return taskId;
-        } catch (RepositoryException e) {
+        }
+        catch (RepositoryException e) {
             throw new ServiceException(e);
         }
     }
@@ -172,7 +185,7 @@ public class DefaultTaskService implements TaskService {
     }
 
     private void validateValues(String name, Integer workTime, LocalDate startDate,
-                                LocalDate endDate, Status status) {
+        LocalDate endDate, Status status) {
         if (name == null || name.isBlank() || status == null) {
             throw new ServiceException("Введите обязательные поля.");
         }
@@ -205,8 +218,8 @@ public class DefaultTaskService implements TaskService {
         if (strDate != null && !strDate.isBlank()) {
             Date date = formatter.parse(strDate);
             localDate = date.toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
         }
 
         return localDate;
@@ -219,7 +232,8 @@ public class DefaultTaskService implements TaskService {
 
         try {
             return Integer.parseInt(strInt);
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
             throw new ServiceException("Некорректный ввод работы.");
         }
     }
@@ -237,7 +251,8 @@ public class DefaultTaskService implements TaskService {
         try {
             long employeeId = Long.parseLong(strEmployeeId);
             return employeeService.getEmployee(employeeId);
-        } catch (NumberFormatException e) {
+        }
+        catch (NumberFormatException e) {
             return null;
         }
     }

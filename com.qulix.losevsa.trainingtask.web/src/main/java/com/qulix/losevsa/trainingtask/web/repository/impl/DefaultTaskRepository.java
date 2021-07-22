@@ -1,5 +1,16 @@
 package com.qulix.losevsa.trainingtask.web.repository.impl;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
+import static java.lang.String.format;
+import static java.sql.Statement.RETURN_GENERATED_KEYS;
+
 import com.qulix.losevsa.trainingtask.web.database.DatabaseConnection;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
@@ -8,13 +19,6 @@ import com.qulix.losevsa.trainingtask.web.repository.EmployeeRepository;
 import com.qulix.losevsa.trainingtask.web.repository.ProjectRepository;
 import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
 import com.qulix.losevsa.trainingtask.web.repository.TaskRepository;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.lang.String.format;
-import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 /**
  * The default implementation of {@link Task}
@@ -31,12 +35,12 @@ public class DefaultTaskRepository implements TaskRepository {
     private static final String TASK_EXECUTOR_COLUMN_NAME = "T_EXECUTOR";
 
     private static final String SAVE_TASK_QUERY = "INSERT INTO TASK (T_STATUS, T_NAME, T_PROJECT, " +
-            "T_WORK_TIME, T_START_DATE, T_END_DATE, T_EXECUTOR) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        "T_WORK_TIME, T_START_DATE, T_END_DATE, T_EXECUTOR) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String GET_ALL_TASKS_QUERY = "SELECT * FROM TASK";
     private static final String GET_TASKS_BY_PROJECT_ID_QUERY = "SELECT * FROM TASK WHERE T_PROJECT = ?";
     private static final String GET_TASK_BY_ID_QUERY = "SELECT * FROM TASK WHERE T_ID = ?";
     private static final String UPDATE_TASK_QUERY = "UPDATE TASK SET T_STATUS = ?, T_NAME = ?, T_PROJECT = ?, " +
-            "T_WORK_TIME = ?, T_START_DATE = ?, T_END_DATE = ?, T_EXECUTOR = ? WHERE T_ID = ?";
+        "T_WORK_TIME = ?, T_START_DATE = ?, T_END_DATE = ?, T_EXECUTOR = ? WHERE T_ID = ?";
     private static final String DELETE_TASK_QUERY = "DELETE FROM TASK WHERE T_ID = ?";
 
     private final EmployeeRepository employeeRepository;
@@ -68,13 +72,15 @@ public class DefaultTaskRepository implements TaskRepository {
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     task.setId(generatedKeys.getLong(1));
-                } else {
+                }
+                else {
                     throw new SQLException(format("Can't save task. No ID obtained. Task: %s", task));
                 }
             }
 
             return task;
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RepositoryException(e);
         }
     }
@@ -93,7 +99,8 @@ public class DefaultTaskRepository implements TaskRepository {
 
                 return taskList;
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RepositoryException(e);
         }
     }
@@ -102,7 +109,7 @@ public class DefaultTaskRepository implements TaskRepository {
     public List<Task> getTaskListByProjectId(long projectId) {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement =
-                     connection.prepareStatement(GET_TASKS_BY_PROJECT_ID_QUERY)) {
+                 connection.prepareStatement(GET_TASKS_BY_PROJECT_ID_QUERY)) {
 
             statement.setLong(1, projectId);
 
@@ -115,7 +122,8 @@ public class DefaultTaskRepository implements TaskRepository {
 
                 return taskList;
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RepositoryException(e);
         }
     }
@@ -130,7 +138,8 @@ public class DefaultTaskRepository implements TaskRepository {
             try (ResultSet result = statement.executeQuery()) {
                 return result.next() ? getTaskByResultSet(result) : null;
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RepositoryException(e);
         }
     }
@@ -149,7 +158,8 @@ public class DefaultTaskRepository implements TaskRepository {
             }
 
             return task;
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RepositoryException(e);
         }
     }
@@ -167,7 +177,8 @@ public class DefaultTaskRepository implements TaskRepository {
             }
 
             return taskId;
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RepositoryException(e);
         }
     }
@@ -179,25 +190,29 @@ public class DefaultTaskRepository implements TaskRepository {
 
         if (task.getWorkTime() != null) {
             statement.setInt(4, task.getWorkTime());
-        } else {
+        }
+        else {
             statement.setNull(4, Types.INTEGER);
         }
 
         if (task.getStartDate() != null) {
             statement.setDate(5, Date.valueOf(task.getStartDate()));
-        } else {
+        }
+        else {
             statement.setNull(5, Types.DATE);
         }
 
         if (task.getEndDate() != null) {
             statement.setDate(6, Date.valueOf(task.getEndDate()));
-        } else {
+        }
+        else {
             statement.setNull(6, Types.DATE);
         }
 
         if (task.getEmployee() != null) {
             statement.setLong(7, task.getEmployee().getId());
-        } else {
+        }
+        else {
             statement.setNull(7, Types.BIGINT);
         }
     }

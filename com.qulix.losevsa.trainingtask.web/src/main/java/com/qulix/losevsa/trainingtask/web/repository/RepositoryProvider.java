@@ -8,6 +8,7 @@ import com.qulix.losevsa.trainingtask.web.repository.impl.DefaultTaskRepository;
  * A singleton class that provides all com.qulix.losevsa.trainingtask.web.repository objects.
  */
 public class RepositoryProvider {
+
     private static final RepositoryProvider instance = new RepositoryProvider();
 
     private final EmployeeRepository employeeRepository;

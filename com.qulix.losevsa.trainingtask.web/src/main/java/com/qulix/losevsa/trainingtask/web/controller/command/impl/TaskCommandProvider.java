@@ -2,7 +2,12 @@ package com.qulix.losevsa.trainingtask.web.controller.command.impl;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.controller.command.CommandProvider;
-import com.qulix.losevsa.trainingtask.web.controller.command.impl.taskCommand.*;
+import com.qulix.losevsa.trainingtask.web.controller.command.impl.taskCommand.DeleteTaskCommand;
+import com.qulix.losevsa.trainingtask.web.controller.command.impl.taskCommand.InsertTaskCommand;
+import com.qulix.losevsa.trainingtask.web.controller.command.impl.taskCommand.ShowEditTaskFormCommand;
+import com.qulix.losevsa.trainingtask.web.controller.command.impl.taskCommand.ShowNewTaskFormCommand;
+import com.qulix.losevsa.trainingtask.web.controller.command.impl.taskCommand.ShowTaskListCommand;
+import com.qulix.losevsa.trainingtask.web.controller.command.impl.taskCommand.UpdateTaskCommand;
 
 /**
  * Provider for task commands.

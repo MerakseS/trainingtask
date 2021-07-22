@@ -1,8 +1,8 @@
 package com.qulix.losevsa.trainingtask.web.controller.command;
 
-import com.qulix.losevsa.trainingtask.web.controller.command.impl.NotFoundCommand;
-
 import java.util.HashMap;
+
+import com.qulix.losevsa.trainingtask.web.controller.command.impl.NotFoundCommand;
 
 /**
  * Represents the base class for command providers
@@ -58,7 +58,8 @@ public abstract class CommandProvider {
     public Command getCommand(String commandName) {
         if (commands.containsKey(commandName)) {
             return commands.get(commandName);
-        } else {
+        }
+        else {
             return new NotFoundCommand();
         }
     }

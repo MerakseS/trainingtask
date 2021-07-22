@@ -1,18 +1,20 @@
 package com.qulix.losevsa.trainingtask.web.controller.command.impl.taskCommand;
 
-import com.qulix.losevsa.trainingtask.web.service.ServiceException;
-import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
-import com.qulix.losevsa.trainingtask.web.service.TaskService;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import com.qulix.losevsa.trainingtask.web.service.ServiceException;
+import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
+import com.qulix.losevsa.trainingtask.web.service.TaskService;
 
 /**
  * The type Insert task command.
  */
 public class InsertTaskCommand implements com.qulix.losevsa.trainingtask.web.controller.command.Command {
+
     private static final String TASK_LIST_PATH = "/task";
     private static final String PROJECT_EDIT_FORM_PATH = "/project/edit?id=";
     private static final String NEW_TASK_FORM_PATH = "/task/new";
@@ -43,9 +45,10 @@ public class InsertTaskCommand implements com.qulix.losevsa.trainingtask.web.con
         try {
             taskService.createTask(name, strProjectId, workTime, startDate, endDate, status, strEmployeeId);
             response.sendRedirect(strSelectedProjectId != null ?
-                    PROJECT_EDIT_FORM_PATH + strSelectedProjectId :
-                    TASK_LIST_PATH);
-        } catch (ServiceException e) {
+                PROJECT_EDIT_FORM_PATH + strSelectedProjectId :
+                TASK_LIST_PATH);
+        }
+        catch (ServiceException e) {
             request.setAttribute("errorMessage", e.getMessage());
             request.getRequestDispatcher(NEW_TASK_FORM_PATH).forward(request, response);
         }

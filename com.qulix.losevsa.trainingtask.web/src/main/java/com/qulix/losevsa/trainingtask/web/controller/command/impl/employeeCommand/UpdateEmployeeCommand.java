@@ -1,19 +1,21 @@
 package com.qulix.losevsa.trainingtask.web.controller.command.impl.employeeCommand;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.service.EmployeeService;
 import com.qulix.losevsa.trainingtask.web.service.ServiceException;
 import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
 /**
  * The Update employee command.
  */
 public class UpdateEmployeeCommand implements Command {
+
     private static final String EMPLOYEE_LIST_PATH = "/employee";
     private static final String EDIT_EMPLOYEE_FORM_PATH = "/employee/edit";
 
@@ -37,7 +39,8 @@ public class UpdateEmployeeCommand implements Command {
         try {
             employeeService.updateEmployee(id, firsName, surname, patronymic, position);
             response.sendRedirect(EMPLOYEE_LIST_PATH);
-        } catch (ServiceException e) {
+        }
+        catch (ServiceException e) {
             request.setAttribute("errorMessage", e.getMessage());
             request.getRequestDispatcher(EDIT_EMPLOYEE_FORM_PATH).forward(request, response);
         }

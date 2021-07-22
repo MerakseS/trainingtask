@@ -1,8 +1,8 @@
 package com.qulix.losevsa.trainingtask.web.repository;
 
-import com.qulix.losevsa.trainingtask.web.entity.Task;
-
 import java.util.List;
+
+import com.qulix.losevsa.trainingtask.web.entity.Task;
 
 /**
  * The interface of com.qulix.losevsa.trainingtask.web.repository layer for working with {@link Task}

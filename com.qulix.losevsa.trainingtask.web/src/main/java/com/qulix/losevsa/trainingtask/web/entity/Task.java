@@ -1,13 +1,14 @@
 package com.qulix.losevsa.trainingtask.web.entity;
 
-import com.qulix.losevsa.trainingtask.web.entity.enums.Status;
-
 import java.time.LocalDate;
+
+import com.qulix.losevsa.trainingtask.web.entity.enums.Status;
 
 /**
  * Represents a task
  */
 public class Task {
+
     /**
      * Identifier of the task.
      */

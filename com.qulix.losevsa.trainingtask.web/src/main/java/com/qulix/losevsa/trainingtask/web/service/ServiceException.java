@@ -4,6 +4,7 @@ package com.qulix.losevsa.trainingtask.web.service;
  * The exception class for com.qulix.losevsa.trainingtask.web.service layer.
  */
 public class ServiceException extends RuntimeException {
+
     /**
      * Instantiates a new Service exception.
      */

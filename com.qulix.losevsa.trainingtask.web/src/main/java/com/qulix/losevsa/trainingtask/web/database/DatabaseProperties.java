@@ -48,7 +48,8 @@ public class DatabaseProperties {
 
             dbUser = getPropVariable(HSQLDB_USER_VARIABLE, DEFAULT_DB_USER);
             dbPassword = getPropVariable(HSQLDB_PASSWORD_VARIABLE, DEFAULT_DB_PASSWORD);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             dbHost = DEFAULT_DB_HOST;
             dbName = DEFAULT_DB_NAME;
             dbUser = DEFAULT_DB_USER;

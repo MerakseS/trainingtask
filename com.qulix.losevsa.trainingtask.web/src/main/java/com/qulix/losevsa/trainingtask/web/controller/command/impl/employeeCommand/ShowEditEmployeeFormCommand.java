@@ -1,19 +1,21 @@
 package com.qulix.losevsa.trainingtask.web.controller.command.impl.employeeCommand;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.service.EmployeeService;
 import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
 /**
  * The command that show employee form for editing.
  */
 public class ShowEditEmployeeFormCommand implements Command {
+
     private static final String EMPLOYEE_EDIT_PATH = "/WEB-INF/jsp/employeeEdit.jsp";
 
     private static final String ID_PARAMETER = "id";

@@ -8,6 +8,7 @@ import com.qulix.losevsa.trainingtask.web.service.impl.DefaultTaskService;
  * A singleton class that provides all services.
  */
 public class ServiceProvider {
+
     private static final ServiceProvider instance = new ServiceProvider();
 
     private final EmployeeService employeeService;

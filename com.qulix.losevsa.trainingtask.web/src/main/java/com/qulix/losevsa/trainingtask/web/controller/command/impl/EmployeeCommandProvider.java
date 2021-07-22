@@ -2,7 +2,12 @@ package com.qulix.losevsa.trainingtask.web.controller.command.impl;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.controller.command.CommandProvider;
-import com.qulix.losevsa.trainingtask.web.controller.command.impl.employeeCommand.*;
+import com.qulix.losevsa.trainingtask.web.controller.command.impl.employeeCommand.DeleteEmployeeCommand;
+import com.qulix.losevsa.trainingtask.web.controller.command.impl.employeeCommand.InsertEmployeeCommand;
+import com.qulix.losevsa.trainingtask.web.controller.command.impl.employeeCommand.ShowEditEmployeeFormCommand;
+import com.qulix.losevsa.trainingtask.web.controller.command.impl.employeeCommand.ShowEmployeeListCommand;
+import com.qulix.losevsa.trainingtask.web.controller.command.impl.employeeCommand.ShowNewEmployeeFormCommand;
+import com.qulix.losevsa.trainingtask.web.controller.command.impl.employeeCommand.UpdateEmployeeCommand;
 
 /**
  * Provider for employee commands.

@@ -2,12 +2,18 @@ package com.qulix.losevsa.trainingtask.web.controller.command.impl;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.controller.command.CommandProvider;
-import com.qulix.losevsa.trainingtask.web.controller.command.impl.projectCommand.*;
+import com.qulix.losevsa.trainingtask.web.controller.command.impl.projectCommand.DeleteProjectCommand;
+import com.qulix.losevsa.trainingtask.web.controller.command.impl.projectCommand.InsertProjectCommand;
+import com.qulix.losevsa.trainingtask.web.controller.command.impl.projectCommand.ShowEditProjectFormCommand;
+import com.qulix.losevsa.trainingtask.web.controller.command.impl.projectCommand.ShowNewProjectFormCommand;
+import com.qulix.losevsa.trainingtask.web.controller.command.impl.projectCommand.ShowProjectListCommand;
+import com.qulix.losevsa.trainingtask.web.controller.command.impl.projectCommand.UpdateProjectCommand;
 
 /**
  * Provider for project commands.
  */
 public class ProjectCommandProvider extends CommandProvider {
+
     /**
      * Initialize project commands with command names
      */

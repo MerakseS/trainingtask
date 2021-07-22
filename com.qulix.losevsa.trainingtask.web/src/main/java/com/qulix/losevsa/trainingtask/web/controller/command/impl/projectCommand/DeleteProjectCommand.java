@@ -1,18 +1,20 @@
 package com.qulix.losevsa.trainingtask.web.controller.command.impl.projectCommand;
 
-import com.qulix.losevsa.trainingtask.web.controller.command.Command;
-import com.qulix.losevsa.trainingtask.web.service.ProjectService;
-import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import com.qulix.losevsa.trainingtask.web.controller.command.Command;
+import com.qulix.losevsa.trainingtask.web.service.ProjectService;
+import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 
 /**
  * The Delete project command.
  */
 public class DeleteProjectCommand implements Command {
+
     private static final String PROJECT_LIST_PATH = "/project";
 
     private static final String ID_PARAMETER = "id";

@@ -1,8 +1,8 @@
 package com.qulix.losevsa.trainingtask.web.service;
 
-import com.qulix.losevsa.trainingtask.web.entity.Task;
-
 import java.util.List;
+
+import com.qulix.losevsa.trainingtask.web.entity.Task;
 
 /**
  * The interface of business logic for working with {@link Task}
@@ -23,7 +23,7 @@ public interface TaskService {
      * @throws ServiceException if data is incorrect
      */
     Task createTask(String name, String strProjectId, String workTime, String startDate,
-                    String endDate, String status, String  strEmployeeId);
+        String endDate, String status, String strEmployeeId);
 
     /**
      * Gets all tasks.
@@ -57,7 +57,7 @@ public interface TaskService {
      * @throws ServiceException if data is incorrect
      */
     Task updateTask(long taskId, String name, String strProjectId, String workTime, String startDate,
-                    String endDate, String status, String strEmployeeId);
+        String endDate, String status, String strEmployeeId);
 
     /**
      * Delete task by task id.

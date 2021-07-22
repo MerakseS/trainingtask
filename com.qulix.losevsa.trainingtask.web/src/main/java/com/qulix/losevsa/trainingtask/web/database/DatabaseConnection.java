@@ -1,15 +1,16 @@
 package com.qulix.losevsa.trainingtask.web.database;
 
-import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
 
 /**
  * The class for creating com.qulix.losevsa.trainingtask.web.database connection/
  */
 public class DatabaseConnection {
+
     private static final DatabaseProperties databaseProperties = new DatabaseProperties();
 
     private static final String DB_DRIVER = "org.hsqldb.jdbc.JDBCDriver";
@@ -24,11 +25,12 @@ public class DatabaseConnection {
             Class.forName(DB_DRIVER);
 
             return DriverManager.getConnection(
-                    databaseProperties.getUrl(),
-                    databaseProperties.getUser(),
-                    databaseProperties.getPassword()
+                databaseProperties.getUrl(),
+                databaseProperties.getUser(),
+                databaseProperties.getPassword()
             );
-        } catch (ClassNotFoundException | SQLException e) {
+        }
+        catch (ClassNotFoundException | SQLException e) {
             throw new RepositoryException(e);
         }
     }

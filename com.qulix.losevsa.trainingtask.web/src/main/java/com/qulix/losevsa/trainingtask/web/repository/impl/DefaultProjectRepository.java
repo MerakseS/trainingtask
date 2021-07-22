@@ -1,20 +1,18 @@
 package com.qulix.losevsa.trainingtask.web.repository.impl;
 
-import com.qulix.losevsa.trainingtask.web.database.DatabaseConnection;
-import com.qulix.losevsa.trainingtask.web.entity.Project;
-import com.qulix.losevsa.trainingtask.web.repository.EmployeeRepository;
-import com.qulix.losevsa.trainingtask.web.repository.ProjectRepository;
-import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import static java.lang.String.format;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
+
+import com.qulix.losevsa.trainingtask.web.database.DatabaseConnection;
+import com.qulix.losevsa.trainingtask.web.entity.Project;
+import com.qulix.losevsa.trainingtask.web.repository.ProjectRepository;
+import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
 
 /**
  * The default implementation of {@link ProjectRepository}
@@ -46,13 +44,15 @@ public class DefaultProjectRepository implements ProjectRepository {
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     project.setId(generatedKeys.getLong(1));
-                } else {
+                }
+                else {
                     throw new SQLException(format("Can't save project. No ID obtained. Project: %s", project));
                 }
             }
 
             return project;
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RepositoryException(e);
         }
     }
@@ -71,7 +71,8 @@ public class DefaultProjectRepository implements ProjectRepository {
 
                 return projectList;
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RepositoryException(e);
         }
     }
@@ -86,7 +87,8 @@ public class DefaultProjectRepository implements ProjectRepository {
             try (ResultSet result = statement.executeQuery()) {
                 return result.next() ? getProjectByResultSet(result) : null;
             }
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RepositoryException(e);
         }
     }
@@ -105,7 +107,8 @@ public class DefaultProjectRepository implements ProjectRepository {
             }
 
             return project;
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RepositoryException(e);
         }
     }
@@ -123,7 +126,8 @@ public class DefaultProjectRepository implements ProjectRepository {
             }
 
             return id;
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             throw new RepositoryException(e);
         }
     }

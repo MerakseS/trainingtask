@@ -6,6 +6,7 @@ import java.util.List;
  * Represents a project.
  */
 public class Project {
+
     /**
      * Identifier of the project
      */

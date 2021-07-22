@@ -1,19 +1,21 @@
 package com.qulix.losevsa.trainingtask.web.service.impl;
 
-import com.qulix.losevsa.trainingtask.web.entity.Employee;
+import java.util.List;
+
 import org.apache.log4j.Logger;
+
+import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.repository.EmployeeRepository;
 import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
 import com.qulix.losevsa.trainingtask.web.repository.RepositoryProvider;
 import com.qulix.losevsa.trainingtask.web.service.EmployeeService;
 import com.qulix.losevsa.trainingtask.web.service.ServiceException;
 
-import java.util.List;
-
 /**
  * The default implementation of {@link EmployeeService}
  */
 public class DefaultEmployeeService implements EmployeeService {
+
     private static final Logger log = Logger.getLogger(DefaultEmployeeService.class);
     private final EmployeeRepository employeeRepository;
 
@@ -42,7 +44,8 @@ public class DefaultEmployeeService implements EmployeeService {
             log.info("Successfully created employee with id " + employee.getId());
 
             return employee;
-        } catch (RepositoryException e) {
+        }
+        catch (RepositoryException e) {
             throw new ServiceException(e);
         }
     }
@@ -52,7 +55,8 @@ public class DefaultEmployeeService implements EmployeeService {
         try {
             log.info("Getting all employees.");
             return employeeRepository.getAllEmployees();
-        } catch (RepositoryException e) {
+        }
+        catch (RepositoryException e) {
             throw new ServiceException(e);
         }
     }
@@ -68,7 +72,8 @@ public class DefaultEmployeeService implements EmployeeService {
             }
 
             return employee;
-        } catch (RepositoryException e) {
+        }
+        catch (RepositoryException e) {
             throw new ServiceException(e);
         }
     }
@@ -92,7 +97,8 @@ public class DefaultEmployeeService implements EmployeeService {
             log.info("Successfully updated employee with id " + employee.getId());
 
             return employee;
-        } catch (RepositoryException e) {
+        }
+        catch (RepositoryException e) {
             throw new ServiceException(e);
         }
     }
@@ -106,7 +112,8 @@ public class DefaultEmployeeService implements EmployeeService {
             log.info("Successfully deleted employee with id " + employeeId);
 
             return employeeId;
-        } catch (RepositoryException e) {
+        }
+        catch (RepositoryException e) {
             throw new ServiceException(e);
         }
     }
@@ -121,7 +128,7 @@ public class DefaultEmployeeService implements EmployeeService {
 
     private void validateValues(String firstName, String surName, String patronymic, String position) {
         if (firstName == null || firstName.isBlank() || surName == null || surName.isBlank()
-                || position == null || position.isBlank()) {
+            || position == null || position.isBlank()) {
             throw new ServiceException("Введите обязательные поля.");
         }
 

@@ -1,22 +1,23 @@
 package com.qulix.losevsa.trainingtask.web.service.impl;
 
+import java.util.List;
+
+import org.apache.log4j.Logger;
+
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
-import org.apache.log4j.Logger;
 import com.qulix.losevsa.trainingtask.web.repository.ProjectRepository;
 import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
 import com.qulix.losevsa.trainingtask.web.repository.RepositoryProvider;
 import com.qulix.losevsa.trainingtask.web.repository.TaskRepository;
 import com.qulix.losevsa.trainingtask.web.service.ProjectService;
 import com.qulix.losevsa.trainingtask.web.service.ServiceException;
-import com.qulix.losevsa.trainingtask.web.service.TaskService;
-
-import java.util.List;
 
 /**
  * The default implementation of the {@link ProjectService}
  */
 public class DefaultProjectService implements ProjectService {
+
     private static final Logger log = Logger.getLogger(DefaultProjectService.class);
     private final ProjectRepository projectRepository;
     private final TaskRepository taskRepository;
@@ -45,7 +46,8 @@ public class DefaultProjectService implements ProjectService {
             log.info("Successfully created project with id " + project.getId());
 
             return project;
-        } catch (RepositoryException e) {
+        }
+        catch (RepositoryException e) {
             throw new ServiceException(e);
         }
     }
@@ -55,7 +57,8 @@ public class DefaultProjectService implements ProjectService {
         try {
             log.info("Getting all projects.");
             return projectRepository.getAllProjects();
-        } catch (RepositoryException e) {
+        }
+        catch (RepositoryException e) {
             throw new ServiceException(e);
         }
     }
@@ -74,7 +77,8 @@ public class DefaultProjectService implements ProjectService {
             project.setTaskList(taskList);
 
             return project;
-        } catch (RepositoryException e) {
+        }
+        catch (RepositoryException e) {
             throw new ServiceException(e);
         }
     }
@@ -97,7 +101,8 @@ public class DefaultProjectService implements ProjectService {
             log.info("Successfully updated project with id " + project.getId());
 
             return project;
-        } catch (RepositoryException e) {
+        }
+        catch (RepositoryException e) {
             throw new ServiceException(e);
         }
     }
@@ -111,7 +116,8 @@ public class DefaultProjectService implements ProjectService {
             log.info("Successfully deleted project with id " + id);
 
             return id;
-        } catch (RepositoryException e) {
+        }
+        catch (RepositoryException e) {
             throw new ServiceException(e);
         }
     }

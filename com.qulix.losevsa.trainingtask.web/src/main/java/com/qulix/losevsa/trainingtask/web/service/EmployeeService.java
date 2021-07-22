@@ -1,9 +1,8 @@
 package com.qulix.losevsa.trainingtask.web.service;
 
-import com.qulix.losevsa.trainingtask.web.entity.Employee;
-import com.qulix.losevsa.trainingtask.web.entity.Project;
-
 import java.util.List;
+
+import com.qulix.losevsa.trainingtask.web.entity.Employee;
 
 /**
  * The interface of business logic for working with {@link Employee}

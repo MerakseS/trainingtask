@@ -1,17 +1,19 @@
 package com.qulix.losevsa.trainingtask.web.controller.command.impl.employeeCommand;
 
-import com.qulix.losevsa.trainingtask.web.controller.command.Command;
-import com.qulix.losevsa.trainingtask.web.service.EmployeeService;
-import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
+import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
+import com.qulix.losevsa.trainingtask.web.controller.command.Command;
+import com.qulix.losevsa.trainingtask.web.service.EmployeeService;
+import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 
 /**
  * The Delete employee command.
  */
 public class DeleteEmployeeCommand implements Command {
+
     private static final String EMPLOYEE_LIST_PATH = "/employee";
 
     private static final String ID_PARAMETER = "id";

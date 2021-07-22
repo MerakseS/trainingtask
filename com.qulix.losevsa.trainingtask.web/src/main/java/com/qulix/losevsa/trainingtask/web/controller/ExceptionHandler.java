@@ -1,15 +1,17 @@
 package com.qulix.losevsa.trainingtask.web.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 /**
  * The Exception handler.
  */
 public class ExceptionHandler extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
@@ -30,20 +32,21 @@ public class ExceptionHandler extends HttpServlet {
         PrintWriter out = response.getWriter();
         String title = "Error/Exception Information";
         String docType =
-                "<!doctype html public \"-//w3c//dtd html 4.0 " +
-                        "transitional//en\">\n";
+            "<!doctype html public \"-//w3c//dtd html 4.0 " +
+                "transitional//en\">\n";
 
         out.println(docType +
-                "<html>\n" +
-                "<head><title>" + title + "</title></head>\n" +
-                "<body bgcolor = \"#f0f0f0\">\n");
+            "<html>\n" +
+            "<head><title>" + title + "</title></head>\n" +
+            "<body bgcolor = \"#f0f0f0\">\n");
 
         if (throwable == null && statusCode == null) {
             out.println("<h2>Error information is missing</h2>");
             out.println("Please return to the <a href=\"" +
-                    response.encodeURL("http://localhost:8080/") +
-                    "\">Home Page</a>.");
-        } else if (throwable != null) {
+                response.encodeURL("http://localhost:8080/") +
+                "\">Home Page</a>.");
+        }
+        else if (throwable != null) {
             out.println("<h2>Error information</h2>");
             out.println("The status code : " + statusCode + "<br><br>");
             out.println("Servlet Name : " + servletName + "</br></br>");
