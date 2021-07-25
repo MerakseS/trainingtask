@@ -28,9 +28,9 @@ import com.qulix.losevsa.trainingtask.web.service.TaskService;
  */
 public class DefaultTaskService implements TaskService {
 
-    private static final Logger log = Logger.getLogger(DefaultTaskService.class);
+    private static final Logger LOG = Logger.getLogger(DefaultTaskService.class);
 
-    private static final DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     private final TaskRepository taskRepository;
     private final EmployeeService employeeService;
@@ -72,7 +72,7 @@ public class DefaultTaskService implements TaskService {
             task.setEmployee(employee);
 
             task = taskRepository.saveTask(task);
-            log.info("Successfully created task with id " + task.getId());
+            LOG.info("Successfully created task with id " + task.getId());
 
             return task;
         }
@@ -93,7 +93,7 @@ public class DefaultTaskService implements TaskService {
     @Override
     public List<Task> getAllTasks() {
         try {
-            log.info("Getting all tasks");
+            LOG.info("Getting all tasks");
             return taskRepository.getAllTasks();
         }
         catch (RepositoryException e) {
@@ -104,10 +104,10 @@ public class DefaultTaskService implements TaskService {
     @Override
     public Task getTask(long taskId) {
         try {
-            log.info("Getting task with id " + taskId);
+            LOG.info("Getting task with id " + taskId);
             Task task = taskRepository.getTaskById(taskId);
             if (task == null) {
-                log.error("Task with id " + taskId + " doesn't exist.");
+                LOG.error("Task with id " + taskId + " doesn't exist.");
                 throw new ServiceException("Задача с id " + taskId + " не существует.");
             }
 
@@ -144,7 +144,7 @@ public class DefaultTaskService implements TaskService {
             task.setEmployee(employee);
 
             task = taskRepository.updateTask(task);
-            log.info("Successfully updated task with id " + task.getId());
+            LOG.info("Successfully updated task with id " + task.getId());
 
             return task;
         }
@@ -167,7 +167,7 @@ public class DefaultTaskService implements TaskService {
         try {
             checkThatTaskExists(taskId);
             taskId = taskRepository.deleteTaskById(taskId);
-            log.info("Successfully deleted task with id " + taskId);
+            LOG.info("Successfully deleted task with id " + taskId);
 
             return taskId;
         }
@@ -179,7 +179,7 @@ public class DefaultTaskService implements TaskService {
     private void checkThatTaskExists(long taskId) {
         Task task = taskRepository.getTaskById(taskId);
         if (task == null) {
-            log.error("Task with id " + taskId + " doesn't exist.");
+            LOG.error("Task with id " + taskId + " doesn't exist.");
             throw new ServiceException("Задача с id " + taskId + " не существует.");
         }
     }
@@ -216,7 +216,7 @@ public class DefaultTaskService implements TaskService {
     private LocalDate parseDate(String strDate) throws ParseException {
         LocalDate localDate = null;
         if (strDate != null && !strDate.isBlank()) {
-            Date date = formatter.parse(strDate);
+            Date date = DATE_FORMAT.parse(strDate);
             localDate = date.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();

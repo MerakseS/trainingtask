@@ -9,7 +9,7 @@ import com.qulix.losevsa.trainingtask.web.service.impl.DefaultTaskService;
  */
 public class ServiceProvider {
 
-    private static final ServiceProvider instance = new ServiceProvider();
+    private static final ServiceProvider INSTANCE = new ServiceProvider();
 
     private final EmployeeService employeeService;
     private final ProjectService projectService;
@@ -30,7 +30,7 @@ public class ServiceProvider {
      * @return the instance
      */
     public static ServiceProvider getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     /**

@@ -9,7 +9,7 @@ import com.qulix.losevsa.trainingtask.web.repository.impl.DefaultTaskRepository;
  */
 public class RepositoryProvider {
 
-    private static final RepositoryProvider instance = new RepositoryProvider();
+    private static final RepositoryProvider INSTANCE = new RepositoryProvider();
 
     private final EmployeeRepository employeeRepository;
     private final ProjectRepository projectRepository;
@@ -30,7 +30,7 @@ public class RepositoryProvider {
      * @return the instance
      */
     public static RepositoryProvider getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     /**

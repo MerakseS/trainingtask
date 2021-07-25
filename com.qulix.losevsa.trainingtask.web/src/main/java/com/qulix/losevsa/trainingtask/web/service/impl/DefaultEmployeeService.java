@@ -16,7 +16,7 @@ import com.qulix.losevsa.trainingtask.web.service.ServiceException;
  */
 public class DefaultEmployeeService implements EmployeeService {
 
-    private static final Logger log = Logger.getLogger(DefaultEmployeeService.class);
+    private static final Logger LOG = Logger.getLogger(DefaultEmployeeService.class);
     private final EmployeeRepository employeeRepository;
 
     /**
@@ -41,7 +41,7 @@ public class DefaultEmployeeService implements EmployeeService {
             }
 
             employee = employeeRepository.saveEmployee(employee);
-            log.info("Successfully created employee with id " + employee.getId());
+            LOG.info("Successfully created employee with id " + employee.getId());
 
             return employee;
         }
@@ -53,7 +53,7 @@ public class DefaultEmployeeService implements EmployeeService {
     @Override
     public List<Employee> getAllEmployees() {
         try {
-            log.info("Getting all employees.");
+            LOG.info("Getting all employees.");
             return employeeRepository.getAllEmployees();
         }
         catch (RepositoryException e) {
@@ -64,10 +64,10 @@ public class DefaultEmployeeService implements EmployeeService {
     @Override
     public Employee getEmployee(long employeeId) {
         try {
-            log.info("Getting employee with id " + employeeId);
+            LOG.info("Getting employee with id " + employeeId);
             Employee employee = employeeRepository.getEmployeeById(employeeId);
             if (employee == null) {
-                log.error("Employee with id " + employeeId + " doesn't exist.");
+                LOG.error("Employee with id " + employeeId + " doesn't exist.");
                 throw new ServiceException("Сотрудник с id " + employeeId + " не существует!");
             }
 
@@ -94,7 +94,7 @@ public class DefaultEmployeeService implements EmployeeService {
             }
 
             employee = employeeRepository.updateEmployee(employee);
-            log.info("Successfully updated employee with id " + employee.getId());
+            LOG.info("Successfully updated employee with id " + employee.getId());
 
             return employee;
         }
@@ -109,7 +109,7 @@ public class DefaultEmployeeService implements EmployeeService {
             checkThatEmployeeExists(employeeId);
 
             employeeId = employeeRepository.deleteEmployeeById(employeeId);
-            log.info("Successfully deleted employee with id " + employeeId);
+            LOG.info("Successfully deleted employee with id " + employeeId);
 
             return employeeId;
         }
@@ -121,7 +121,7 @@ public class DefaultEmployeeService implements EmployeeService {
     private void checkThatEmployeeExists(long employeeId) {
         Employee employee = employeeRepository.getEmployeeById(employeeId);
         if (employee == null) {
-            log.error("Employee with id " + employeeId + " doesn't exist.");
+            LOG.error("Employee with id " + employeeId + " doesn't exist.");
             throw new ServiceException("Сотрудник с id " + employeeId + " не существует!");
         }
     }

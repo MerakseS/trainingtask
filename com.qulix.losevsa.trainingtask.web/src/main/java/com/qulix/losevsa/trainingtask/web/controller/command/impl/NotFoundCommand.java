@@ -14,11 +14,11 @@ import com.qulix.losevsa.trainingtask.web.controller.command.Command;
  */
 public class NotFoundCommand implements Command {
 
-    private static final Logger log = Logger.getLogger(NotFoundCommand.class);
+    private static final Logger LOG = Logger.getLogger(NotFoundCommand.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        log.warn("Incorrect URI - " + request.getRequestURI());
+        LOG.warn("Incorrect URI - " + request.getRequestURI());
         response.sendError(HttpServletResponse.SC_NOT_FOUND);
     }
 }

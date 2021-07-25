@@ -18,7 +18,7 @@ import com.qulix.losevsa.trainingtask.web.service.ServiceException;
  */
 public class DefaultProjectService implements ProjectService {
 
-    private static final Logger log = Logger.getLogger(DefaultProjectService.class);
+    private static final Logger LOG = Logger.getLogger(DefaultProjectService.class);
     private final ProjectRepository projectRepository;
     private final TaskRepository taskRepository;
 
@@ -43,7 +43,7 @@ public class DefaultProjectService implements ProjectService {
             }
 
             project = projectRepository.saveProject(project);
-            log.info("Successfully created project with id " + project.getId());
+            LOG.info("Successfully created project with id " + project.getId());
 
             return project;
         }
@@ -55,7 +55,7 @@ public class DefaultProjectService implements ProjectService {
     @Override
     public List<Project> getAllProjects() {
         try {
-            log.info("Getting all projects.");
+            LOG.info("Getting all projects.");
             return projectRepository.getAllProjects();
         }
         catch (RepositoryException e) {
@@ -66,10 +66,10 @@ public class DefaultProjectService implements ProjectService {
     @Override
     public Project getProject(long id) {
         try {
-            log.info("Getting project with id " + id);
+            LOG.info("Getting project with id " + id);
             Project project = projectRepository.getProjectById(id);
             if (project == null) {
-                log.error("Project with id " + id + " doesn't exist.");
+                LOG.error("Project with id " + id + " doesn't exist.");
                 throw new ServiceException("Проект с id " + id + " не существует!");
             }
 
@@ -98,7 +98,7 @@ public class DefaultProjectService implements ProjectService {
             }
 
             project = projectRepository.updateProject(project);
-            log.info("Successfully updated project with id " + project.getId());
+            LOG.info("Successfully updated project with id " + project.getId());
 
             return project;
         }
@@ -113,7 +113,7 @@ public class DefaultProjectService implements ProjectService {
             checkThatProjectExists(id);
 
             id = projectRepository.deleteProjectById(id);
-            log.info("Successfully deleted project with id " + id);
+            LOG.info("Successfully deleted project with id " + id);
 
             return id;
         }
@@ -125,7 +125,7 @@ public class DefaultProjectService implements ProjectService {
     public void checkThatProjectExists(long id) {
         Project project = projectRepository.getProjectById(id);
         if (project == null) {
-            log.error("Project with id " + id + " doesn't exist.");
+            LOG.error("Project with id " + id + " doesn't exist.");
             throw new ServiceException("Проект с id " + id + " не сущесвует!");
         }
     }
