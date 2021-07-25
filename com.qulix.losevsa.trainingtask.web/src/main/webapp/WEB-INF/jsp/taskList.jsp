@@ -1,3 +1,4 @@
+<%@ page import="static java.nio.charset.StandardCharsets.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
@@ -32,8 +33,9 @@
         </thead>
         <tbody>
         <c:forEach var="task" items="${taskList}">
+            <jsp:useBean id="task" type="com.qulix.losevsa.trainingtask.web.entity.Task"/>
             <tr>
-                <td>${task.status.toString()}</td>
+                <td><%= new String(task.getStatus().toString().getBytes(), UTF_8)%></td>
                 <td>${htmlUtils.escapeHtml(task.name)}</td>
                 <td>${htmlUtils.escapeHtml(task.project.name)}</td>
                 <td>${task.workTime == null ? "" : task.workTime}</td>

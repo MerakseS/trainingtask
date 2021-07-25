@@ -73,8 +73,9 @@
             </thead>
             <tbody>
             <c:forEach var="task" items="${project.taskList}">
+                <jsp:useBean id="task" type="com.qulix.losevsa.trainingtask.web.entity.Task"/>
                 <tr>
-                    <td>${task.status.toString()}</td>
+                    <td><%= new String(task.getStatus().toString().getBytes(), UTF_8)%></td>
                     <td>${task.name}</td>
                     <td>${task.workTime}</td>
                     <td>${task.startDate}</td>
