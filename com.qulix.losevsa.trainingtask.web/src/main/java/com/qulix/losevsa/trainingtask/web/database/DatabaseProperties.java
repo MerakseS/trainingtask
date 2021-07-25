@@ -54,8 +54,6 @@ public class DatabaseProperties {
             dbName = DEFAULT_DB_NAME;
             dbUser = DEFAULT_DB_USER;
             dbPassword = DEFAULT_DB_PASSWORD;
-
-            e.printStackTrace();
         }
 
         url = String.format(HSQLDB_URL_FORMAT, dbHost, dbName);
