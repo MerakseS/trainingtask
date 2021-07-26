@@ -19,15 +19,15 @@ import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
  */
 public class DefaultProjectRepository implements ProjectRepository {
 
-    private static final String PROJECT_ID_COLUMN_NAME = "P_ID";
-    private static final String PROJECT_NAME_COLUMN_NAME = "P_NAME";
-    private static final String PROJECT_DESCRIPTION_COLUMN_NAME = "P_DESCRIPTION";
+    private static final String PROJECT_ID_COLUMN_NAME = "ID";
+    private static final String PROJECT_NAME_COLUMN_NAME = "NAME";
+    private static final String PROJECT_DESCRIPTION_COLUMN_NAME = "DESCRIPTION";
 
-    private static final String SAVE_PROJECT_QUERY = "INSERT INTO PROJECT (P_NAME, P_DESCRIPTION) VALUES (?, ?)";
+    private static final String SAVE_PROJECT_QUERY = "INSERT INTO PROJECT (NAME, DESCRIPTION) VALUES (?, ?)";
     private static final String GET_ALL_PROJECTS_QUERY = "SELECT * FROM PROJECT";
-    private static final String GET_PROJECT_BY_ID_QUERY = "SELECT * FROM PROJECT WHERE P_ID = ?";
-    private static final String UPDATE_PROJECT_QUERY = "UPDATE PROJECT SET P_NAME = ?, P_DESCRIPTION = ? WHERE P_ID = ?";
-    private static final String DELETE_PROJECT_QUERY = "DELETE FROM PROJECT WHERE P_ID = ?";
+    private static final String GET_PROJECT_BY_ID_QUERY = "SELECT * FROM PROJECT WHERE ID = ?";
+    private static final String UPDATE_PROJECT_QUERY = "UPDATE PROJECT SET NAME = ?, DESCRIPTION = ? WHERE ID = ?";
+    private static final String DELETE_PROJECT_QUERY = "DELETE FROM PROJECT WHERE ID = ?";
 
     @Override
     public Project saveProject(Project project) {

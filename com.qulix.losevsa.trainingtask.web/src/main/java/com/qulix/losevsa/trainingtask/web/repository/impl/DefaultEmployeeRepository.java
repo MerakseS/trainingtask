@@ -19,19 +19,19 @@ import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
  */
 public class DefaultEmployeeRepository implements EmployeeRepository {
 
-    private static final String EMPLOYEE_ID_COLUMN_NAME = "E_ID";
-    private static final String EMPLOYEE_FIRST_NAME_COLUMN_NAME = "E_FIRST_NAME";
-    private static final String EMPLOYEE_SURNAME_COLUMN_NAME = "E_SURNAME";
-    private static final String EMPLOYEE_PATRONYMIC_COLUMN_NAME = "E_PATRONYMIC";
-    private static final String EMPLOYEE_POSITION_COLUMN_NAME = "E_POSITION";
+    private static final String EMPLOYEE_ID_COLUMN_NAME = "ID";
+    private static final String EMPLOYEE_FIRST_NAME_COLUMN_NAME = "FIRST_NAME";
+    private static final String EMPLOYEE_SURNAME_COLUMN_NAME = "SURNAME";
+    private static final String EMPLOYEE_PATRONYMIC_COLUMN_NAME = "PATRONYMIC";
+    private static final String EMPLOYEE_POSITION_COLUMN_NAME = "POSITION";
 
     private static final String SAVE_EMPLOYEE_QUERY =
-        "INSERT INTO EMPLOYEE (E_FIRST_NAME, E_SURNAME, E_PATRONYMIC, E_POSITION) VALUES (?, ?, ?, ?)";
+        "INSERT INTO EMPLOYEE (FIRST_NAME, SURNAME, PATRONYMIC, POSITION) VALUES (?, ?, ?, ?)";
     private static final String GET_ALL_EMPLOYEES_QUERY = "SELECT * FROM EMPLOYEE";
-    private static final String GET_EMPLOYEE_BY_ID_QUERY = "SELECT * FROM EMPLOYEE WHERE E_ID = ?";
+    private static final String GET_EMPLOYEE_BY_ID_QUERY = "SELECT * FROM EMPLOYEE WHERE ID = ?";
     private static final String UPDATE_EMPLOYEE_QUERY =
-        "UPDATE EMPLOYEE SET E_FIRST_NAME = ?, E_SURNAME = ?, E_PATRONYMIC = ?, E_POSITION = ? WHERE E_ID = ?";
-    private static final String DELETE_EMPLOYEE_QUERY = "DELETE FROM EMPLOYEE WHERE E_ID = ?";
+        "UPDATE EMPLOYEE SET FIRST_NAME = ?, SURNAME = ?, PATRONYMIC = ?, POSITION = ? WHERE ID = ?";
+    private static final String DELETE_EMPLOYEE_QUERY = "DELETE FROM EMPLOYEE WHERE ID = ?";
 
     @Override
     public Employee saveEmployee(Employee employee) {

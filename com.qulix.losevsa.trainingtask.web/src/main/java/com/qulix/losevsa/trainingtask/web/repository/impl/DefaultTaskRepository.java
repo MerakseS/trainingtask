@@ -25,23 +25,23 @@ import com.qulix.losevsa.trainingtask.web.repository.TaskRepository;
  */
 public class DefaultTaskRepository implements TaskRepository {
 
-    private static final String TASK_ID_COLUMN_NAME = "T_ID";
-    private static final String TASK_STATUS_COLUMN_NAME = "T_STATUS";
-    private static final String TASK_NAME_COLUMN_NAME = "T_NAME";
-    private static final String TASK_PROJECT_COLUMN_NAME = "T_PROJECT";
-    private static final String TASK_WORK_TIME_COLUMN_NAME = "T_WORK_TIME";
-    private static final String TASK_START_DATE_COLUMN_NAME = "T_START_DATE";
-    private static final String TASK_END_DATE_COLUMN_NAME = "T_END_DATE";
-    private static final String TASK_EXECUTOR_COLUMN_NAME = "T_EXECUTOR";
+    private static final String TASK_ID_COLUMN_NAME = "ID";
+    private static final String TASK_STATUS_COLUMN_NAME = "STATUS";
+    private static final String TASK_NAME_COLUMN_NAME = "NAME";
+    private static final String TASK_PROJECT_COLUMN_NAME = "PROJECT";
+    private static final String TASK_WORK_TIME_COLUMN_NAME = "WORK_TIME";
+    private static final String TASK_START_DATE_COLUMN_NAME = "STARt_DATE";
+    private static final String TASK_END_DATE_COLUMN_NAME = "END_DATE";
+    private static final String TASK_EXECUTOR_COLUMN_NAME = "EXECUTOR";
 
-    private static final String SAVE_TASK_QUERY = "INSERT INTO TASK (T_STATUS, T_NAME, T_PROJECT, " +
-        "T_WORK_TIME, T_START_DATE, T_END_DATE, T_EXECUTOR) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    private static final String SAVE_TASK_QUERY = "INSERT INTO TASK (STATUS, NAME, PROJECT, " +
+        "WORK_TIME, START_DATE, END_DATE, EXECUTOR) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String GET_ALL_TASKS_QUERY = "SELECT * FROM TASK";
-    private static final String GET_TASKS_BY_PROJECT_ID_QUERY = "SELECT * FROM TASK WHERE T_PROJECT = ?";
-    private static final String GET_TASK_BY_ID_QUERY = "SELECT * FROM TASK WHERE T_ID = ?";
-    private static final String UPDATE_TASK_QUERY = "UPDATE TASK SET T_STATUS = ?, T_NAME = ?, T_PROJECT = ?, " +
-        "T_WORK_TIME = ?, T_START_DATE = ?, T_END_DATE = ?, T_EXECUTOR = ? WHERE T_ID = ?";
-    private static final String DELETE_TASK_QUERY = "DELETE FROM TASK WHERE T_ID = ?";
+    private static final String GET_TASKS_BY_PROJECT_ID_QUERY = "SELECT * FROM TASK WHERE PROJECT = ?";
+    private static final String GET_TASK_BY_ID_QUERY = "SELECT * FROM TASK WHERE ID = ?";
+    private static final String UPDATE_TASK_QUERY = "UPDATE TASK SET STATUS = ?, NAME = ?, PROJECT = ?, " +
+        "WORK_TIME = ?, START_DATE = ?, END_DATE = ?, EXECUTOR = ? WHERE ID = ?";
+    private static final String DELETE_TASK_QUERY = "DELETE FROM TASK WHERE ID = ?";
 
     private final EmployeeRepository employeeRepository;
     private final ProjectRepository projectRepository;
