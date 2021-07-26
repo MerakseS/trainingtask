@@ -69,13 +69,12 @@ public class DefaultTaskRepository implements TaskRepository {
                 throw new SQLException(format("Can't save task. No rows affected. Task: %s", task));
             }
 
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    task.setId(generatedKeys.getLong(1));
-                }
-                else {
-                    throw new SQLException(format("Can't save task. No ID obtained. Task: %s", task));
-                }
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                task.setId(generatedKeys.getLong(1));
+            }
+            else {
+                throw new SQLException(format("Can't save task. No ID obtained. Task: %s", task));
             }
 
             return task;
@@ -90,15 +89,14 @@ public class DefaultTaskRepository implements TaskRepository {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ALL_TASKS_QUERY)) {
 
-            try (ResultSet result = statement.executeQuery()) {
-                List<Task> taskList = new ArrayList<>();
-                while (result.next()) {
-                    Task task = getTaskByResultSet(result);
-                    taskList.add(task);
-                }
-
-                return taskList;
+            ResultSet result = statement.executeQuery();
+            List<Task> taskList = new ArrayList<>();
+            while (result.next()) {
+                Task task = getTaskByResultSet(result);
+                taskList.add(task);
             }
+
+            return taskList;
         }
         catch (SQLException e) {
             throw new RepositoryException(e);
@@ -113,15 +111,14 @@ public class DefaultTaskRepository implements TaskRepository {
 
             statement.setLong(1, projectId);
 
-            try (ResultSet result = statement.executeQuery()) {
-                List<Task> taskList = new ArrayList<>();
-                while (result.next()) {
-                    Task task = getTaskByResultSet(result);
-                    taskList.add(task);
-                }
-
-                return taskList;
+            ResultSet result = statement.executeQuery();
+            List<Task> taskList = new ArrayList<>();
+            while (result.next()) {
+                Task task = getTaskByResultSet(result);
+                taskList.add(task);
             }
+
+            return taskList;
         }
         catch (SQLException e) {
             throw new RepositoryException(e);
@@ -135,9 +132,8 @@ public class DefaultTaskRepository implements TaskRepository {
 
             statement.setLong(1, taskId);
 
-            try (ResultSet result = statement.executeQuery()) {
-                return result.next() ? getTaskByResultSet(result) : null;
-            }
+            ResultSet result = statement.executeQuery();
+            return result.next() ? getTaskByResultSet(result) : null;
         }
         catch (SQLException e) {
             throw new RepositoryException(e);

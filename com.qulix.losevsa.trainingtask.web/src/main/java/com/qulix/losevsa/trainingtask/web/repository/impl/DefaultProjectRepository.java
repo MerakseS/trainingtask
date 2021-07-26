@@ -41,13 +41,12 @@ public class DefaultProjectRepository implements ProjectRepository {
                 throw new SQLException(format("Can't save project. No rows affected. Project: %s", project));
             }
 
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    project.setId(generatedKeys.getLong(1));
-                }
-                else {
-                    throw new SQLException(format("Can't save project. No ID obtained. Project: %s", project));
-                }
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                project.setId(generatedKeys.getLong(1));
+            }
+            else {
+                throw new SQLException(format("Can't save project. No ID obtained. Project: %s", project));
             }
 
             return project;
@@ -62,15 +61,14 @@ public class DefaultProjectRepository implements ProjectRepository {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ALL_PROJECTS_QUERY)) {
 
-            try (ResultSet result = statement.executeQuery()) {
-                List<Project> projectList = new ArrayList<>();
-                while (result.next()) {
-                    Project project = getProjectByResultSet(result);
-                    projectList.add(project);
-                }
-
-                return projectList;
+            ResultSet result = statement.executeQuery();
+            List<Project> projectList = new ArrayList<>();
+            while (result.next()) {
+                Project project = getProjectByResultSet(result);
+                projectList.add(project);
             }
+
+            return projectList;
         }
         catch (SQLException e) {
             throw new RepositoryException(e);
@@ -84,9 +82,8 @@ public class DefaultProjectRepository implements ProjectRepository {
 
             statement.setLong(1, id);
 
-            try (ResultSet result = statement.executeQuery()) {
-                return result.next() ? getProjectByResultSet(result) : null;
-            }
+            ResultSet result = statement.executeQuery();
+            return result.next() ? getProjectByResultSet(result) : null;
         }
         catch (SQLException e) {
             throw new RepositoryException(e);

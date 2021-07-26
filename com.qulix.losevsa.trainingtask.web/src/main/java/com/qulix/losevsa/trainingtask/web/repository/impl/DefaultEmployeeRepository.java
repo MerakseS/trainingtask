@@ -45,13 +45,12 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
                 throw new SQLException(format("Can't save employee. No rows affected. Employee: %s", employee));
             }
 
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    employee.setId(generatedKeys.getLong(1));
-                }
-                else {
-                    throw new SQLException(format("Can't save employee. No ID obtained. Employee: %s", employee));
-                }
+            ResultSet generatedKeys = statement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                employee.setId(generatedKeys.getLong(1));
+            }
+            else {
+                throw new SQLException(format("Can't save employee. No ID obtained. Employee: %s", employee));
             }
 
             return employee;
@@ -67,14 +66,13 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
              PreparedStatement statement = connection.prepareStatement(GET_ALL_EMPLOYEES_QUERY)) {
             List<Employee> employeeList = new ArrayList<>();
 
-            try (ResultSet result = statement.executeQuery()) {
-                while (result.next()) {
-                    Employee employee = getEmployeeByResultSet(result);
-                    employeeList.add(employee);
-                }
-
-                return employeeList;
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                Employee employee = getEmployeeByResultSet(result);
+                employeeList.add(employee);
             }
+
+            return employeeList;
         }
         catch (SQLException e) {
             throw new RepositoryException(e);
@@ -88,9 +86,8 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
 
             statement.setLong(1, id);
 
-            try (ResultSet result = statement.executeQuery()) {
-                return result.next() ? getEmployeeByResultSet(result) : null;
-            }
+            ResultSet result = statement.executeQuery();
+            return result.next() ? getEmployeeByResultSet(result) : null;
         }
         catch (SQLException e) {
             throw new RepositoryException(e);
