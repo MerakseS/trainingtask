@@ -19,7 +19,7 @@ import com.qulix.losevsa.trainingtask.web.entity.enums.Status;
 import com.qulix.losevsa.trainingtask.web.repository.RepositoryProvider;
 import com.qulix.losevsa.trainingtask.web.repository.TaskRepository;
 import com.qulix.losevsa.trainingtask.web.service.EmployeeService;
-import com.qulix.losevsa.trainingtask.web.service.ServiceException;
+import com.qulix.losevsa.trainingtask.web.service.IncorrectInputException;
 import com.qulix.losevsa.trainingtask.web.service.ProjectService;
 import com.qulix.losevsa.trainingtask.web.service.TaskService;
 
@@ -90,7 +90,7 @@ public class DefaultTaskService implements TaskService {
         Task task = taskRepository.getTaskById(taskId);
         if (task == null) {
             LOG.error("Task with id " + taskId + " doesn't exist.");
-            throw new ServiceException("Задача с id " + taskId + " не существует.");
+            throw new IncorrectInputException("Задача с id " + taskId + " не существует.");
         }
 
         return task;
@@ -140,7 +140,7 @@ public class DefaultTaskService implements TaskService {
         Task task = taskRepository.getTaskById(taskId);
         if (task == null) {
             LOG.error("Task with id " + taskId + " doesn't exist.");
-            throw new ServiceException("Задача с id " + taskId + " не существует.");
+            throw new IncorrectInputException("Задача с id " + taskId + " не существует.");
         }
     }
 
@@ -148,21 +148,21 @@ public class DefaultTaskService implements TaskService {
         LocalDate endDate, Status status) {
         if (name == null || name.isBlank() || status == null) {
             LOG.warn(format("Required fields are empty. Name: %s, status: %s", name, status));
-            throw new ServiceException("Введите обязательные поля.");
+            throw new IncorrectInputException("Введите обязательные поля.");
         }
 
         if (name.length() > NAME_MAX_LENGTH) {
-            throw new ServiceException(format("Длина наименования не больше %d символов.", NAME_MAX_LENGTH));
+            throw new IncorrectInputException(format("Длина наименования не больше %d символов.", NAME_MAX_LENGTH));
         }
 
         if (workTime != null && workTime < 0) {
             LOG.warn(format("Work time is below zero. Work time: %s", workTime));
-            throw new ServiceException("Работа не может быть отрицательной");
+            throw new IncorrectInputException("Работа не может быть отрицательной");
         }
 
         if (startDate != null && endDate != null && endDate.isBefore(startDate)) {
             LOG.warn(format("Еnd date is earlier than start date. Start date: %s, End date: %s", startDate, endDate));
-            throw new ServiceException("Дата окончания не может быть раньше даты начала");
+            throw new IncorrectInputException("Дата окончания не может быть раньше даты начала");
         }
 
     }
@@ -178,7 +178,7 @@ public class DefaultTaskService implements TaskService {
         }
         catch (IllegalArgumentException e) {
             LOG.warn("Incorrect status input. Status: " + strStatus);
-            throw new ServiceException("Некорректный статус.");
+            throw new IncorrectInputException("Некорректный статус.");
         }
     }
 
@@ -196,7 +196,7 @@ public class DefaultTaskService implements TaskService {
         }
         catch (DateTimeParseException | ParseException e) {
             LOG.warn("Incorrect date input. Date: " + strDate);
-            throw new ServiceException("Некорректный ввод даты.");
+            throw new IncorrectInputException("Некорректный ввод даты.");
         }
     }
 
@@ -210,7 +210,7 @@ public class DefaultTaskService implements TaskService {
         }
         catch (NumberFormatException e) {
             LOG.warn("Incorrect work time input. Work time: " + strInt);
-            throw new ServiceException("Некорректный ввод работы.");
+            throw new IncorrectInputException("Некорректный ввод работы.");
         }
     }
 
@@ -221,7 +221,7 @@ public class DefaultTaskService implements TaskService {
         }
         catch (NumberFormatException e) {
             LOG.warn("Incorrect project input. Project id: " + strProjectId);
-            throw new ServiceException("Для добавления задачи сначала создайте проект.");
+            throw new IncorrectInputException("Для добавления задачи сначала создайте проект.");
         }
     }
 

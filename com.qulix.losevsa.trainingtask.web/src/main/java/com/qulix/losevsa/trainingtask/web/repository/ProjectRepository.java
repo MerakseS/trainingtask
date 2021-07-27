@@ -14,6 +14,7 @@ public interface ProjectRepository {
      *
      * @param project the project
      * @return the project
+     * @throws QueryExecutionException if a database access error occurs
      */
     Project saveProject(Project project);
 
@@ -21,6 +22,7 @@ public interface ProjectRepository {
      * Gets all projects from com.qulix.losevsa.trainingtask.web.database.
      *
      * @return the all projects
+     * @throws QueryExecutionException if a database access error occurs
      */
     List<Project> getAllProjects();
 
@@ -29,6 +31,7 @@ public interface ProjectRepository {
      *
      * @param id the id
      * @return the project by id
+     * @throws QueryExecutionException if a database access error occurs
      */
     Project getProjectById(long id);
 
@@ -37,6 +40,7 @@ public interface ProjectRepository {
      *
      * @param project the project
      * @return the project
+     * @throws QueryExecutionException if a database access error occurs
      */
     Project updateProject(Project project);
 
@@ -45,6 +49,7 @@ public interface ProjectRepository {
      *
      * @param id the id
      * @return the long
+     * @throws QueryExecutionException if a database access error occurs
      */
     long deleteProjectById(long id);
 

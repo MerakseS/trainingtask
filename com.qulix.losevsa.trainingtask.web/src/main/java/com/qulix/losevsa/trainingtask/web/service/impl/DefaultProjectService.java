@@ -10,7 +10,7 @@ import com.qulix.losevsa.trainingtask.web.entity.Task;
 import com.qulix.losevsa.trainingtask.web.repository.ProjectRepository;
 import com.qulix.losevsa.trainingtask.web.repository.RepositoryProvider;
 import com.qulix.losevsa.trainingtask.web.repository.TaskRepository;
-import com.qulix.losevsa.trainingtask.web.service.ServiceException;
+import com.qulix.losevsa.trainingtask.web.service.IncorrectInputException;
 import com.qulix.losevsa.trainingtask.web.service.ProjectService;
 
 /**
@@ -62,7 +62,7 @@ public class DefaultProjectService implements ProjectService {
         Project project = projectRepository.getProjectById(id);
         if (project == null) {
             LOG.error("Project with id " + id + " doesn't exist.");
-            throw new ServiceException("Проект с id " + id + " не существует!");
+            throw new IncorrectInputException("Проект с id " + id + " не существует!");
         }
 
         List<Task> taskList = taskRepository.getTaskListByProjectId(id);
@@ -105,24 +105,24 @@ public class DefaultProjectService implements ProjectService {
         Project project = projectRepository.getProjectById(id);
         if (project == null) {
             LOG.error("Project with id " + id + " doesn't exist.");
-            throw new ServiceException("Проект с id " + id + " не существует!");
+            throw new IncorrectInputException("Проект с id " + id + " не существует!");
         }
     }
 
     private void validateValues(String name, String description) {
         if (name == null || name.isBlank()) {
             LOG.warn(format("Required field are empty. Name: %s", name));
-            throw new ServiceException("Введите обязательные поля.");
+            throw new IncorrectInputException("Введите обязательные поля.");
         }
 
         if (name.length() > NAME_MAX_LENGTH) {
             LOG.warn(format("Length of name is more then %d. Name: %s", NAME_MAX_LENGTH, name));
-            throw new ServiceException(format("Длина наименования не больше %d символов.", NAME_MAX_LENGTH));
+            throw new IncorrectInputException(format("Длина наименования не больше %d символов.", NAME_MAX_LENGTH));
         }
 
         if (description != null && description.length() > DESCRIPTION_MAX_LENGTH) {
             LOG.warn(format("Length of patronymic is more then %d. Patronymic: %s", DESCRIPTION_MAX_LENGTH, description));
-            throw new ServiceException(format("Длина описания не больше %d символов.", DESCRIPTION_MAX_LENGTH));
+            throw new IncorrectInputException(format("Длина описания не больше %d символов.", DESCRIPTION_MAX_LENGTH));
         }
     }
 }

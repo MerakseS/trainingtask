@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
-import com.qulix.losevsa.trainingtask.web.service.ServiceException;
+import com.qulix.losevsa.trainingtask.web.service.IncorrectInputException;
 import com.qulix.losevsa.trainingtask.web.service.ProjectService;
 import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 
@@ -34,7 +34,7 @@ public class InsertProjectCommand implements Command {
             projectService.createProject(name, description);
             response.sendRedirect(PROJECT_LIST_PATH);
         }
-        catch (ServiceException e) {
+        catch (IncorrectInputException e) {
             request.setAttribute("errorMessage", e.getMessage());
             request.getRequestDispatcher(NEW_PROJECT_FORM_PATH).forward(request, response);
         }

@@ -9,7 +9,7 @@ import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.repository.EmployeeRepository;
 import com.qulix.losevsa.trainingtask.web.repository.RepositoryProvider;
 import com.qulix.losevsa.trainingtask.web.service.EmployeeService;
-import com.qulix.losevsa.trainingtask.web.service.ServiceException;
+import com.qulix.losevsa.trainingtask.web.service.IncorrectInputException;
 
 /**
  * The default implementation of {@link EmployeeService}
@@ -57,7 +57,7 @@ public class DefaultEmployeeService implements EmployeeService {
         Employee employee = employeeRepository.getEmployeeById(employeeId);
         if (employee == null) {
             LOG.error("Employee with id " + employeeId + " doesn't exist.");
-            throw new ServiceException("Сотрудник с id " + employeeId + " не существует!");
+            throw new IncorrectInputException("Сотрудник с id " + employeeId + " не существует!");
         }
 
         LOG.info("Successfully get employee with id " + employeeId);
@@ -99,7 +99,7 @@ public class DefaultEmployeeService implements EmployeeService {
         Employee employee = employeeRepository.getEmployeeById(employeeId);
         if (employee == null) {
             LOG.error("Employee with id " + employeeId + " doesn't exist.");
-            throw new ServiceException("Сотрудник с id " + employeeId + " не существует!");
+            throw new IncorrectInputException("Сотрудник с id " + employeeId + " не существует!");
         }
     }
 
@@ -107,27 +107,27 @@ public class DefaultEmployeeService implements EmployeeService {
         if (firstName == null || firstName.isBlank() || surName == null || surName.isBlank()
             || position == null || position.isBlank()) {
             LOG.warn(format("Required fields are empty. First name: %s, surname: %s, position: %s", firstName, surName, position));
-            throw new ServiceException("Введите обязательные поля.");
+            throw new IncorrectInputException("Введите обязательные поля.");
         }
 
         if (firstName.length() > FIELDS_MAX_LENGTH) {
             LOG.warn(format("Length of first name is more then %d. First name: %s", FIELDS_MAX_LENGTH, firstName));
-            throw new ServiceException(format("Длина имени не больше %d символов.", FIELDS_MAX_LENGTH));
+            throw new IncorrectInputException(format("Длина имени не больше %d символов.", FIELDS_MAX_LENGTH));
         }
 
         if (surName.length() > FIELDS_MAX_LENGTH) {
             LOG.warn(format("Length of surname is more then %d. Surname: %s", FIELDS_MAX_LENGTH, surName));
-            throw new ServiceException(format("Длина фамилии не больше %d символов.", FIELDS_MAX_LENGTH));
+            throw new IncorrectInputException(format("Длина фамилии не больше %d символов.", FIELDS_MAX_LENGTH));
         }
 
         if (position.length() > FIELDS_MAX_LENGTH) {
             LOG.warn(format("Length of position is more then %d. Position: %s", FIELDS_MAX_LENGTH, position));
-            throw new ServiceException(format("Длина должности не больше %d символов.", FIELDS_MAX_LENGTH));
+            throw new IncorrectInputException(format("Длина должности не больше %d символов.", FIELDS_MAX_LENGTH));
         }
 
         if (patronymic != null && patronymic.length() > FIELDS_MAX_LENGTH) {
             LOG.warn(format("Length of patronymic is more then %d. Patronymic: %s", FIELDS_MAX_LENGTH, patronymic));
-            throw new ServiceException(format("Длина отчества не больше %d символов.", FIELDS_MAX_LENGTH));
+            throw new IncorrectInputException(format("Длина отчества не больше %d символов.", FIELDS_MAX_LENGTH));
         }
     }
 }

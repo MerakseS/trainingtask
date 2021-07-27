@@ -3,12 +3,12 @@ package com.qulix.losevsa.trainingtask.web.service;
 /**
  * The exception class for com.qulix.losevsa.trainingtask.web.service layer.
  */
-public class ServiceException extends RuntimeException {
+public class IncorrectInputException extends RuntimeException {
 
     /**
      * Instantiates a new Service exception.
      */
-    public ServiceException() {
+    public IncorrectInputException() {
     }
 
     /**
@@ -16,7 +16,7 @@ public class ServiceException extends RuntimeException {
      *
      * @param message the message
      */
-    public ServiceException(String message) {
+    public IncorrectInputException(String message) {
         super(message);
     }
 
@@ -26,7 +26,7 @@ public class ServiceException extends RuntimeException {
      * @param message the message
      * @param cause   the cause
      */
-    public ServiceException(String message, Throwable cause) {
+    public IncorrectInputException(String message, Throwable cause) {
         super(message, cause);
     }
 
@@ -35,7 +35,7 @@ public class ServiceException extends RuntimeException {
      *
      * @param cause the cause
      */
-    public ServiceException(Throwable cause) {
+    public IncorrectInputException(Throwable cause) {
         super(cause);
     }
 }

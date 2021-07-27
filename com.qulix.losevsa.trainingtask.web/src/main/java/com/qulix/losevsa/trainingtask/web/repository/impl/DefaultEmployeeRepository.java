@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.database.DatabaseConnection;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
-import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
+import com.qulix.losevsa.trainingtask.web.repository.QueryExecutionException;
 import com.qulix.losevsa.trainingtask.web.repository.EmployeeRepository;
 
 /**
@@ -61,7 +61,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
         }
         catch (SQLException e) {
             LOG.error(format("Can't save employee cause: %s. Employee: %s", e.getMessage(), employee));
-            throw new RepositoryException(e);
+            throw new QueryExecutionException(e);
         }
     }
 
@@ -81,7 +81,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
         }
         catch (SQLException e) {
             LOG.error(format("Can't get all employees cause: %s", e.getMessage()));
-            throw new RepositoryException(e);
+            throw new QueryExecutionException(e);
         }
     }
 
@@ -97,7 +97,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
         }
         catch (SQLException e) {
             LOG.error(format("Can't get employee cause: %s. Employee: %d", e.getMessage(), id));
-            throw new RepositoryException(e);
+            throw new QueryExecutionException(e);
         }
     }
 
@@ -118,7 +118,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
         }
         catch (SQLException e) {
             LOG.error(format("Can't update employee cause: %s. Employee: %s", e.getMessage(), employee));
-            throw new RepositoryException(e);
+            throw new QueryExecutionException(e);
         }
     }
 
@@ -138,7 +138,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
         }
         catch (SQLException e) {
             LOG.error(format("Can't delete employee cause: %s. Employee: %s", e.getMessage(), id));
-            throw new RepositoryException(e);
+            throw new QueryExecutionException(e);
         }
     }
 

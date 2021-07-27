@@ -14,6 +14,7 @@ public interface TaskRepository {
      *
      * @param task the task
      * @return the task
+     * @throws QueryExecutionException if a database access error occurs
      */
     Task saveTask(Task task);
 
@@ -21,6 +22,7 @@ public interface TaskRepository {
      * Gets all tasks from com.qulix.losevsa.trainingtask.web.database.
      *
      * @return the all tasks
+     * @throws QueryExecutionException if a database access error occurs
      */
     List<Task> getAllTasks();
 
@@ -29,6 +31,7 @@ public interface TaskRepository {
      *
      * @param projectId the project id
      * @return the task list by project id
+     * @throws QueryExecutionException if a database access error occurs
      */
     List<Task> getTaskListByProjectId(long projectId);
 
@@ -37,6 +40,7 @@ public interface TaskRepository {
      *
      * @param id the id
      * @return the task by id
+     * @throws QueryExecutionException if a database access error occurs
      */
     Task getTaskById(long id);
 
@@ -45,6 +49,7 @@ public interface TaskRepository {
      *
      * @param task the task
      * @return the task
+     * @throws QueryExecutionException if a database access error occurs
      */
     Task updateTask(Task task);
 
@@ -53,6 +58,7 @@ public interface TaskRepository {
      *
      * @param id the id
      * @return the long
+     * @throws QueryExecutionException if a database access error occurs
      */
     long deleteTaskById(long id);
 }

@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.database.DatabaseConnection;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
-import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
+import com.qulix.losevsa.trainingtask.web.repository.QueryExecutionException;
 import com.qulix.losevsa.trainingtask.web.repository.ProjectRepository;
 
 /**
@@ -56,7 +56,7 @@ public class DefaultProjectRepository implements ProjectRepository {
         }
         catch (SQLException e) {
             LOG.error(format("Can't save project cause: %s. Employee: %s", e.getMessage(), project));
-            throw new RepositoryException(e);
+            throw new QueryExecutionException(e);
         }
     }
 
@@ -76,7 +76,7 @@ public class DefaultProjectRepository implements ProjectRepository {
         }
         catch (SQLException e) {
             LOG.error(format("Can't get all projects cause: %s", e.getMessage()));
-            throw new RepositoryException(e);
+            throw new QueryExecutionException(e);
         }
     }
 
@@ -92,7 +92,7 @@ public class DefaultProjectRepository implements ProjectRepository {
         }
         catch (SQLException e) {
             LOG.error(format("Can't get project cause: %s. Employee: %d", e.getMessage(), id));
-            throw new RepositoryException(e);
+            throw new QueryExecutionException(e);
         }
     }
 
@@ -113,7 +113,7 @@ public class DefaultProjectRepository implements ProjectRepository {
         }
         catch (SQLException e) {
             LOG.error(format("Can't update project cause: %s. Employee: %s", e.getMessage(), project));
-            throw new RepositoryException(e);
+            throw new QueryExecutionException(e);
         }
     }
 
@@ -133,7 +133,7 @@ public class DefaultProjectRepository implements ProjectRepository {
         }
         catch (SQLException e) {
             LOG.error(format("Can't delete project cause: %s. Employee: %s", e.getMessage(), id));
-            throw new RepositoryException(e);
+            throw new QueryExecutionException(e);
         }
     }
 

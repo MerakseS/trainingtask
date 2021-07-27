@@ -20,7 +20,7 @@ public interface TaskService {
      * @param status        the status of task
      * @param strEmployeeId the employee id string
      * @return the task
-     * @throws ServiceException if data is incorrect
+     * @throws IncorrectInputException if data is incorrect
      */
     Task createTask(String name, String strProjectId, String workTime, String startDate,
         String endDate, String status, String strEmployeeId);
@@ -29,7 +29,7 @@ public interface TaskService {
      * Gets all tasks.
      *
      * @return the {@link List} of all tasks
-     * @throws ServiceException if there is no connection to com.qulix.losevsa.trainingtask.web.database
+     * @throws IncorrectInputException if there is no connection to com.qulix.losevsa.trainingtask.web.database
      */
     List<Task> getAllTasks();
 
@@ -38,7 +38,7 @@ public interface TaskService {
      *
      * @param taskId the task id
      * @return the task
-     * @throws ServiceException if task with that id doesn't exists
+     * @throws IncorrectInputException if task with that id doesn't exists
      */
     Task getTask(long taskId);
 
@@ -54,7 +54,7 @@ public interface TaskService {
      * @param status        the status of task
      * @param strEmployeeId the employee id string
      * @return the task
-     * @throws ServiceException if data is incorrect
+     * @throws IncorrectInputException if data is incorrect
      */
     Task updateTask(long taskId, String name, String strProjectId, String workTime, String startDate,
         String endDate, String status, String strEmployeeId);
@@ -64,7 +64,7 @@ public interface TaskService {
      *
      * @param taskId the task id
      * @return id of the deleted task
-     * @throws ServiceException if task with that id doesn't exists
+     * @throws IncorrectInputException if task with that id doesn't exists
      */
     long deleteTask(long taskId);
 }

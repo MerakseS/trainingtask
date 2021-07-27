@@ -10,46 +10,46 @@ import com.qulix.losevsa.trainingtask.web.entity.Employee;
 public interface EmployeeRepository {
 
     /**
-     * Save employee to com.qulix.losevsa.trainingtask.web.database.
+     * Save employee to database.
      *
      * @param employee the employee
      * @return the employee
-     * @throws RepositoryException if a com.qulix.losevsa.trainingtask.web.database access error occurs
+     * @throws QueryExecutionException if a database access error occurs
      */
     Employee saveEmployee(Employee employee);
 
     /**
-     * Gets all employees from com.qulix.losevsa.trainingtask.web.database.
+     * Gets all employees from database.
      *
      * @return the all employees
-     * @throws RepositoryException if a com.qulix.losevsa.trainingtask.web.database access error occurs
+     * @throws QueryExecutionException if a database access error occurs
      */
     List<Employee> getAllEmployees();
 
     /**
-     * Gets employee by id from com.qulix.losevsa.trainingtask.web.database.
+     * Gets employee by id from database.
      *
      * @param id the id
      * @return the employee by id
-     * @throws RepositoryException if a com.qulix.losevsa.trainingtask.web.database access error occurs
+     * @throws QueryExecutionException if a database access error occurs
      */
     Employee getEmployeeById(long id);
 
     /**
-     * Update employee in com.qulix.losevsa.trainingtask.web.database.
+     * Update employee in database.
      *
      * @param employee the employee
      * @return the employee
-     * @throws RepositoryException if a com.qulix.losevsa.trainingtask.web.database access error occurs
+     * @throws QueryExecutionException if a database access error occurs
      */
     Employee updateEmployee(Employee employee);
 
     /**
-     * Delete employee by id from com.qulix.losevsa.trainingtask.web.database.
+     * Delete employee by id from database.
      *
      * @param id the id
      * @return the long
-     * @throws RepositoryException if a com.qulix.losevsa.trainingtask.web.database access error occurs
+     * @throws QueryExecutionException if a database access error occurs
      */
     long deleteEmployeeById(long id);
 }

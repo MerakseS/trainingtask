@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.service.EmployeeService;
-import com.qulix.losevsa.trainingtask.web.service.ServiceException;
+import com.qulix.losevsa.trainingtask.web.service.IncorrectInputException;
 import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 
 /**
@@ -38,7 +38,7 @@ public class InsertEmployeeCommand implements Command {
             employeeService.createEmployee(firsName, surname, patronymic, position);
             response.sendRedirect(EMPLOYEE_LIST_PATH);
         }
-        catch (ServiceException e) {
+        catch (IncorrectInputException e) {
             request.setAttribute("errorMessage", e.getMessage());
             request.getRequestDispatcher(NEW_EMPLOYEE_FORM_PATH).forward(request, response);
         }

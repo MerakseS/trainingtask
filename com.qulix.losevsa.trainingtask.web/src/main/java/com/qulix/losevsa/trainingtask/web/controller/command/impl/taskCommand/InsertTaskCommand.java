@@ -6,7 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.qulix.losevsa.trainingtask.web.service.ServiceException;
+import com.qulix.losevsa.trainingtask.web.service.IncorrectInputException;
 import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 import com.qulix.losevsa.trainingtask.web.service.TaskService;
 
@@ -48,7 +48,7 @@ public class InsertTaskCommand implements com.qulix.losevsa.trainingtask.web.con
                 PROJECT_EDIT_FORM_PATH + strSelectedProjectId :
                 TASK_LIST_PATH);
         }
-        catch (ServiceException e) {
+        catch (IncorrectInputException e) {
             request.setAttribute("errorMessage", e.getMessage());
             request.getRequestDispatcher(NEW_TASK_FORM_PATH).forward(request, response);
         }

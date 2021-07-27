@@ -17,7 +17,7 @@ import com.qulix.losevsa.trainingtask.web.database.DatabaseConnection;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
 import com.qulix.losevsa.trainingtask.web.entity.enums.Status;
-import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
+import com.qulix.losevsa.trainingtask.web.repository.QueryExecutionException;
 import com.qulix.losevsa.trainingtask.web.repository.EmployeeRepository;
 import com.qulix.losevsa.trainingtask.web.repository.ProjectRepository;
 import com.qulix.losevsa.trainingtask.web.repository.TaskRepository;
@@ -84,7 +84,7 @@ public class DefaultTaskRepository implements TaskRepository {
         }
         catch (SQLException e) {
             LOG.error(format("Can't save task cause: %s. Employee: %s", e.getMessage(), task));
-            throw new RepositoryException(e);
+            throw new QueryExecutionException(e);
         }
     }
 
@@ -104,7 +104,7 @@ public class DefaultTaskRepository implements TaskRepository {
         }
         catch (SQLException e) {
             LOG.error(format("Can't get all tasks cause: %s", e.getMessage()));
-            throw new RepositoryException(e);
+            throw new QueryExecutionException(e);
         }
     }
 
@@ -127,7 +127,7 @@ public class DefaultTaskRepository implements TaskRepository {
         }
         catch (SQLException e) {
             LOG.error(format("Can't get task list cause: %s. Project id: %d", e.getMessage(), projectId));
-            throw new RepositoryException(e);
+            throw new QueryExecutionException(e);
         }
     }
 
@@ -143,7 +143,7 @@ public class DefaultTaskRepository implements TaskRepository {
         }
         catch (SQLException e) {
             LOG.error(format("Can't get task cause: %s. Employee: %d", e.getMessage(), taskId));
-            throw new RepositoryException(e);
+            throw new QueryExecutionException(e);
         }
     }
 
@@ -164,7 +164,7 @@ public class DefaultTaskRepository implements TaskRepository {
         }
         catch (SQLException e) {
             LOG.error(format("Can't update task cause: %s. Employee: %s", e.getMessage(), task));
-            throw new RepositoryException(e);
+            throw new QueryExecutionException(e);
         }
     }
 
@@ -184,7 +184,7 @@ public class DefaultTaskRepository implements TaskRepository {
         }
         catch (SQLException e) {
             LOG.error(format("Can't delete task cause: %s. Employee: %s", e.getMessage(), taskId));
-            throw new RepositoryException(e);
+            throw new QueryExecutionException(e);
         }
     }
 

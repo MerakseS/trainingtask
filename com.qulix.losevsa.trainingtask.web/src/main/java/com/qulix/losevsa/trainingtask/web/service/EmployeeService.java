@@ -17,7 +17,7 @@ public interface EmployeeService {
      * @param patronymic the patronymic
      * @param position   the position
      * @return the employee
-     * @throws ServiceException if data is incorrect
+     * @throws IncorrectInputException if data is incorrect
      */
     Employee createEmployee(String firstName, String surName, String patronymic, String position);
 
@@ -26,7 +26,7 @@ public interface EmployeeService {
      *
      * @return the {@link List} of all employees
      * @see Employee
-     * @throws ServiceException if there is no connection to com.qulix.losevsa.trainingtask.web.database
+     * @throws IncorrectInputException if there is no connection to com.qulix.losevsa.trainingtask.web.database
      */
     List<Employee> getAllEmployees();
 
@@ -35,7 +35,7 @@ public interface EmployeeService {
      *
      * @param employeeId the employee id
      * @return the employee
-     * @throws ServiceException if employee with that id doesn't exists
+     * @throws IncorrectInputException if employee with that id doesn't exists
      */
     Employee getEmployee(long employeeId);
 
@@ -48,7 +48,7 @@ public interface EmployeeService {
      * @param patronymic the patronymic
      * @param position   the position
      * @return the employee
-     * @throws ServiceException if data is incorrect
+     * @throws IncorrectInputException if data is incorrect
      */
     Employee updateEmployee(long employeeId, String firstName, String surName, String patronymic, String position);
 
@@ -57,7 +57,7 @@ public interface EmployeeService {
      *
      * @param employeeId the employee id
      * @return the id of the deleted employee
-     * @throws ServiceException if employee with that id doesn't exists
+     * @throws IncorrectInputException if employee with that id doesn't exists
      */
     long deleteEmployee(long employeeId);
 }
