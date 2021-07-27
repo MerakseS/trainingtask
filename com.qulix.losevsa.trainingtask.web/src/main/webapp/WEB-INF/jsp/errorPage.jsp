@@ -1,3 +1,4 @@
+<%@ page import="static java.nio.charset.StandardCharsets.*" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -35,8 +36,9 @@
         <h3>The request URI</h3>
         <p>${requestUri}</p>
 
+        <jsp:useBean id="throwable" type="java.lang.Throwable" scope="request"/>
         <h3>The exception message</h3>
-        <p>${throwable.getMessage()}</p>
+        <p><%= new String(throwable.getMessage().getBytes(), UTF_8)%></p>
     </c:if>
 </div>
 </body>

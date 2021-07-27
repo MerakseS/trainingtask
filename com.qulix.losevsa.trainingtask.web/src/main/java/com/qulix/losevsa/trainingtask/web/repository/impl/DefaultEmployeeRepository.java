@@ -9,15 +9,19 @@ import java.util.List;
 import static java.lang.String.format;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
+import org.apache.log4j.Logger;
+
 import com.qulix.losevsa.trainingtask.web.database.DatabaseConnection;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
-import com.qulix.losevsa.trainingtask.web.repository.EmployeeRepository;
 import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
+import com.qulix.losevsa.trainingtask.web.repository.EmployeeRepository;
 
 /**
  * The default implementation of {@link EmployeeRepository}
  */
 public class DefaultEmployeeRepository implements EmployeeRepository {
+
+    private static final Logger LOG = Logger.getLogger(DefaultEmployeeRepository.class);
 
     private static final String EMPLOYEE_ID_COLUMN_NAME = "ID";
     private static final String EMPLOYEE_FIRST_NAME_COLUMN_NAME = "FIRST_NAME";
@@ -56,6 +60,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
             return employee;
         }
         catch (SQLException e) {
+            LOG.error(format("Can't save employee cause: %s. Employee: %s", e.getMessage(), employee));
             throw new RepositoryException(e);
         }
     }
@@ -75,6 +80,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
             return employeeList;
         }
         catch (SQLException e) {
+            LOG.error(format("Can't get all employees cause: %s", e.getMessage()));
             throw new RepositoryException(e);
         }
     }
@@ -90,6 +96,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
             return result.next() ? getEmployeeByResultSet(result) : null;
         }
         catch (SQLException e) {
+            LOG.error(format("Can't get employee cause: %s. Employee: %d", e.getMessage(), id));
             throw new RepositoryException(e);
         }
     }
@@ -110,6 +117,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
             return employee;
         }
         catch (SQLException e) {
+            LOG.error(format("Can't update employee cause: %s. Employee: %s", e.getMessage(), employee));
             throw new RepositoryException(e);
         }
     }
@@ -129,6 +137,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
             return id;
         }
         catch (SQLException e) {
+            LOG.error(format("Can't delete employee cause: %s. Employee: %s", e.getMessage(), id));
             throw new RepositoryException(e);
         }
     }

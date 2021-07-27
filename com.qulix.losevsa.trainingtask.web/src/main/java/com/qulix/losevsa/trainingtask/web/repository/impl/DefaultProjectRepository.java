@@ -9,15 +9,18 @@ import java.util.List;
 import static java.lang.String.format;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
+import org.apache.log4j.Logger;
+
 import com.qulix.losevsa.trainingtask.web.database.DatabaseConnection;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
-import com.qulix.losevsa.trainingtask.web.repository.ProjectRepository;
 import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
+import com.qulix.losevsa.trainingtask.web.repository.ProjectRepository;
 
 /**
  * The default implementation of {@link ProjectRepository}
  */
 public class DefaultProjectRepository implements ProjectRepository {
+    private static final Logger LOG = Logger.getLogger(DefaultProjectRepository.class);
 
     private static final String PROJECT_ID_COLUMN_NAME = "ID";
     private static final String PROJECT_NAME_COLUMN_NAME = "NAME";
@@ -52,6 +55,7 @@ public class DefaultProjectRepository implements ProjectRepository {
             return project;
         }
         catch (SQLException e) {
+            LOG.error(format("Can't save project cause: %s. Employee: %s", e.getMessage(), project));
             throw new RepositoryException(e);
         }
     }
@@ -71,6 +75,7 @@ public class DefaultProjectRepository implements ProjectRepository {
             return projectList;
         }
         catch (SQLException e) {
+            LOG.error(format("Can't get all projects cause: %s", e.getMessage()));
             throw new RepositoryException(e);
         }
     }
@@ -86,6 +91,7 @@ public class DefaultProjectRepository implements ProjectRepository {
             return result.next() ? getProjectByResultSet(result) : null;
         }
         catch (SQLException e) {
+            LOG.error(format("Can't get project cause: %s. Employee: %d", e.getMessage(), id));
             throw new RepositoryException(e);
         }
     }
@@ -106,6 +112,7 @@ public class DefaultProjectRepository implements ProjectRepository {
             return project;
         }
         catch (SQLException e) {
+            LOG.error(format("Can't update project cause: %s. Employee: %s", e.getMessage(), project));
             throw new RepositoryException(e);
         }
     }
@@ -125,6 +132,7 @@ public class DefaultProjectRepository implements ProjectRepository {
             return id;
         }
         catch (SQLException e) {
+            LOG.error(format("Can't delete project cause: %s. Employee: %s", e.getMessage(), id));
             throw new RepositoryException(e);
         }
     }

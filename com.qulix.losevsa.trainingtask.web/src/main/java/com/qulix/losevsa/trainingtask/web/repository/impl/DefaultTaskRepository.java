@@ -11,19 +11,22 @@ import java.util.List;
 import static java.lang.String.format;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
+import org.apache.log4j.Logger;
+
 import com.qulix.losevsa.trainingtask.web.database.DatabaseConnection;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
 import com.qulix.losevsa.trainingtask.web.entity.enums.Status;
+import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
 import com.qulix.losevsa.trainingtask.web.repository.EmployeeRepository;
 import com.qulix.losevsa.trainingtask.web.repository.ProjectRepository;
-import com.qulix.losevsa.trainingtask.web.repository.RepositoryException;
 import com.qulix.losevsa.trainingtask.web.repository.TaskRepository;
 
 /**
  * The default implementation of {@link Task}
  */
 public class DefaultTaskRepository implements TaskRepository {
+    private static final Logger LOG = Logger.getLogger(DefaultTaskRepository.class);
 
     private static final String TASK_ID_COLUMN_NAME = "ID";
     private static final String TASK_STATUS_COLUMN_NAME = "STATUS";
@@ -80,6 +83,7 @@ public class DefaultTaskRepository implements TaskRepository {
             return task;
         }
         catch (SQLException e) {
+            LOG.error(format("Can't save task cause: %s. Employee: %s", e.getMessage(), task));
             throw new RepositoryException(e);
         }
     }
@@ -99,6 +103,7 @@ public class DefaultTaskRepository implements TaskRepository {
             return taskList;
         }
         catch (SQLException e) {
+            LOG.error(format("Can't get all tasks cause: %s", e.getMessage()));
             throw new RepositoryException(e);
         }
     }
@@ -121,6 +126,7 @@ public class DefaultTaskRepository implements TaskRepository {
             return taskList;
         }
         catch (SQLException e) {
+            LOG.error(format("Can't get task list cause: %s. Project id: %d", e.getMessage(), projectId));
             throw new RepositoryException(e);
         }
     }
@@ -136,6 +142,7 @@ public class DefaultTaskRepository implements TaskRepository {
             return result.next() ? getTaskByResultSet(result) : null;
         }
         catch (SQLException e) {
+            LOG.error(format("Can't get task cause: %s. Employee: %d", e.getMessage(), taskId));
             throw new RepositoryException(e);
         }
     }
@@ -156,6 +163,7 @@ public class DefaultTaskRepository implements TaskRepository {
             return task;
         }
         catch (SQLException e) {
+            LOG.error(format("Can't update task cause: %s. Employee: %s", e.getMessage(), task));
             throw new RepositoryException(e);
         }
     }
@@ -175,6 +183,7 @@ public class DefaultTaskRepository implements TaskRepository {
             return taskId;
         }
         catch (SQLException e) {
+            LOG.error(format("Can't delete task cause: %s. Employee: %s", e.getMessage(), taskId));
             throw new RepositoryException(e);
         }
     }
