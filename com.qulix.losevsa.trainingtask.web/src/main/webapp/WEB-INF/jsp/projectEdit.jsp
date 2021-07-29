@@ -75,12 +75,18 @@
             <c:forEach var="task" items="${project.taskList}">
                 <jsp:useBean id="task" type="com.qulix.losevsa.trainingtask.web.entity.Task"/>
                 <tr>
-                    <td><%= new String(task.getStatus().toString().getBytes(), UTF_8)%></td>
-                    <td>${task.name}</td>
-                    <td>${task.workTime}</td>
+                    <td>
+                        <%= new String(task.getStatus().toString().getBytes(), UTF_8)%>
+                    </td>
+                    <td>${htmlUtils.escapeHtml(task.name)}</td>
+                    <td>${task.workTime == null ? "" : task.workTime}</td>
                     <td>${task.startDate}</td>
                     <td>${task.endDate}</td>
-                    <td>${task.employee.firstName} ${task.employee.surName} ${task.employee.patronymic}</td>
+                    <td>
+                            ${htmlUtils.escapeHtml(task.employee.firstName)}
+                            ${htmlUtils.escapeHtml(task.employee.surName)}
+                            ${htmlUtils.escapeHtml(task.employee.patronymic)}
+                    </td>
                     <td>
                         <a href="<c:url value="/task/edit?taskId=${task.id}&selectedProjectId=${project.id}"/>">
                             <button>Изменить</button>
