@@ -16,10 +16,9 @@ public interface EmployeeService {
      * @param surName    the sur name
      * @param patronymic the patronymic
      * @param position   the position
-     * @return the employee
      * @throws IncorrectInputException if data is incorrect
      */
-    Employee createEmployee(String firstName, String surName, String patronymic, String position);
+    void createEmployee(String firstName, String surName, String patronymic, String position);
 
     /**
      * Gets all employees.
@@ -47,17 +46,15 @@ public interface EmployeeService {
      * @param surName    the sur name
      * @param patronymic the patronymic
      * @param position   the position
-     * @return the employee
      * @throws IncorrectInputException if data is incorrect
      */
-    Employee updateEmployee(long employeeId, String firstName, String surName, String patronymic, String position);
+    void updateEmployee(long employeeId, String firstName, String surName, String patronymic, String position);
 
     /**
      * Delete employee by id.
      *
      * @param employeeId the employee id
-     * @return the id of the deleted employee
      * @throws IncorrectInputException if employee with that id doesn't exists
      */
-    long deleteEmployee(long employeeId);
+    void deleteEmployee(long employeeId);
 }

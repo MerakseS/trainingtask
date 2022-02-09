@@ -19,10 +19,9 @@ public interface TaskService {
      * @param endDate       the end date of executing task
      * @param status        the status of task
      * @param strEmployeeId the employee id string
-     * @return the task
      * @throws IncorrectInputException if data is incorrect
      */
-    Task createTask(String name, String strProjectId, String workTime, String startDate,
+    void createTask(String name, String strProjectId, String workTime, String startDate,
         String endDate, String status, String strEmployeeId);
 
     /**
@@ -53,18 +52,16 @@ public interface TaskService {
      * @param endDate       the end date of executing task
      * @param status        the status of task
      * @param strEmployeeId the employee id string
-     * @return the task
      * @throws IncorrectInputException if data is incorrect
      */
-    Task updateTask(long taskId, String name, String strProjectId, String workTime, String startDate,
+    void updateTask(long taskId, String name, String strProjectId, String workTime, String startDate,
         String endDate, String status, String strEmployeeId);
 
     /**
      * Delete task by task id.
      *
      * @param taskId the task id
-     * @return id of the deleted task
      * @throws IncorrectInputException if task with that id doesn't exists
      */
-    long deleteTask(long taskId);
+    void deleteTask(long taskId);
 }

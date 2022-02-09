@@ -14,10 +14,9 @@ public interface ProjectService {
      *
      * @param name        the name of the project
      * @param description the description of the project
-     * @return the project
      * @throws IncorrectInputException if data is incorrect
      */
-    Project createProject(String name, String description);
+    void createProject(String name, String description);
 
     /**
      * Gets all projects.
@@ -42,26 +41,16 @@ public interface ProjectService {
      * @param projectId   the project id
      * @param name        the name
      * @param description the description
-     * @return the project
      * @throws IncorrectInputException if data is incorrect
      */
-    Project updateProject(long projectId, String name, String description);
+    void updateProject(long projectId, String name, String description);
 
     /**
      * Delete project by id.
      *
      * @param projectId the project id
-     * @return the id of the deleted project
      * @throws IncorrectInputException if project with that id doesn't exists
      */
-    long deleteProject(long projectId);
-
-    /**
-     * Check that project exists.
-     *
-     * @param projectId the project id
-     * @throws IncorrectInputException if project doesn't exists
-     */
-    void checkThatProjectExists(long projectId);
+    void deleteProject(long projectId);
 
 }

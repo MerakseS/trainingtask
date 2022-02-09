@@ -36,7 +36,7 @@ public class DefaultProjectService implements ProjectService {
     }
 
     @Override
-    public Project createProject(String name, String description) {
+    public void createProject(String name, String description) {
         validateValues(name, description);
 
         Project project = new Project();
@@ -47,8 +47,6 @@ public class DefaultProjectService implements ProjectService {
 
         project = projectRepository.saveProject(project);
         LOG.info("Successfully created project with id " + project.getId());
-
-        return project;
     }
 
     @Override
@@ -73,7 +71,7 @@ public class DefaultProjectService implements ProjectService {
     }
 
     @Override
-    public Project updateProject(long id, String name, String description) {
+    public void updateProject(long id, String name, String description) {
         checkThatProjectExists(id);
 
         validateValues(name, description);
@@ -87,21 +85,17 @@ public class DefaultProjectService implements ProjectService {
 
         project = projectRepository.updateProject(project);
         LOG.info("Successfully updated project with id " + project.getId());
-
-        return project;
     }
 
     @Override
-    public long deleteProject(long id) {
+    public void deleteProject(long id) {
         checkThatProjectExists(id);
 
         id = projectRepository.deleteProjectById(id);
         LOG.info("Successfully deleted project with id " + id);
-
-        return id;
     }
 
-    public void checkThatProjectExists(long id) {
+    private void checkThatProjectExists(long id) {
         Project project = projectRepository.getProjectById(id);
         if (project == null) {
             LOG.error("Project with id " + id + " doesn't exist.");

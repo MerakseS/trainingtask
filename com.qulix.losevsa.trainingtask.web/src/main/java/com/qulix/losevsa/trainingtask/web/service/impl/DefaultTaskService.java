@@ -51,7 +51,7 @@ public class DefaultTaskService implements TaskService {
     }
 
     @Override
-    public Task createTask(String name, String strProjectId, String strWorkTime, String strStartDate,
+    public void createTask(String name, String strProjectId, String strWorkTime, String strStartDate,
         String strEndDate, String strStatus, String strEmployeeId) {
 
         Integer workTime = parseInteger(strWorkTime);
@@ -74,8 +74,6 @@ public class DefaultTaskService implements TaskService {
 
         task = taskRepository.saveTask(task);
         LOG.info("Successfully created task with id " + task.getId());
-
-        return task;
     }
 
     @Override
@@ -97,7 +95,7 @@ public class DefaultTaskService implements TaskService {
     }
 
     @Override
-    public Task updateTask(long taskId, String name, String strProjectId, String strWorkTime,
+    public void updateTask(long taskId, String name, String strProjectId, String strWorkTime,
         String strStartDate, String strEndDate, String strStatus, String strEmployeeId) {
 
         checkThatTaskExists(taskId);
@@ -123,17 +121,13 @@ public class DefaultTaskService implements TaskService {
 
         task = taskRepository.updateTask(task);
         LOG.info("Successfully updated task with id " + task.getId());
-
-        return task;
     }
 
     @Override
-    public long deleteTask(long taskId) {
+    public void deleteTask(long taskId) {
         checkThatTaskExists(taskId);
         taskId = taskRepository.deleteTaskById(taskId);
         LOG.info("Successfully deleted task with id " + taskId);
-
-        return taskId;
     }
 
     private void checkThatTaskExists(long taskId) {

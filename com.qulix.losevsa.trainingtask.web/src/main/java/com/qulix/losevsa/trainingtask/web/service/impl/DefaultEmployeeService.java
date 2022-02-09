@@ -29,7 +29,7 @@ public class DefaultEmployeeService implements EmployeeService {
     }
 
     @Override
-    public Employee createEmployee(String firstName, String surName, String patronymic, String position) {
+    public void createEmployee(String firstName, String surName, String patronymic, String position) {
         validateValues(firstName, surName, patronymic, position);
 
         Employee employee = new Employee();
@@ -42,8 +42,6 @@ public class DefaultEmployeeService implements EmployeeService {
 
         employee = employeeRepository.saveEmployee(employee);
         LOG.info("Successfully created employee with id " + employee.getId());
-
-        return employee;
     }
 
     @Override
@@ -66,7 +64,7 @@ public class DefaultEmployeeService implements EmployeeService {
     }
 
     @Override
-    public Employee updateEmployee(long employeeId, String firstName, String surName, String patronymic, String position) {
+    public void updateEmployee(long employeeId, String firstName, String surName, String patronymic, String position) {
         checkThatEmployeeExists(employeeId);
         validateValues(firstName, surName, patronymic, position);
 
@@ -81,18 +79,14 @@ public class DefaultEmployeeService implements EmployeeService {
 
         employee = employeeRepository.updateEmployee(employee);
         LOG.info("Successfully updated employee with id " + employee.getId());
-
-        return employee;
     }
 
     @Override
-    public long deleteEmployee(long employeeId) {
+    public void deleteEmployee(long employeeId) {
         checkThatEmployeeExists(employeeId);
 
         employeeId = employeeRepository.deleteEmployeeById(employeeId);
         LOG.info("Successfully deleted employee with id " + employeeId);
-
-        return employeeId;
     }
 
     private void checkThatEmployeeExists(long employeeId) {
