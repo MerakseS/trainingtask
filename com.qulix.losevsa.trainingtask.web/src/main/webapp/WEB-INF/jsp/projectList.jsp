@@ -8,7 +8,6 @@
 <head>
     <title>Проекты</title>
     <link href="../../css/style.css" rel="stylesheet" type="text/css" media="all"/>
-    <script type="javascript" src="../../js/index.js"></script>
 </head>
 <body>
 
