@@ -36,7 +36,7 @@ def buildProcess(className, filePath, dbName) {
 }
 
 def wait(Process process) {
-    def ready = "From command line, use [Ctrl]+[C] to abort abruptly"
+    def ready = "From command line, use [gradlew stopDatabase] to abort abruptly"
     def reader = new BufferedReader(new InputStreamReader(process.getInputStream()))
 
     def line

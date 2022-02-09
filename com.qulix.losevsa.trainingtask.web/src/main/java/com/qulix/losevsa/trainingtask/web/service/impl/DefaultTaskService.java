@@ -1,12 +1,7 @@
 package com.qulix.losevsa.trainingtask.web.service.impl;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
-import java.util.Date;
 import java.util.List;
 import static java.lang.String.format;
 
@@ -30,7 +25,6 @@ public class DefaultTaskService implements TaskService {
 
     private static final Logger LOG = Logger.getLogger(DefaultTaskService.class);
 
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
     private static final int NAME_MAX_LENGTH = 50;
 
     private final TaskRepository taskRepository;
@@ -180,15 +174,12 @@ public class DefaultTaskService implements TaskService {
         try {
             LocalDate localDate = null;
             if (strDate != null && !strDate.isBlank()) {
-                Date date = DATE_FORMAT.parse(strDate);
-                localDate = date.toInstant()
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDate();
+                localDate = LocalDate.parse(strDate);
             }
 
             return localDate;
         }
-        catch (DateTimeParseException | ParseException e) {
+        catch (DateTimeParseException e) {
             LOG.warn("Incorrect date input. Date: " + strDate);
             throw new IncorrectInputException("Некорректный ввод даты.");
         }

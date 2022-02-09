@@ -26,8 +26,8 @@ public class ShowEditTaskFormCommand implements com.qulix.losevsa.trainingtask.w
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
-
         TaskService taskService = serviceProvider.getTaskService();
+
         long taskId = Long.parseLong(request.getParameter(TASK_ID_PARAMETER));
         Task task = taskService.getTask(taskId);
         request.setAttribute("task", task);
