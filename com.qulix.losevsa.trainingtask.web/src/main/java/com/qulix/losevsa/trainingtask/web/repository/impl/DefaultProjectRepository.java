@@ -13,13 +13,14 @@ import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.database.DatabaseConnection;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
-import com.qulix.losevsa.trainingtask.web.repository.QueryExecutionException;
 import com.qulix.losevsa.trainingtask.web.repository.ProjectRepository;
+import com.qulix.losevsa.trainingtask.web.repository.QueryExecutionException;
 
 /**
  * The default implementation of {@link ProjectRepository}
  */
 public class DefaultProjectRepository implements ProjectRepository {
+
     private static final Logger LOG = Logger.getLogger(DefaultProjectRepository.class);
 
     private static final String PROJECT_ID_COLUMN_NAME = "ID";

@@ -17,15 +17,16 @@ import com.qulix.losevsa.trainingtask.web.database.DatabaseConnection;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
 import com.qulix.losevsa.trainingtask.web.entity.enums.Status;
-import com.qulix.losevsa.trainingtask.web.repository.QueryExecutionException;
 import com.qulix.losevsa.trainingtask.web.repository.EmployeeRepository;
 import com.qulix.losevsa.trainingtask.web.repository.ProjectRepository;
+import com.qulix.losevsa.trainingtask.web.repository.QueryExecutionException;
 import com.qulix.losevsa.trainingtask.web.repository.TaskRepository;
 
 /**
  * The default implementation of {@link Task}
  */
 public class DefaultTaskRepository implements TaskRepository {
+
     private static final Logger LOG = Logger.getLogger(DefaultTaskRepository.class);
 
     private static final String TASK_ID_COLUMN_NAME = "ID";

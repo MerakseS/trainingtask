@@ -13,8 +13,8 @@ import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.database.DatabaseConnection;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
-import com.qulix.losevsa.trainingtask.web.repository.QueryExecutionException;
 import com.qulix.losevsa.trainingtask.web.repository.EmployeeRepository;
+import com.qulix.losevsa.trainingtask.web.repository.QueryExecutionException;
 
 /**
  * The default implementation of {@link EmployeeRepository}
