@@ -46,7 +46,7 @@ public class DefaultProjectService implements ProjectService {
         }
 
         project = projectRepository.saveProject(project);
-        LOG.info("Successfully created project with id " + project.getId());
+        LOG.info(format("Successfully created project with id %d", project.getId()));
     }
 
     @Override
@@ -59,13 +59,13 @@ public class DefaultProjectService implements ProjectService {
     public Project getProject(long id) {
         Project project = projectRepository.getProjectById(id);
         if (project == null) {
-            LOG.error("Project with id " + id + " doesn't exist.");
-            throw new IncorrectInputException("Проект с id " + id + " не существует!");
+            LOG.error(format("Project with id %d doesn't exist.", id));
+            throw new IncorrectInputException(format("Проект с id %d не существует!", id));
         }
 
         List<Task> taskList = taskRepository.getTaskListByProjectId(id);
         project.setTaskList(taskList);
-        LOG.info("Successfully get project with id " + id);
+        LOG.info(format("Successfully get project with id %d", id));
 
         return project;
     }
@@ -84,7 +84,7 @@ public class DefaultProjectService implements ProjectService {
         }
 
         project = projectRepository.updateProject(project);
-        LOG.info("Successfully updated project with id " + project.getId());
+        LOG.info(format("Successfully updated project with id %d", project.getId()));
     }
 
     @Override
@@ -92,14 +92,14 @@ public class DefaultProjectService implements ProjectService {
         checkThatProjectExists(id);
 
         id = projectRepository.deleteProjectById(id);
-        LOG.info("Successfully deleted project with id " + id);
+        LOG.info(format("Successfully deleted project with id %d", id));
     }
 
     private void checkThatProjectExists(long id) {
         Project project = projectRepository.getProjectById(id);
         if (project == null) {
-            LOG.error("Project with id " + id + " doesn't exist.");
-            throw new IncorrectInputException("Проект с id " + id + " не существует!");
+            LOG.error(format("Project with id %d doesn't exist.", id));
+            throw new IncorrectInputException(format("Проект с id %d не существует!", id));
         }
     }
 

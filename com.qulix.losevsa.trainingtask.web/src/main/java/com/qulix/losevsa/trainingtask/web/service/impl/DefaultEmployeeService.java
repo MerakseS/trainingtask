@@ -41,7 +41,7 @@ public class DefaultEmployeeService implements EmployeeService {
         }
 
         employee = employeeRepository.saveEmployee(employee);
-        LOG.info("Successfully created employee with id " + employee.getId());
+        LOG.info(format("Successfully created employee with id %d", employee.getId()));
     }
 
     @Override
@@ -54,11 +54,11 @@ public class DefaultEmployeeService implements EmployeeService {
     public Employee getEmployee(long employeeId) {
         Employee employee = employeeRepository.getEmployeeById(employeeId);
         if (employee == null) {
-            LOG.error("Employee with id " + employeeId + " doesn't exist.");
-            throw new IncorrectInputException("Сотрудник с id " + employeeId + " не существует!");
+            LOG.error(format("Employee with id %d doesn't exist.", employeeId));
+            throw new IncorrectInputException(format("Сотрудник с id %d не существует!", employeeId));
         }
 
-        LOG.info("Successfully get employee with id " + employeeId);
+        LOG.info(format("Successfully get employee with id %d", employeeId));
 
         return employee;
     }
@@ -78,7 +78,7 @@ public class DefaultEmployeeService implements EmployeeService {
         }
 
         employee = employeeRepository.updateEmployee(employee);
-        LOG.info("Successfully updated employee with id " + employee.getId());
+        LOG.info(format("Successfully updated employee with id %d", employee.getId()));
     }
 
     @Override
@@ -86,14 +86,14 @@ public class DefaultEmployeeService implements EmployeeService {
         checkThatEmployeeExists(employeeId);
 
         employeeId = employeeRepository.deleteEmployeeById(employeeId);
-        LOG.info("Successfully deleted employee with id " + employeeId);
+        LOG.info(format("Successfully deleted employee with id %d", employeeId));
     }
 
     private void checkThatEmployeeExists(long employeeId) {
         Employee employee = employeeRepository.getEmployeeById(employeeId);
         if (employee == null) {
-            LOG.error("Employee with id " + employeeId + " doesn't exist.");
-            throw new IncorrectInputException("Сотрудник с id " + employeeId + " не существует!");
+            LOG.error(format("Employee with id %d doesn't exist.", employeeId));
+            throw new IncorrectInputException(format("Сотрудник с id %d не существует!", employeeId));
         }
     }
 

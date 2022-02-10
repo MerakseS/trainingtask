@@ -1,6 +1,7 @@
 package com.qulix.losevsa.trainingtask.web.controller.command.impl;
 
 import java.io.IOException;
+import static java.lang.String.format;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +19,7 @@ public class NotFoundCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        LOG.warn("Incorrect URI - " + request.getRequestURI());
+        LOG.warn(format("Incorrect URI - %s", request.getRequestURI()));
         response.sendError(HttpServletResponse.SC_NOT_FOUND);
     }
 }

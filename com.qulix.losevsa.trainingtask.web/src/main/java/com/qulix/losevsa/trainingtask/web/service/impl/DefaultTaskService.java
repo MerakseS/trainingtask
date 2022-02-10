@@ -67,7 +67,7 @@ public class DefaultTaskService implements TaskService {
         task.setEmployee(employee);
 
         task = taskRepository.saveTask(task);
-        LOG.info("Successfully created task with id " + task.getId());
+        LOG.info(format("Successfully created task with id %d", task.getId()));
     }
 
     @Override
@@ -78,11 +78,11 @@ public class DefaultTaskService implements TaskService {
 
     @Override
     public Task getTask(long taskId) {
-        LOG.info("Getting task with id " + taskId);
+        LOG.info(format("Getting task with id %d", taskId));
         Task task = taskRepository.getTaskById(taskId);
         if (task == null) {
-            LOG.error("Task with id " + taskId + " doesn't exist.");
-            throw new IncorrectInputException("Задача с id " + taskId + " не существует.");
+            LOG.error(format("Task with id %d doesn't exist.", taskId));
+            throw new IncorrectInputException(format("Задача с id %d не существует.", taskId));
         }
 
         return task;
@@ -114,21 +114,21 @@ public class DefaultTaskService implements TaskService {
         task.setEmployee(employee);
 
         task = taskRepository.updateTask(task);
-        LOG.info("Successfully updated task with id " + task.getId());
+        LOG.info(format("Successfully updated task with id %d", task.getId()));
     }
 
     @Override
     public void deleteTask(long taskId) {
         checkThatTaskExists(taskId);
         taskId = taskRepository.deleteTaskById(taskId);
-        LOG.info("Successfully deleted task with id " + taskId);
+        LOG.info(format("Successfully deleted task with id %d", taskId));
     }
 
     private void checkThatTaskExists(long taskId) {
         Task task = taskRepository.getTaskById(taskId);
         if (task == null) {
-            LOG.error("Task with id " + taskId + " doesn't exist.");
-            throw new IncorrectInputException("Задача с id " + taskId + " не существует.");
+            LOG.error(format("Task with id %d doesn't exist.", taskId));
+            throw new IncorrectInputException(format("Задача с id %d не существует.", taskId));
         }
     }
 
@@ -152,7 +152,6 @@ public class DefaultTaskService implements TaskService {
             LOG.warn(format("Еnd date is earlier than start date. Start date: %s, End date: %s", startDate, endDate));
             throw new IncorrectInputException("Дата окончания не может быть раньше даты начала");
         }
-
     }
 
     private Status parseStatus(String strStatus) {
@@ -165,7 +164,7 @@ public class DefaultTaskService implements TaskService {
             return status;
         }
         catch (IllegalArgumentException e) {
-            LOG.warn("Incorrect status input. Status: " + strStatus);
+            LOG.warn(format("Incorrect status input. Status: %s", strStatus));
             throw new IncorrectInputException("Некорректный статус.");
         }
     }
@@ -180,7 +179,7 @@ public class DefaultTaskService implements TaskService {
             return localDate;
         }
         catch (DateTimeParseException e) {
-            LOG.warn("Incorrect date input. Date: " + strDate);
+            LOG.warn(format("Incorrect date input. Date: %s", strDate));
             throw new IncorrectInputException("Некорректный ввод даты.");
         }
     }
@@ -194,7 +193,7 @@ public class DefaultTaskService implements TaskService {
             return Integer.parseInt(strInt);
         }
         catch (NumberFormatException e) {
-            LOG.warn("Incorrect work time input. Work time: " + strInt);
+            LOG.warn(format("Incorrect work time input. Work time: %s", strInt));
             throw new IncorrectInputException("Некорректный ввод работы.");
         }
     }
@@ -205,7 +204,7 @@ public class DefaultTaskService implements TaskService {
             return projectService.getProject(projectId);
         }
         catch (NumberFormatException e) {
-            LOG.warn("Incorrect project input. Project id: " + strProjectId);
+            LOG.warn(format("Incorrect project input. Project id: %s", strProjectId));
             throw new IncorrectInputException("Для добавления задачи сначала создайте проект.");
         }
     }
