@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * Represents com.qulix.losevsa.trainingtask.web.database connection properties.
+ * Represents database connection properties.
  * Sets all connection parameters according to db.properties file
  * If db.properties is missing, class uses default connection parameters.
  */
@@ -27,8 +27,20 @@ public class DatabaseProperties {
 
     private final Properties properties = new Properties();
 
+    /**
+     * Database URL address.
+     */
     private final String url;
+
+    /**
+     * Database username.
+     */
     private final String user;
+
+
+    /**
+     * Username's password.
+     */
     private final String password;
 
     /**
@@ -71,29 +83,14 @@ public class DatabaseProperties {
         return variable;
     }
 
-    /**
-     * Gets url.
-     *
-     * @return the url
-     */
     public String getUrl() {
         return url;
     }
 
-    /**
-     * Gets user.
-     *
-     * @return the user
-     */
     public String getUser() {
         return user;
     }
 
-    /**
-     * Gets password.
-     *
-     * @return the password
-     */
     public String getPassword() {
         return password;
     }

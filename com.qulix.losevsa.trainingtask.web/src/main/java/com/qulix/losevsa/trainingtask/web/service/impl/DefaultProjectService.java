@@ -14,7 +14,7 @@ import com.qulix.losevsa.trainingtask.web.service.IncorrectInputException;
 import com.qulix.losevsa.trainingtask.web.service.ProjectService;
 
 /**
- * The default implementation of the {@link ProjectService}
+ * The default implementation of the {@link ProjectService}.
  */
 public class DefaultProjectService implements ProjectService {
 
@@ -27,7 +27,7 @@ public class DefaultProjectService implements ProjectService {
     private final TaskRepository taskRepository;
 
     /**
-     * Instantiates a new Default project com.qulix.losevsa.trainingtask.web.service.
+     * Instantiates a new Default project service.
      */
     public DefaultProjectService() {
         RepositoryProvider provider = RepositoryProvider.getInstance();

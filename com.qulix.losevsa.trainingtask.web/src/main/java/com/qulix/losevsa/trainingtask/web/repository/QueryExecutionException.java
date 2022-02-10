@@ -1,7 +1,7 @@
 package com.qulix.losevsa.trainingtask.web.repository;
 
 /**
- * The exception class for com.qulix.losevsa.trainingtask.web.repository layer.
+ * The exception class for repository layer.
  */
 public class QueryExecutionException extends RuntimeException {
 

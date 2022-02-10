@@ -51,10 +51,10 @@ public class DefaultTaskRepository implements TaskRepository {
     private final ProjectRepository projectRepository;
 
     /**
-     * Instantiates a new Default task com.qulix.losevsa.trainingtask.web.repository.
+     * Instantiates a new Default task repository.
      *
-     * @param employeeRepository the employee com.qulix.losevsa.trainingtask.web.repository
-     * @param projectRepository  the project com.qulix.losevsa.trainingtask.web.repository
+     * @param employeeRepository the employee repository
+     * @param projectRepository  the project repository
      */
     public DefaultTaskRepository(EmployeeRepository employeeRepository, ProjectRepository projectRepository) {
         this.employeeRepository = employeeRepository;

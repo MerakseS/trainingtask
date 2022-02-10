@@ -8,7 +8,7 @@ import static java.lang.String.format;
 import org.apache.log4j.Logger;
 
 /**
- * The class for creating com.qulix.losevsa.trainingtask.web.database connection/
+ * The class for creating database connection.
  */
 public class DatabaseConnection {
 
@@ -18,9 +18,9 @@ public class DatabaseConnection {
     private static final Logger LOG = Logger.getLogger(DatabaseConnection.class);
 
     /**
-     * Gets connection for com.qulix.losevsa.trainingtask.web.database. Connection parameters are taken from {@link DatabaseProperties}
+     * Gets database connection. Connection parameters are taken from {@link DatabaseProperties}.
      *
-     * @return the connection
+     * @return database connection
      */
     public static Connection getConnection() {
         try {

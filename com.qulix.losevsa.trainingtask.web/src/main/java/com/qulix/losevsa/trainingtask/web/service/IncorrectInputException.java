@@ -1,7 +1,7 @@
 package com.qulix.losevsa.trainingtask.web.service;
 
 /**
- * The exception class for com.qulix.losevsa.trainingtask.web.service layer.
+ * The exception class for service layer.
  */
 public class IncorrectInputException extends RuntimeException {
 

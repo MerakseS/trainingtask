@@ -5,7 +5,7 @@ import com.qulix.losevsa.trainingtask.web.repository.impl.DefaultProjectReposito
 import com.qulix.losevsa.trainingtask.web.repository.impl.DefaultTaskRepository;
 
 /**
- * A singleton class that provides all com.qulix.losevsa.trainingtask.web.repository objects.
+ * A singleton class that provides all repository objects.
  */
 public class RepositoryProvider {
 
@@ -34,27 +34,27 @@ public class RepositoryProvider {
     }
 
     /**
-     * Gets employee com.qulix.losevsa.trainingtask.web.repository.
+     * Gets employee repository.
      *
-     * @return the employee com.qulix.losevsa.trainingtask.web.repository
+     * @return the employee repository
      */
     public EmployeeRepository getEmployeeRepository() {
         return employeeRepository;
     }
 
     /**
-     * Gets project com.qulix.losevsa.trainingtask.web.repository.
+     * Gets project repository.
      *
-     * @return the project com.qulix.losevsa.trainingtask.web.repository
+     * @return the project repository
      */
     public ProjectRepository getProjectRepository() {
         return projectRepository;
     }
 
     /**
-     * Gets task com.qulix.losevsa.trainingtask.web.repository.
+     * Gets task repository.
      *
-     * @return the task com.qulix.losevsa.trainingtask.web.repository
+     * @return the task repository
      */
     public TaskRepository getTaskRepository() {
         return taskRepository;

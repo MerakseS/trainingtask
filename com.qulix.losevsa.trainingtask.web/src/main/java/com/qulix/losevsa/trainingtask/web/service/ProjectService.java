@@ -22,7 +22,7 @@ public interface ProjectService {
      * Gets all projects.
      *
      * @return the {@link List} of all projects
-     * @throws IncorrectInputException if there is no connection to com.qulix.losevsa.trainingtask.web.database
+     * @throws IncorrectInputException if there is no connection to database
      */
     List<Project> getAllProjects();
 
@@ -31,7 +31,7 @@ public interface ProjectService {
      *
      * @param projectId the project id
      * @return the project
-     * @throws IncorrectInputException if project with that id doesn't exists
+     * @throws IncorrectInputException if project with that id doesn't exist
      */
     Project getProject(long projectId);
 
@@ -49,7 +49,7 @@ public interface ProjectService {
      * Delete project by id.
      *
      * @param projectId the project id
-     * @throws IncorrectInputException if project with that id doesn't exists
+     * @throws IncorrectInputException if project with that id doesn't exist
      */
     void deleteProject(long projectId);
 

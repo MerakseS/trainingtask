@@ -5,7 +5,7 @@ import java.util.List;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
 
 /**
- * The interface of com.qulix.losevsa.trainingtask.web.repository layer for working with {@link Employee}
+ * The interface of repository layer for working with {@link Employee}
  */
 public interface EmployeeRepository {
 

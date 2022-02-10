@@ -12,7 +12,7 @@ import com.qulix.losevsa.trainingtask.web.service.EmployeeService;
 import com.qulix.losevsa.trainingtask.web.service.IncorrectInputException;
 
 /**
- * The default implementation of {@link EmployeeService}
+ * The default implementation of {@link EmployeeService}.
  */
 public class DefaultEmployeeService implements EmployeeService {
 
@@ -21,7 +21,7 @@ public class DefaultEmployeeService implements EmployeeService {
     private final EmployeeRepository employeeRepository;
 
     /**
-     * Instantiates a new Default employee com.qulix.losevsa.trainingtask.web.service.
+     * Instantiates a new Default employee service.
      */
     public DefaultEmployeeService() {
         RepositoryProvider provider = RepositoryProvider.getInstance();

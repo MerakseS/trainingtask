@@ -5,7 +5,7 @@ import java.util.List;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
 
 /**
- * The interface of business logic for working with {@link Employee}
+ * The interface of business logic for working with {@link Employee}.
  */
 public interface EmployeeService {
 
@@ -13,7 +13,7 @@ public interface EmployeeService {
      * Creates employee.
      *
      * @param firstName  the first name
-     * @param surName    the sur name
+     * @param surName    the surname
      * @param patronymic the patronymic
      * @param position   the position
      * @throws IncorrectInputException if data is incorrect
@@ -25,7 +25,7 @@ public interface EmployeeService {
      *
      * @return the {@link List} of all employees
      * @see Employee
-     * @throws IncorrectInputException if there is no connection to com.qulix.losevsa.trainingtask.web.database
+     * @throws IncorrectInputException if there is no connection to database
      */
     List<Employee> getAllEmployees();
 
@@ -34,7 +34,7 @@ public interface EmployeeService {
      *
      * @param employeeId the employee id
      * @return the employee
-     * @throws IncorrectInputException if employee with that id doesn't exists
+     * @throws IncorrectInputException if employee with that id doesn't exist
      */
     Employee getEmployee(long employeeId);
 
@@ -43,7 +43,7 @@ public interface EmployeeService {
      *
      * @param employeeId the employee id
      * @param firstName  the first name
-     * @param surName    the sur name
+     * @param surName    the surname
      * @param patronymic the patronymic
      * @param position   the position
      * @throws IncorrectInputException if data is incorrect
@@ -54,7 +54,7 @@ public interface EmployeeService {
      * Delete employee by id.
      *
      * @param employeeId the employee id
-     * @throws IncorrectInputException if employee with that id doesn't exists
+     * @throws IncorrectInputException if employee with that id doesn't exist
      */
     void deleteEmployee(long employeeId);
 }

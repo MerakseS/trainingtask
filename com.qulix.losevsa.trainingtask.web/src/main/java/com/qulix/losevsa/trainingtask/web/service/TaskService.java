@@ -5,7 +5,7 @@ import java.util.List;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
 
 /**
- * The interface of business logic for working with {@link Task}
+ * The interface of business logic for working with {@link Task}.
  */
 public interface TaskService {
 
@@ -28,7 +28,7 @@ public interface TaskService {
      * Gets all tasks.
      *
      * @return the {@link List} of all tasks
-     * @throws IncorrectInputException if there is no connection to com.qulix.losevsa.trainingtask.web.database
+     * @throws IncorrectInputException if there is no connection to database
      */
     List<Task> getAllTasks();
 
@@ -37,7 +37,7 @@ public interface TaskService {
      *
      * @param taskId the task id
      * @return the task
-     * @throws IncorrectInputException if task with that id doesn't exists
+     * @throws IncorrectInputException if task with that id doesn't exist
      */
     Task getTask(long taskId);
 
@@ -61,7 +61,7 @@ public interface TaskService {
      * Delete task by task id.
      *
      * @param taskId the task id
-     * @throws IncorrectInputException if task with that id doesn't exists
+     * @throws IncorrectInputException if task with that id doesn't exist
      */
     void deleteTask(long taskId);
 }

@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface Command {
 
     /**
-     * Execute.
+     * Execute specified command.
      *
      * @param request  the {@link HttpServletRequest} object that
      * contains the request the client made of the servlet

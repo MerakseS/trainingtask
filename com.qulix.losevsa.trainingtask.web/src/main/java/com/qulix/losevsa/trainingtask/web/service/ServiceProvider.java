@@ -25,7 +25,7 @@ public class ServiceProvider {
     }
 
     /**
-     * Gets instance of com.qulix.losevsa.trainingtask.web.service provider.
+     * Gets instance of service provider.
      *
      * @return the instance
      */
@@ -34,27 +34,27 @@ public class ServiceProvider {
     }
 
     /**
-     * Gets employee com.qulix.losevsa.trainingtask.web.service.
+     * Gets employee service.
      *
-     * @return the employee com.qulix.losevsa.trainingtask.web.service
+     * @return the employee service
      */
     public EmployeeService getEmployeeService() {
         return employeeService;
     }
 
     /**
-     * Gets project com.qulix.losevsa.trainingtask.web.service.
+     * Gets project service.
      *
-     * @return the project com.qulix.losevsa.trainingtask.web.service
+     * @return the project service
      */
     public ProjectService getProjectService() {
         return projectService;
     }
 
     /**
-     * Gets task com.qulix.losevsa.trainingtask.web.service.
+     * Gets task service.
      *
-     * @return the task com.qulix.losevsa.trainingtask.web.service
+     * @return the task service
      */
     public TaskService getTaskService() {
         return taskService;

@@ -1,7 +1,7 @@
 package com.qulix.losevsa.trainingtask.web.utils;
 
 /**
- * The type Html com.qulix.losevsa.trainingtask.web.utils.
+ * The type Html utils.
  */
 public class HtmlUtils {
 

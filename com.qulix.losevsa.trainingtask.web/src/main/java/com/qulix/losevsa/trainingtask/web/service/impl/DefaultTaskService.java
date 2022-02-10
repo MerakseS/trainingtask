@@ -19,7 +19,7 @@ import com.qulix.losevsa.trainingtask.web.service.ProjectService;
 import com.qulix.losevsa.trainingtask.web.service.TaskService;
 
 /**
- * The default implementation of the {@link TaskService}
+ * The default implementation of the {@link TaskService}.
  */
 public class DefaultTaskService implements TaskService {
 
@@ -32,10 +32,10 @@ public class DefaultTaskService implements TaskService {
     private final ProjectService projectService;
 
     /**
-     * Instantiates a new Default task com.qulix.losevsa.trainingtask.web.service.
+     * Instantiates a new Default task service.
      *
-     * @param employeeService the employee com.qulix.losevsa.trainingtask.web.service
-     * @param projectService  the project com.qulix.losevsa.trainingtask.web.service
+     * @param employeeService the employee service
+     * @param projectService  the project service
      */
     public DefaultTaskService(EmployeeService employeeService, ProjectService projectService) {
         RepositoryProvider repositoryProvider = RepositoryProvider.getInstance();
