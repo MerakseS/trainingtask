@@ -16,29 +16,31 @@
 </head>
 <body>
 <div>
-    <c:if test="${throwable == null && statusCode == null}">
+    <c:if test="${exception == null && statusCode == null}">
         <h2>Error information is missing</h2>
-        <p>Please return to the <a href="${response.encodeURL("http://localhost:8080/")}">Home Page</a>.</p>
+        <p>Please return to the <a href="${request.getRequestURL()}">Home Page</a>.</p>
     </c:if>
 
-    <c:if test="${throwable != null}">
-        <h1>Error information</h1>
+    <h1>Error information</h1>
 
+    <c:if test="${statusCode != null}">
         <h3>Status code</h3>
         <p>${statusCode}</p>
+    </c:if>
 
+    <c:if test="${exception != null}">
         <h3>Servlet name</h3>
         <p>${servletName}</p>
 
         <h3>Exception Type</h3>
-        <p>${throwable.getClass().getName()}</p>
+        <p>${exception.getClass().getName()}</p>
 
         <h3>The request URI</h3>
         <p>${requestUri}</p>
 
-        <jsp:useBean id="throwable" type="java.lang.Throwable" scope="request"/>
+        <jsp:useBean id="exception" type="java.lang.Exception" scope="request"/>
         <h3>The exception message</h3>
-        <p><%= new String(throwable.getMessage().getBytes(), UTF_8)%></p>
+        <p><%= new String(exception.getMessage().getBytes(), UTF_8)%></p>
     </c:if>
 </div>
 </body>

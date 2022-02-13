@@ -2,7 +2,6 @@ package com.qulix.losevsa.trainingtask.web.controller.command.impl.projectComman
 
 import java.io.IOException;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,7 +19,7 @@ public class DeleteProjectCommand implements Command {
     private static final String ID_PARAMETER = "id";
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
         ProjectService projectService = serviceProvider.getProjectService();
 

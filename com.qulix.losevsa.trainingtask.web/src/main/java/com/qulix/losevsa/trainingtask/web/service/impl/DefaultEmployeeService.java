@@ -10,6 +10,7 @@ import com.qulix.losevsa.trainingtask.web.repository.EmployeeRepository;
 import com.qulix.losevsa.trainingtask.web.repository.RepositoryProvider;
 import com.qulix.losevsa.trainingtask.web.service.EmployeeService;
 import com.qulix.losevsa.trainingtask.web.service.IncorrectInputException;
+import com.qulix.losevsa.trainingtask.web.service.NotFoundException;
 
 /**
  * The default implementation of {@link EmployeeService}.
@@ -55,7 +56,7 @@ public class DefaultEmployeeService implements EmployeeService {
         Employee employee = employeeRepository.getEmployeeById(employeeId);
         if (employee == null) {
             LOG.error(format("Employee with id %d doesn't exist.", employeeId));
-            throw new IncorrectInputException(format("Сотрудник с id %d не существует!", employeeId));
+            throw new NotFoundException(format("Сотрудник с id %d не существует!", employeeId));
         }
 
         LOG.info(format("Successfully get employee with id %d", employeeId));
@@ -93,7 +94,7 @@ public class DefaultEmployeeService implements EmployeeService {
         Employee employee = employeeRepository.getEmployeeById(employeeId);
         if (employee == null) {
             LOG.error(format("Employee with id %d doesn't exist.", employeeId));
-            throw new IncorrectInputException(format("Сотрудник с id %d не существует!", employeeId));
+            throw new NotFoundException(format("Сотрудник с id %d не существует!", employeeId));
         }
     }
 

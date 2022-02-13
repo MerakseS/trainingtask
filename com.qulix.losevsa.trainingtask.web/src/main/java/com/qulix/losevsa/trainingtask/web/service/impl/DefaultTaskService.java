@@ -15,6 +15,7 @@ import com.qulix.losevsa.trainingtask.web.repository.RepositoryProvider;
 import com.qulix.losevsa.trainingtask.web.repository.TaskRepository;
 import com.qulix.losevsa.trainingtask.web.service.EmployeeService;
 import com.qulix.losevsa.trainingtask.web.service.IncorrectInputException;
+import com.qulix.losevsa.trainingtask.web.service.NotFoundException;
 import com.qulix.losevsa.trainingtask.web.service.ProjectService;
 import com.qulix.losevsa.trainingtask.web.service.TaskService;
 
@@ -82,7 +83,7 @@ public class DefaultTaskService implements TaskService {
         Task task = taskRepository.getTaskById(taskId);
         if (task == null) {
             LOG.error(format("Task with id %d doesn't exist.", taskId));
-            throw new IncorrectInputException(format("Задача с id %d не существует.", taskId));
+            throw new NotFoundException(format("Задача с id %d не существует.", taskId));
         }
 
         return task;
@@ -128,7 +129,7 @@ public class DefaultTaskService implements TaskService {
         Task task = taskRepository.getTaskById(taskId);
         if (task == null) {
             LOG.error(format("Task with id %d doesn't exist.", taskId));
-            throw new IncorrectInputException(format("Задача с id %d не существует.", taskId));
+            throw new NotFoundException(format("Задача с id %d не существует.", taskId));
         }
     }
 
