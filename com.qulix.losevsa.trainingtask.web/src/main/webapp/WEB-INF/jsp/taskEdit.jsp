@@ -108,15 +108,14 @@
                     <c:forEach var="status" items="${Status.values()}">
                         <jsp:useBean id="status" type="com.qulix.losevsa.trainingtask.web.entity.enums.Status"/>
                         <option value="${status}"
-                                <c:if test="${param.status != null &&
-                                status == Status.valueOf(param.status)}">
+                                <c:if test="${param.status != null && status == Status.valueOf(param.status)}">
                                     selected
                                 </c:if>
 
                                 <c:if test="${param.status == null && status == task.status}">
                                     selected
                                 </c:if>
-                        ><%= new String(status.toString().getBytes(), UTF_8)%></option>
+                        ><%= new String(status.getName().getBytes(), UTF_8)%></option>
                     </c:forEach>
                 </select>
             </label> <br/><br/>

@@ -76,7 +76,7 @@
                 <jsp:useBean id="task" type="com.qulix.losevsa.trainingtask.web.entity.Task"/>
                 <tr>
                     <td>
-                        <%= new String(task.getStatus().toString().getBytes(), UTF_8)%>
+                        <%= new String(task.getStatus().getName().getBytes(), UTF_8)%>
                     </td>
                     <td>${htmlUtils.escapeHtml(task.name)}</td>
                     <td>${task.workTime == null ? "" : task.workTime}</td>

@@ -27,14 +27,13 @@ public enum Status {
      */
     POSTPONED("Отложена");
 
-    private final String status;
+    private final String name;
 
-    Status(String status) {
-        this.status = status;
+    Status(String name) {
+        this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return status;
+    public String getName() {
+        return name;
     }
 }
