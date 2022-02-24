@@ -19,6 +19,7 @@ public interface EmployeeService {
      * @param surName    the surname
      * @param patronymic the patronymic
      * @param position   the position
+     *
      * @throws FieldNotFilledException if required fields are empty
      * @throws EmployeeFieldLengthExceededException if field's length is bigger than 30.
      */
@@ -49,6 +50,7 @@ public interface EmployeeService {
      * @param surName    the surname
      * @param patronymic the patronymic
      * @param position   the position
+     *
      * @throws NotFoundException if employee doesn't exist
      * @throws FieldNotFilledException if required fields are empty
      * @throws EmployeeFieldLengthExceededException if field's length is bigger than 30.

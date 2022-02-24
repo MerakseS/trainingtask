@@ -16,7 +16,7 @@ import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 
 /**
- * The Show edit project form command.
+ * Show edit project form command.
  */
 public class ShowEditProjectFormCommand implements Command {
 

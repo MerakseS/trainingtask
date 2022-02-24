@@ -1,7 +1,7 @@
 package com.qulix.losevsa.trainingtask.web.utils;
 
 /**
- * The type Html utils.
+ * HTML utils using for escaping HTML.
  */
 public class HtmlUtils {
 

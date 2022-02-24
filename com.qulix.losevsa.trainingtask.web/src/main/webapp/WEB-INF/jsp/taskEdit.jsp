@@ -115,7 +115,8 @@
                                 <c:if test="${param.status == null && status == task.status}">
                                     selected
                                 </c:if>
-                        ><%= new String(status.getName().getBytes(), UTF_8)%></option>
+                        ><%= new String(status.getName().getBytes(), UTF_8)%>
+                        </option>
                     </c:forEach>
                 </select>
             </label> <br/><br/>

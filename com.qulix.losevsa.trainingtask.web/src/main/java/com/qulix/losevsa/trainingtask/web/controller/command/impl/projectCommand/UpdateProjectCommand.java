@@ -18,7 +18,7 @@ import com.qulix.losevsa.trainingtask.web.service.exception.DescriptionLengthExc
 import com.qulix.losevsa.trainingtask.web.service.exception.NameLengthExceededException;
 
 /**
- * The Update project command.
+ * Update project command.
  */
 public class UpdateProjectCommand implements Command {
 

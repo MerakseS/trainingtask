@@ -18,6 +18,7 @@ public interface ProjectService {
      *
      * @param name        the name of the project
      * @param description the description of the project
+     *
      * @throws FieldNotFilledException if required fields are empty
      * @throws NameLengthExceededException if name's length is bigger than 30.
      * @throws DescriptionLengthExceededException if description's length is bigger than 200.
@@ -46,6 +47,7 @@ public interface ProjectService {
      * @param projectId   the project id
      * @param name        the name
      * @param description the description
+     *
      * @throws NotFoundException if project with that id doesn't exist
      * @throws FieldNotFilledException if required fields are empty
      * @throws NameLengthExceededException if name's length is bigger than 30.

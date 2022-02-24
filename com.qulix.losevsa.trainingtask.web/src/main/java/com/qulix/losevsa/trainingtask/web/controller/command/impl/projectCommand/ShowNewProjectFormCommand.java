@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 
 /**
- * The Show new project form command.
+ * Show new project form command.
  */
 public class ShowNewProjectFormCommand implements Command {
 

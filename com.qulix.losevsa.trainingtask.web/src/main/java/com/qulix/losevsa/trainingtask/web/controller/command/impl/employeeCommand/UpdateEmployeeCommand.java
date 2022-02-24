@@ -17,7 +17,7 @@ import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledExcept
 import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 
 /**
- * The Update employee command.
+ * Update employee command.
  */
 public class UpdateEmployeeCommand implements Command {
 

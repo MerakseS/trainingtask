@@ -40,7 +40,8 @@
 
         <jsp:useBean id="exception" type="java.lang.Exception" scope="request"/>
         <h3>The exception message</h3>
-        <p><%= new String(exception.getMessage().getBytes(), UTF_8)%></p>
+        <p><%= new String(exception.getMessage().getBytes(), UTF_8)%>
+        </p>
     </c:if>
 </div>
 </body>

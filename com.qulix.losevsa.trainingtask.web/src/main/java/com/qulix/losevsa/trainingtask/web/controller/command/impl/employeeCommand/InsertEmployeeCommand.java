@@ -15,7 +15,7 @@ import com.qulix.losevsa.trainingtask.web.service.exception.EmployeeFieldLengthE
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
 
 /**
- * The Insert employee command.
+ * Insert employee command.
  */
 public class InsertEmployeeCommand implements Command {
 

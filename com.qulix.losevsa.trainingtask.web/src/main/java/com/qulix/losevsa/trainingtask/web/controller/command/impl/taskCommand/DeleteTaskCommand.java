@@ -15,7 +15,7 @@ import com.qulix.losevsa.trainingtask.web.service.TaskService;
 import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 
 /**
- * The type Delete task command.
+ * Delete task command.
  */
 public class DeleteTaskCommand implements Command {
 

@@ -16,7 +16,7 @@ import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledExcept
 import com.qulix.losevsa.trainingtask.web.service.exception.NameLengthExceededException;
 
 /**
- * The Insert project command.
+ * Insert project command.
  */
 public class InsertProjectCommand implements Command {
 

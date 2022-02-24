@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
 import com.qulix.losevsa.trainingtask.web.service.ProjectService;
@@ -13,9 +14,9 @@ import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 import com.qulix.losevsa.trainingtask.web.service.TaskService;
 
 /**
- * The type Show edit task form command.
+ * Show edit task form command.
  */
-public class ShowEditTaskFormCommand implements com.qulix.losevsa.trainingtask.web.controller.command.Command {
+public class ShowEditTaskFormCommand implements Command {
 
     private static final String TASK_EDIT_PATH = "/WEB-INF/jsp/taskEdit.jsp";
 

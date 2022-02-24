@@ -13,7 +13,7 @@ import com.qulix.losevsa.trainingtask.web.service.ProjectService;
 import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 
 /**
- * The Show project list command.
+ * Show project list command.
  */
 public class ShowProjectListCommand implements Command {
 

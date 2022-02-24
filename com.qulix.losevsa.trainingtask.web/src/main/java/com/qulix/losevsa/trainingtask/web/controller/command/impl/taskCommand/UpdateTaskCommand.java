@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 import com.qulix.losevsa.trainingtask.web.service.TaskService;
 import com.qulix.losevsa.trainingtask.web.service.exception.DateParseException;
@@ -22,9 +23,9 @@ import com.qulix.losevsa.trainingtask.web.service.exception.WorkTimeNegativeExce
 import com.qulix.losevsa.trainingtask.web.service.exception.WorkTimeParseException;
 
 /**
- * The type Update task command.
+ * Update task command.
  */
-public class UpdateTaskCommand implements com.qulix.losevsa.trainingtask.web.controller.command.Command {
+public class UpdateTaskCommand implements Command {
 
     private static final Logger LOG = Logger.getLogger(UpdateTaskCommand.class);
 
@@ -90,10 +91,10 @@ public class UpdateTaskCommand implements com.qulix.losevsa.trainingtask.web.con
             handleException(e.getMessage(), "Длина наименования должна быть не больше 30 символов.", request, response);
         }
         catch (WorkTimeNegativeException e) {
-            handleException(e.getMessage(), "Время работы не может быть отрицательным", request, response);
+            handleException(e.getMessage(), "Время работы не может быть отрицательным.", request, response);
         }
         catch (EndDateEarlierStartDateException e) {
-            handleException(e.getMessage(), "Дата окончания не может быть раньше даты начала", request, response);
+            handleException(e.getMessage(), "Дата окончания не может быть раньше даты начала.", request, response);
         }
     }
 

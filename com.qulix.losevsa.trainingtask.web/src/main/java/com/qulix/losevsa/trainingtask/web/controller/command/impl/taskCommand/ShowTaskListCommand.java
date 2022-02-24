@@ -13,7 +13,7 @@ import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 import com.qulix.losevsa.trainingtask.web.service.TaskService;
 
 /**
- * The type Show task list command.
+ * Show task list command.
  */
 public class ShowTaskListCommand implements Command {
 

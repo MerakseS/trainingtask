@@ -60,16 +60,16 @@
         <h3>Список задач проекта</h3>
         <table>
             <thead>
-                <tr>
-                    <th>Статус</th>
-                    <th>Наименование</th>
-                    <th>Работа</th>
-                    <th>Дата начала</th>
-                    <th>Дата окончания</th>
-                    <th>Исполнитель</th>
-                    <th></th>
-                    <th></th>
-                </tr>
+            <tr>
+                <th>Статус</th>
+                <th>Наименование</th>
+                <th>Работа</th>
+                <th>Дата начала</th>
+                <th>Дата окончания</th>
+                <th>Исполнитель</th>
+                <th></th>
+                <th></th>
+            </tr>
             </thead>
             <tbody>
             <c:forEach var="task" items="${project.taskList}">
