@@ -5,17 +5,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import static java.lang.String.format;
 
-import org.apache.log4j.Logger;
-
 /**
  * The class for creating database connection.
  */
 public class DatabaseConnection {
 
     private static final DatabaseProperties DATABASE_PROPERTIES = new DatabaseProperties();
-
     private static final String DB_DRIVER = "org.hsqldb.jdbc.JDBCDriver";
-    private static final Logger LOG = Logger.getLogger(DatabaseConnection.class);
 
     /**
      * Gets database connection. Connection parameters are taken from {@link DatabaseProperties}.
@@ -33,8 +29,7 @@ public class DatabaseConnection {
             );
         }
         catch (ClassNotFoundException | SQLException e) {
-            LOG.error(format("Can't get connection cause: %s", e.getMessage()));
-            throw new NoConnectionException(e);
+            throw new NoConnectionException(format("Can't get connection cause: %s", e.getMessage()), e);
         }
     }
 }

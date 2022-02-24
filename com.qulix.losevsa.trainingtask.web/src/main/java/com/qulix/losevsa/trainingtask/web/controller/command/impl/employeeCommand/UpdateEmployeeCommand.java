@@ -1,29 +1,39 @@
 package com.qulix.losevsa.trainingtask.web.controller.command.impl.employeeCommand;
 
 import java.io.IOException;
+import static java.lang.String.format;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.service.EmployeeService;
-import com.qulix.losevsa.trainingtask.web.service.IncorrectInputException;
 import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
+import com.qulix.losevsa.trainingtask.web.service.exception.EmployeeFieldLengthExceededException;
+import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
+import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 
 /**
  * The Update employee command.
  */
 public class UpdateEmployeeCommand implements Command {
 
+    public static final Logger LOG = Logger.getLogger(UpdateEmployeeCommand.class);
+
     private static final String EMPLOYEE_LIST_PATH = "/employee";
     private static final String EDIT_EMPLOYEE_FORM_PATH = "/employee/edit";
+    private static final String NOT_FOUND_PATH = "/WEB-INF/jsp/notFoundPage.jsp";
 
     private static final String ID_PARAMETER = "id";
     private static final String FIRSTNAME_PARAMETER = "firstname";
     private static final String SURNAME_PARAMETER = "surname";
     private static final String PATRONYMIC_PARAMETER = "patronymic";
     private static final String POSITION_PARAMETER = "position";
+
+    private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
@@ -40,9 +50,23 @@ public class UpdateEmployeeCommand implements Command {
             employeeService.updateEmployee(id, firsName, surname, patronymic, position);
             response.sendRedirect(EMPLOYEE_LIST_PATH);
         }
-        catch (IncorrectInputException e) {
-            request.setAttribute("errorMessage", e.getMessage());
-            request.getRequestDispatcher(EDIT_EMPLOYEE_FORM_PATH).forward(request, response);
+        catch (NotFoundException e) {
+            LOG.warn(e.getMessage());
+            request.setAttribute(ERROR_ATTRIBUTE_NAME, format("Сотрудник с id %d не существует!", id));
+            request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);
         }
+        catch (FieldNotFilledException e) {
+            handleException(e.getMessage(), "Введите обязательные поля.", request, response);
+        }
+        catch (EmployeeFieldLengthExceededException e) {
+            handleException(e.getMessage(), "Длина полей работника должна быть не больше 30 символов.", request, response);
+        }
+    }
+
+    private void handleException(String logMessage, String clientMessage,
+        HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        LOG.warn(logMessage);
+        request.setAttribute(ERROR_ATTRIBUTE_NAME, clientMessage);
+        request.getRequestDispatcher(EDIT_EMPLOYEE_FORM_PATH).forward(request, response);
     }
 }

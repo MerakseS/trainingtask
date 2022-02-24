@@ -7,12 +7,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.qulix.losevsa.trainingtask.web.service.NotFoundException;
+import org.apache.log4j.Logger;
+
+import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 
 /**
  * The Exception handler.
  */
 public class ExceptionHandler extends HttpServlet {
+
+    private static final Logger LOG = Logger.getLogger(ExceptionHandler.class);
 
     private static final String EXCEPTION_NAME = "javax.servlet.error.exception";
     private static final String STATUS_CODE_NAME = "javax.servlet.error.status_code";
@@ -24,6 +28,9 @@ public class ExceptionHandler extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Exception exception = (Exception) request.getAttribute(EXCEPTION_NAME);
+        if (exception != null) {
+            LOG.error(exception.getMessage());
+        }
 
         Integer statusCode;
         if (exception instanceof NotFoundException) {

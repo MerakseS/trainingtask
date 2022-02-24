@@ -9,8 +9,6 @@ import java.util.List;
 import static java.lang.String.format;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
-import org.apache.log4j.Logger;
-
 import com.qulix.losevsa.trainingtask.web.database.DatabaseConnection;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.repository.EmployeeRepository;
@@ -20,8 +18,6 @@ import com.qulix.losevsa.trainingtask.web.repository.QueryExecutionException;
  * The default implementation of {@link EmployeeRepository}
  */
 public class DefaultEmployeeRepository implements EmployeeRepository {
-
-    private static final Logger LOG = Logger.getLogger(DefaultEmployeeRepository.class);
 
     private static final String EMPLOYEE_ID_COLUMN_NAME = "ID";
     private static final String EMPLOYEE_FIRST_NAME_COLUMN_NAME = "FIRST_NAME";
@@ -46,7 +42,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException(format("Can't save employee. No rows affected. Employee: %s", employee));
+                throw new QueryExecutionException(format("Can't save employee. No rows affected. Employee: %s", employee));
             }
 
             ResultSet generatedKeys = statement.getGeneratedKeys();
@@ -54,14 +50,16 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
                 employee.setId(generatedKeys.getLong(1));
             }
             else {
-                throw new SQLException(format("Can't save employee. No ID obtained. Employee: %s", employee));
+                throw new QueryExecutionException(format("Can't save employee. No ID obtained. Employee: %s", employee));
             }
 
             return employee;
         }
         catch (SQLException e) {
-            LOG.error(format("Can't save employee cause: %s. Employee: %s", e.getMessage(), employee));
-            throw new QueryExecutionException(e);
+            throw new QueryExecutionException(
+                format("Can't save employee cause: %s. Employee: %s", e.getMessage(), employee),
+                e
+            );
         }
     }
 
@@ -80,8 +78,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
             return employeeList;
         }
         catch (SQLException e) {
-            LOG.error(format("Can't get all employees cause: %s", e.getMessage()));
-            throw new QueryExecutionException(e);
+            throw new QueryExecutionException(format("Can't get all employees cause: %s", e.getMessage()), e);
         }
     }
 
@@ -96,8 +93,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
             return result.next() ? getEmployeeByResultSet(result) : null;
         }
         catch (SQLException e) {
-            LOG.error(format("Can't get employee cause: %s. Employee: %d", e.getMessage(), id));
-            throw new QueryExecutionException(e);
+            throw new QueryExecutionException(format("Can't get employee cause: %s. Employee: %d", e.getMessage(), id), e);
         }
     }
 
@@ -111,14 +107,15 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException(format("Can't update employee. No rows affected. Employee: %s", employee));
+                throw new QueryExecutionException(format("Can't update employee. No rows affected. Employee: %s", employee));
             }
 
             return employee;
         }
         catch (SQLException e) {
-            LOG.error(format("Can't update employee cause: %s. Employee: %s", e.getMessage(), employee));
-            throw new QueryExecutionException(e);
+            throw new QueryExecutionException(
+                format("Can't update employee cause: %s. Employee: %s", e.getMessage(), employee), e
+            );
         }
     }
 
@@ -131,14 +128,13 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException(format("Can't update employee. No rows affected. Employee's id: %s", id));
+                throw new QueryExecutionException(format("Can't update employee. No rows affected. Employee's id: %s", id));
             }
 
             return id;
         }
         catch (SQLException e) {
-            LOG.error(format("Can't delete employee cause: %s. Employee: %s", e.getMessage(), id));
-            throw new QueryExecutionException(e);
+            throw new QueryExecutionException(format("Can't delete employee cause: %s. Employee: %s", e.getMessage(), id), e);
         }
     }
 

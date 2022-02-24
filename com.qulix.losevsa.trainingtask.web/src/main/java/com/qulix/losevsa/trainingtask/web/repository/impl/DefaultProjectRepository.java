@@ -9,8 +9,6 @@ import java.util.List;
 import static java.lang.String.format;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
-import org.apache.log4j.Logger;
-
 import com.qulix.losevsa.trainingtask.web.database.DatabaseConnection;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.repository.ProjectRepository;
@@ -20,8 +18,6 @@ import com.qulix.losevsa.trainingtask.web.repository.QueryExecutionException;
  * The default implementation of {@link ProjectRepository}
  */
 public class DefaultProjectRepository implements ProjectRepository {
-
-    private static final Logger LOG = Logger.getLogger(DefaultProjectRepository.class);
 
     private static final String PROJECT_ID_COLUMN_NAME = "ID";
     private static final String PROJECT_NAME_COLUMN_NAME = "NAME";
@@ -42,7 +38,7 @@ public class DefaultProjectRepository implements ProjectRepository {
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException(format("Can't save project. No rows affected. Project: %s", project));
+                throw new QueryExecutionException(format("Can't save project. No rows affected. Project: %s", project));
             }
 
             ResultSet generatedKeys = statement.getGeneratedKeys();
@@ -50,14 +46,13 @@ public class DefaultProjectRepository implements ProjectRepository {
                 project.setId(generatedKeys.getLong(1));
             }
             else {
-                throw new SQLException(format("Can't save project. No ID obtained. Project: %s", project));
+                throw new QueryExecutionException(format("Can't save project. No ID obtained. Project: %s", project));
             }
 
             return project;
         }
         catch (SQLException e) {
-            LOG.error(format("Can't save project cause: %s. Employee: %s", e.getMessage(), project));
-            throw new QueryExecutionException(e);
+            throw new QueryExecutionException(format("Can't save project cause: %s. Employee: %s", e.getMessage(), project), e);
         }
     }
 
@@ -76,8 +71,7 @@ public class DefaultProjectRepository implements ProjectRepository {
             return projectList;
         }
         catch (SQLException e) {
-            LOG.error(format("Can't get all projects cause: %s", e.getMessage()));
-            throw new QueryExecutionException(e);
+            throw new QueryExecutionException(format("Can't get all projects cause: %s", e.getMessage()), e);
         }
     }
 
@@ -92,8 +86,7 @@ public class DefaultProjectRepository implements ProjectRepository {
             return result.next() ? getProjectByResultSet(result) : null;
         }
         catch (SQLException e) {
-            LOG.error(format("Can't get project cause: %s. Employee: %d", e.getMessage(), id));
-            throw new QueryExecutionException(e);
+            throw new QueryExecutionException(format("Can't get project cause: %s. Employee: %d", e.getMessage(), id), e);
         }
     }
 
@@ -107,14 +100,13 @@ public class DefaultProjectRepository implements ProjectRepository {
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException(format("Can't update project. No rows affected. Project: %s", project));
+                throw new QueryExecutionException(format("Can't update project. No rows affected. Project: %s", project));
             }
 
             return project;
         }
         catch (SQLException e) {
-            LOG.error(format("Can't update project cause: %s. Employee: %s", e.getMessage(), project));
-            throw new QueryExecutionException(e);
+            throw new QueryExecutionException(format("Can't update project cause: %s. Employee: %s", e.getMessage(), project), e);
         }
     }
 
@@ -127,14 +119,13 @@ public class DefaultProjectRepository implements ProjectRepository {
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException(format("Can't delete project. No rows affected. Project's id: %s", id));
+                throw new QueryExecutionException(format("Can't delete project. No rows affected. Project's id: %s", id));
             }
 
             return id;
         }
         catch (SQLException e) {
-            LOG.error(format("Can't delete project cause: %s. Employee: %s", e.getMessage(), id));
-            throw new QueryExecutionException(e);
+            throw new QueryExecutionException(format("Can't delete project cause: %s. Employee: %s", e.getMessage(), id), e);
         }
     }
 

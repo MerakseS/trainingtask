@@ -27,7 +27,7 @@ public class Task {
     private String name;
 
     /**
-     * Project that task belong.
+     * Project that task belongs.
      */
     private Project project;
 

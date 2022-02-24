@@ -8,9 +8,10 @@ public class NoConnectionException extends RuntimeException {
     /**
      * Instantiates a new No connection exception.
      *
+     * @param message the message
      * @param cause the cause
      */
-    public NoConnectionException(Throwable cause) {
-        super(cause);
+    public NoConnectionException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

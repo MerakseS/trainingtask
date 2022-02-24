@@ -3,6 +3,9 @@ package com.qulix.losevsa.trainingtask.web.service;
 import java.util.List;
 
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
+import com.qulix.losevsa.trainingtask.web.service.exception.EmployeeFieldLengthExceededException;
+import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
+import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 
 /**
  * The interface of business logic for working with {@link Employee}.
@@ -16,7 +19,8 @@ public interface EmployeeService {
      * @param surName    the surname
      * @param patronymic the patronymic
      * @param position   the position
-     * @throws IncorrectInputException if data is incorrect
+     * @throws FieldNotFilledException if required fields are empty
+     * @throws EmployeeFieldLengthExceededException if field's length is bigger than 30.
      */
     void createEmployee(String firstName, String surName, String patronymic, String position);
 
@@ -25,7 +29,6 @@ public interface EmployeeService {
      *
      * @return the {@link List} of all employees
      * @see Employee
-     * @throws IncorrectInputException if there is no connection to database
      */
     List<Employee> getAllEmployees();
 
@@ -34,19 +37,21 @@ public interface EmployeeService {
      *
      * @param employeeId the employee id
      * @return the employee
-     * @throws IncorrectInputException if employee with that id doesn't exist
+     * @throws NotFoundException if employee with that id doesn't exist
      */
     Employee getEmployee(long employeeId);
 
     /**
-     * Updates employee.
+     * Updates employee by id.
      *
      * @param employeeId the employee id
      * @param firstName  the first name
      * @param surName    the surname
      * @param patronymic the patronymic
      * @param position   the position
-     * @throws IncorrectInputException if data is incorrect
+     * @throws NotFoundException if employee doesn't exist
+     * @throws FieldNotFilledException if required fields are empty
+     * @throws EmployeeFieldLengthExceededException if field's length is bigger than 30.
      */
     void updateEmployee(long employeeId, String firstName, String surName, String patronymic, String position);
 
@@ -54,7 +59,7 @@ public interface EmployeeService {
      * Delete employee by id.
      *
      * @param employeeId the employee id
-     * @throws IncorrectInputException if employee with that id doesn't exist
+     * @throws NotFoundException if employee with that id doesn't exist
      */
     void deleteEmployee(long employeeId);
 }

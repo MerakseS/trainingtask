@@ -10,9 +10,11 @@ import com.qulix.losevsa.trainingtask.web.entity.Task;
 import com.qulix.losevsa.trainingtask.web.repository.ProjectRepository;
 import com.qulix.losevsa.trainingtask.web.repository.RepositoryProvider;
 import com.qulix.losevsa.trainingtask.web.repository.TaskRepository;
-import com.qulix.losevsa.trainingtask.web.service.IncorrectInputException;
-import com.qulix.losevsa.trainingtask.web.service.NotFoundException;
 import com.qulix.losevsa.trainingtask.web.service.ProjectService;
+import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
+import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
+import com.qulix.losevsa.trainingtask.web.service.exception.DescriptionLengthExceededException;
+import com.qulix.losevsa.trainingtask.web.service.exception.NameLengthExceededException;
 
 /**
  * The default implementation of the {@link ProjectService}.
@@ -60,8 +62,7 @@ public class DefaultProjectService implements ProjectService {
     public Project getProject(long id) {
         Project project = projectRepository.getProjectById(id);
         if (project == null) {
-            LOG.error(format("Project with id %d doesn't exist.", id));
-            throw new NotFoundException(format("Проект с id %d не существует!", id));
+            throw new NotFoundException(format("Project with id %d doesn't exist.", id));
         }
 
         List<Task> taskList = taskRepository.getTaskListByProjectId(id);
@@ -73,51 +74,48 @@ public class DefaultProjectService implements ProjectService {
 
     @Override
     public void updateProject(long id, String name, String description) {
-        checkThatProjectExists(id);
+        Project project = projectRepository.getProjectById(id);
+        if (project == null) {
+            throw new NotFoundException(format("Project with id %d doesn't exist.", id));
+        }
 
         validateValues(name, description);
 
-        Project project = new Project();
-        project.setId(id);
-        project.setName(name);
+        Project newProject = new Project();
+        newProject.setId(id);
+        newProject.setName(name);
         if (description != null && !description.isBlank()) {
-            project.setDescription(description);
+            newProject.setDescription(description);
         }
 
-        project = projectRepository.updateProject(project);
-        LOG.info(format("Successfully updated project with id %d", project.getId()));
+        newProject = projectRepository.updateProject(newProject);
+        LOG.info(format("Successfully updated project with id %d", newProject.getId()));
     }
 
     @Override
     public void deleteProject(long id) {
-        checkThatProjectExists(id);
+        Project project = projectRepository.getProjectById(id);
+        if (project == null) {
+            throw new NotFoundException(format("Project with id %d doesn't exist.", id));
+        }
 
         id = projectRepository.deleteProjectById(id);
         LOG.info(format("Successfully deleted project with id %d", id));
     }
 
-    private void checkThatProjectExists(long id) {
-        Project project = projectRepository.getProjectById(id);
-        if (project == null) {
-            LOG.error(format("Project with id %d doesn't exist.", id));
-            throw new NotFoundException(format("Проект с id %d не существует!", id));
-        }
-    }
-
     private void validateValues(String name, String description) {
         if (name == null || name.isBlank()) {
-            LOG.warn(format("Required field are empty. Name: %s", name));
-            throw new IncorrectInputException("Введите обязательные поля.");
+            throw new FieldNotFilledException(format("Required field are empty. Name: %s", name));
         }
 
         if (name.length() > NAME_MAX_LENGTH) {
-            LOG.warn(format("Length of name is more then %d. Name: %s", NAME_MAX_LENGTH, name));
-            throw new IncorrectInputException(format("Длина наименования не больше %d символов.", NAME_MAX_LENGTH));
+            throw new NameLengthExceededException(format("Length of name is more then %d. Name: %s", NAME_MAX_LENGTH, name));
         }
 
         if (description != null && description.length() > DESCRIPTION_MAX_LENGTH) {
-            LOG.warn(format("Length of patronymic is more then %d. Patronymic: %s", DESCRIPTION_MAX_LENGTH, description));
-            throw new IncorrectInputException(format("Длина описания не больше %d символов.", DESCRIPTION_MAX_LENGTH));
+            throw new DescriptionLengthExceededException(
+                format("Length of patronymic is more then %d. Patronymic: %s", DESCRIPTION_MAX_LENGTH, description)
+            );
         }
     }
 }
