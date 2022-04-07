@@ -1,9 +1,5 @@
 package com.qulix.losevsa.trainingtask.web.repository;
 
-import com.qulix.losevsa.trainingtask.web.repository.impl.DefaultEmployeeRepository;
-import com.qulix.losevsa.trainingtask.web.repository.impl.DefaultProjectRepository;
-import com.qulix.losevsa.trainingtask.web.repository.impl.DefaultTaskRepository;
-
 /**
  * A singleton class that provides all repository objects.
  */

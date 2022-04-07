@@ -2,8 +2,6 @@ package com.qulix.losevsa.trainingtask.web.entity;
 
 import java.time.LocalDate;
 
-import com.qulix.losevsa.trainingtask.web.entity.enums.Status;
-
 /**
  * Represents a task.
  */
@@ -17,9 +15,9 @@ public class Task {
     /**
      * Status of the task.
      *
-     * @see Status
+     * @see TaskStatus
      */
-    private Status status;
+    private TaskStatus taskStatus;
 
     /**
      * Name of the task.
@@ -59,12 +57,12 @@ public class Task {
         this.id = id;
     }
 
-    public Status getStatus() {
-        return status;
+    public TaskStatus getTaskStatus() {
+        return taskStatus;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setTaskStatus(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus;
     }
 
     public String getName() {

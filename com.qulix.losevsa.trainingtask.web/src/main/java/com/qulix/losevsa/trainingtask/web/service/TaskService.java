@@ -9,7 +9,7 @@ import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledExcept
 import com.qulix.losevsa.trainingtask.web.service.exception.NameLengthExceededException;
 import com.qulix.losevsa.trainingtask.web.service.exception.NoProjectException;
 import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
-import com.qulix.losevsa.trainingtask.web.service.exception.StatusParseException;
+import com.qulix.losevsa.trainingtask.web.service.exception.TaskStatusParseException;
 import com.qulix.losevsa.trainingtask.web.service.exception.WorkTimeNegativeException;
 import com.qulix.losevsa.trainingtask.web.service.exception.WorkTimeParseException;
 
@@ -26,7 +26,7 @@ public interface TaskService {
      * @param workTime      the work time
      * @param startDate     the start date of executing task
      * @param endDate       the end date of executing task
-     * @param status        the status of task
+     * @param taskStatus        the status of task
      * @param strEmployeeId the employee id string
      *
      * @throws FieldNotFilledException if required fields are empty
@@ -36,11 +36,10 @@ public interface TaskService {
      * @throws WorkTimeNegativeException if work time is negative
      * @throws DateParseException if start date or end date is incorrect
      * @throws EndDateEarlierStartDateException if end date is earlier than start date
-     * @throws StatusParseException if status is incorrect
-     * @throws StatusParseException if status is incorrect
+     * @throws TaskStatusParseException if task status is incorrect
      */
     void createTask(String name, String strProjectId, String workTime, String startDate,
-        String endDate, String status, String strEmployeeId);
+        String endDate, String taskStatus, String strEmployeeId);
 
     /**
      * Gets all tasks.
@@ -67,7 +66,7 @@ public interface TaskService {
      * @param workTime      the work time
      * @param startDate     the start date of executing task
      * @param endDate       the end date of executing task
-     * @param status        the status of task
+     * @param taskStatus        the status of task
      * @param strEmployeeId the employee id string
      *
      * @throws NotFoundException if task with that id doesn't exist
@@ -78,11 +77,10 @@ public interface TaskService {
      * @throws WorkTimeNegativeException if work time is negative
      * @throws DateParseException if start date or end date is incorrect
      * @throws EndDateEarlierStartDateException if end date is earlier than start date
-     * @throws StatusParseException if status is incorrect
-     * @throws StatusParseException if status is incorrect
+     * @throws TaskStatusParseException if status is incorrect
      */
     void updateTask(long taskId, String name, String strProjectId, String workTime, String startDate,
-        String endDate, String status, String strEmployeeId);
+        String endDate, String taskStatus, String strEmployeeId);
 
     /**
      * Delete task by task id.

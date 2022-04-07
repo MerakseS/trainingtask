@@ -24,12 +24,4 @@ public class QueryExecutionException extends RuntimeException {
         super(message, cause);
     }
 
-    /**
-     * Instantiates a new Repository exception.
-     *
-     * @param cause the cause
-     */
-    public QueryExecutionException(Throwable cause) {
-        super(cause);
-    }
 }

@@ -1,9 +1,5 @@
 package com.qulix.losevsa.trainingtask.web.service;
 
-import com.qulix.losevsa.trainingtask.web.service.impl.DefaultEmployeeService;
-import com.qulix.losevsa.trainingtask.web.service.impl.DefaultProjectService;
-import com.qulix.losevsa.trainingtask.web.service.impl.DefaultTaskService;
-
 /**
  * A singleton class that provides all services.
  */

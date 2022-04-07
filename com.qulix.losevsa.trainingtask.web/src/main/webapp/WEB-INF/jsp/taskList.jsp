@@ -35,7 +35,7 @@
         <c:forEach var="task" items="${taskList}">
             <jsp:useBean id="task" type="com.qulix.losevsa.trainingtask.web.entity.Task"/>
             <tr>
-                <td><%= new String(task.getStatus().getName().getBytes(), UTF_8)%>
+                <td><%= new String(task.getTaskStatus().getName().getBytes(), UTF_8)%>
                 </td>
                 <td>${htmlUtils.escapeHtml(task.name)}</td>
                 <td>${htmlUtils.escapeHtml(task.project.name)}</td>

@@ -6,7 +6,7 @@
 <%@ page import="com.qulix.losevsa.trainingtask.web.service.ServiceProvider" %>
 <%@ page import="com.qulix.losevsa.trainingtask.web.service.EmployeeService" %>
 <%@ page import="com.qulix.losevsa.trainingtask.web.entity.Employee" %>
-<%@ page import="com.qulix.losevsa.trainingtask.web.entity.enums.Status" %>
+<%@ page import="com.qulix.losevsa.trainingtask.web.entity.TaskStatus" %>
 <%@ page import="static java.nio.charset.StandardCharsets.UTF_8" %>
 
 <jsp:useBean id="errorMessage" class="java.lang.String" scope="request"/>
@@ -104,18 +104,18 @@
             </label> <br/><br/>
 
             <label>Статус*<br/>
-                <select name="status">
-                    <c:forEach var="status" items="${Status.values()}">
-                        <jsp:useBean id="status" type="com.qulix.losevsa.trainingtask.web.entity.enums.Status"/>
-                        <option value="${status}"
-                                <c:if test="${param.status != null && status == Status.valueOf(param.status)}">
+                <select name="taskStatus">
+                    <c:forEach var="taskStatus" items="${TaskStatus.values()}">
+                        <jsp:useBean id="taskStatus" type="com.qulix.losevsa.trainingtask.web.entity.TaskStatus"/>
+                        <option value="${taskStatus}"
+                                <c:if test="${param.taskStatus != null && taskStatus == TaskStatus.valueOf(param.taskStatus)}">
                                     selected
                                 </c:if>
 
-                                <c:if test="${param.status == null && status == task.status}">
+                                <c:if test="${param.taskStatus == null && taskStatus == task.taskStatus}">
                                     selected
                                 </c:if>
-                        ><%= new String(status.getName().getBytes(), UTF_8)%>
+                        ><%= new String(taskStatus.getName().getBytes(), UTF_8)%>
                         </option>
                     </c:forEach>
                 </select>

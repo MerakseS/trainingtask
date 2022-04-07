@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS employee
 CREATE TABLE IF NOT EXISTS task
 (
     id         BIGINT IDENTITY PRIMARY KEY,
-    status     VARCHAR(20) NOT NULL,
+    taskStatus     VARCHAR(20) NOT NULL,
     name       VARCHAR(50) NOT NULL,
     project    BIGINT      NOT NULL,
     work_time  INT,

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
-import com.qulix.losevsa.trainingtask.web.controller.command.impl.NotFoundCommand;
+import com.qulix.losevsa.trainingtask.web.controller.command.NotFoundCommand;
 
 /**
  * The Controller for 404 error.
