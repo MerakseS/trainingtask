@@ -1,5 +1,7 @@
 package com.qulix.losevsa.trainingtask.web.controller.command;
 
+import java.util.HashMap;
+
 import com.qulix.losevsa.trainingtask.web.controller.command.taskcommand.DeleteTaskCommand;
 import com.qulix.losevsa.trainingtask.web.controller.command.taskcommand.InsertTaskCommand;
 import com.qulix.losevsa.trainingtask.web.controller.command.taskcommand.ShowEditTaskFormCommand;
@@ -17,6 +19,7 @@ public class TaskCommandProvider extends CommandProvider {
      */
     public TaskCommandProvider() {
         super();
+        HashMap<String, Command> commands = getCommands();
         Command showListCommand = new ShowTaskListCommand();
         commands.put(EMPTY_COMMAND, showListCommand);
         commands.put(SHOW_LIST_COMMAND, showListCommand);
