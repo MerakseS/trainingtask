@@ -55,17 +55,8 @@
         <exception-type>java.lang.Exception</exception-type>
         <location>/ExceptionHandler</location>
     </error-page>
-
-    <servlet>
-        <servlet-name>NotFoundController</servlet-name>
-        <servlet-class>com.qulix.losevsa.trainingtask.web.controller.NotFoundController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>NotFoundController</servlet-name>
-        <url-pattern>/notfound</url-pattern>
-    </servlet-mapping>
     <error-page>
         <error-code>404</error-code>
-        <location>/notfound</location>
+        <location>/ExceptionHandler</location>
     </error-page>
 </web-app>
