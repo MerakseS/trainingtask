@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * The interface Repository.
  *
- * @param <T>  the type parameter in repository
+ * @param <T>  the type parameter of object in repository
  */
 public interface Repository<T> {
 
@@ -21,7 +21,7 @@ public interface Repository<T> {
     /**
      * Gets all objects from database.
      *
-     * @return the list of all objects from database.
+     * @return the {@link List} of all objects from database.
      * @throws QueryExecutionException if a database access error occurs
      */
     List<T> getAll();

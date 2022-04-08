@@ -1,7 +1,6 @@
 package com.qulix.losevsa.trainingtask.web.controller.command.employeecommand;
 
 import java.io.IOException;
-
 import static java.lang.String.format;
 
 import javax.servlet.ServletException;
@@ -11,8 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
+import com.qulix.losevsa.trainingtask.web.dto.EmployeeDto;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
-import com.qulix.losevsa.trainingtask.web.service.EmployeeService;
+import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 
@@ -33,12 +33,12 @@ public class ShowEditEmployeeFormCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        EmployeeService employeeService = serviceProvider.getEmployeeService();
+        Service<Employee, EmployeeDto> employeeService = serviceProvider.getEmployeeService();
 
         long id = Long.parseLong(request.getParameter(ID_PARAMETER));
 
         try {
-            Employee employee = employeeService.getEmployee(id);
+            Employee employee = employeeService.get(id);
             request.setAttribute("employee", employee);
             request.getRequestDispatcher(EMPLOYEE_EDIT_PATH).forward(request, response);
         }

@@ -7,8 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
+import com.qulix.losevsa.trainingtask.web.dto.ProjectDto;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
-import com.qulix.losevsa.trainingtask.web.service.ProjectService;
+import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 
 /**
@@ -23,12 +24,12 @@ public class ShowNewTaskFormCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServiceProvider provider = ServiceProvider.getInstance();
-        ProjectService projectService = provider.getProjectService();
+        Service<Project, ProjectDto> projectService = provider.getProjectService();
 
         String strProjectId = request.getParameter(PROJECT_ID_PARAMETER);
         if (strProjectId != null && !strProjectId.isBlank()) {
             long id = Long.parseLong(strProjectId);
-            Project project = projectService.getProject(id);
+            Project project = projectService.get(id);
             request.setAttribute("selectedProject", project);
         }
 

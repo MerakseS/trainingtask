@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
+import com.qulix.losevsa.trainingtask.web.dto.ProjectDto;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
-import com.qulix.losevsa.trainingtask.web.service.ProjectService;
+import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 
@@ -32,12 +33,12 @@ public class ShowEditProjectFormCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        ProjectService projectService = serviceProvider.getProjectService();
+        Service<Project, ProjectDto> projectService = serviceProvider.getProjectService();
 
         long id = Long.parseLong(request.getParameter(ID_PARAMETER));
 
         try {
-            Project project = projectService.getProject(id);
+            Project project = projectService.get(id);
             request.setAttribute("project", project);
             request.getRequestDispatcher(PROJECT_EDIT_PATH).forward(request, response);
         }

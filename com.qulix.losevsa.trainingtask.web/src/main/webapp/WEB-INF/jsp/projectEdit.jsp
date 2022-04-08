@@ -84,7 +84,7 @@
                     <td>${task.endDate}</td>
                     <td>
                             ${htmlUtils.escapeHtml(task.employee.firstName)}
-                            ${htmlUtils.escapeHtml(task.employee.surName)}
+                            ${htmlUtils.escapeHtml(task.employee.surname)}
                             ${htmlUtils.escapeHtml(task.employee.patronymic)}
                     </td>
                     <td>

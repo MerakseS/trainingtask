@@ -5,6 +5,7 @@ import static java.lang.String.format;
 
 import org.apache.log4j.Logger;
 
+import com.qulix.losevsa.trainingtask.web.dto.EmployeeDto;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.repository.Repository;
 import com.qulix.losevsa.trainingtask.web.repository.RepositoryProvider;
@@ -13,9 +14,9 @@ import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledExcept
 import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 
 /**
- * The default implementation of {@link EmployeeService}.
+ * The default {@link Employee} implementation of {@link Service}.
  */
-public class DefaultEmployeeService implements EmployeeService {
+public class DefaultEmployeeService implements Service<Employee, EmployeeDto> {
 
     private static final Logger LOG = Logger.getLogger(DefaultEmployeeService.class);
     private static final int FIELDS_MAX_LENGTH = 30;
@@ -30,15 +31,15 @@ public class DefaultEmployeeService implements EmployeeService {
     }
 
     @Override
-    public void createEmployee(String firstName, String surName, String patronymic, String position) {
-        validateValues(firstName, surName, patronymic, position);
+    public void create(EmployeeDto employeeDto) {
+        validateValues(employeeDto);
 
         Employee employee = new Employee();
-        employee.setFirstName(firstName);
-        employee.setSurName(surName);
-        employee.setPosition(position);
-        if (patronymic != null && !patronymic.isBlank()) {
-            employee.setPatronymic(patronymic);
+        employee.setFirstName(employeeDto.getFirstName());
+        employee.setSurname(employeeDto.getSurname());
+        employee.setPosition(employeeDto.getPosition());
+        if (employeeDto.getPatronymic() != null && !employeeDto.getPatronymic().isBlank()) {
+            employee.setPatronymic(employeeDto.getPatronymic());
         }
 
         employee = employeeRepository.save(employee);
@@ -46,13 +47,13 @@ public class DefaultEmployeeService implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
+    public List<Employee> getAll() {
         LOG.info("Getting all employees.");
         return employeeRepository.getAll();
     }
 
     @Override
-    public Employee getEmployee(long employeeId) {
+    public Employee get(long employeeId) {
         Employee employee = employeeRepository.getById(employeeId);
         if (employee == null) {
             throw new NotFoundException(format("Employee with id %d doesn't exist.", employeeId));
@@ -64,21 +65,21 @@ public class DefaultEmployeeService implements EmployeeService {
     }
 
     @Override
-    public void updateEmployee(long employeeId, String firstName, String surName, String patronymic, String position) {
+    public void update(long employeeId, EmployeeDto employeeDto) {
         Employee employee = employeeRepository.getById(employeeId);
         if (employee == null) {
             throw new NotFoundException(format("Employee with id %d doesn't exist.", employeeId));
         }
 
-        validateValues(firstName, surName, patronymic, position);
+        validateValues(employeeDto);
 
         Employee newEmployee = new Employee();
         newEmployee.setId(employeeId);
-        newEmployee.setFirstName(firstName);
-        newEmployee.setSurName(surName);
-        newEmployee.setPosition(position);
-        if (patronymic != null && !patronymic.isBlank()) {
-            newEmployee.setPatronymic(patronymic);
+        newEmployee.setFirstName(employeeDto.getFirstName());
+        newEmployee.setSurname(employeeDto.getSurname());
+        newEmployee.setPosition(employeeDto.getPosition());
+        if (employeeDto.getPatronymic() != null && !employeeDto.getPatronymic().isBlank()) {
+            newEmployee.setPatronymic(employeeDto.getPatronymic());
         }
 
         newEmployee = employeeRepository.update(newEmployee);
@@ -86,7 +87,7 @@ public class DefaultEmployeeService implements EmployeeService {
     }
 
     @Override
-    public void deleteEmployee(long employeeId) {
+    public void delete(long employeeId) {
         Employee employee = employeeRepository.getById(employeeId);
         if (employee == null) {
             throw new NotFoundException(format("Employee with id %d doesn't exist.", employeeId));
@@ -96,35 +97,36 @@ public class DefaultEmployeeService implements EmployeeService {
         LOG.info(format("Successfully deleted employee with id %d", employeeId));
     }
 
-    private void validateValues(String firstName, String surName, String patronymic, String position) {
-        if (firstName == null || firstName.isBlank() || surName == null || surName.isBlank()
-            || position == null || position.isBlank()) {
+    private void validateValues(EmployeeDto employeeDto) {
+        if (employeeDto.getFirstName() == null || employeeDto.getFirstName().isBlank()
+            || employeeDto.getSurname() == null || employeeDto.getSurname().isBlank()
+            || employeeDto.getPosition() == null || employeeDto.getPosition().isBlank()) {
             throw new FieldNotFilledException(
-                format("Required fields are empty. First name: '%s', surname: '%s', position: '%s'", firstName, surName, position)
+                format("Required fields are empty. First name: '%s', surname: '%s', position: '%s'", employeeDto.getFirstName(), employeeDto.getSurname(), employeeDto.getPosition())
             );
         }
 
-        if (firstName.length() > FIELDS_MAX_LENGTH) {
+        if (employeeDto.getFirstName().length() > FIELDS_MAX_LENGTH) {
             throw new EmployeeFieldLengthExceededException(
-                format("Length of first name is more then %d. First name: %s", FIELDS_MAX_LENGTH, firstName)
+                format("Length of first name is more then %d. First name: %s", FIELDS_MAX_LENGTH, employeeDto.getFirstName())
             );
         }
 
-        if (surName.length() > FIELDS_MAX_LENGTH) {
+        if (employeeDto.getSurname().length() > FIELDS_MAX_LENGTH) {
             throw new EmployeeFieldLengthExceededException(
-                format("Length of surname is more then %d. Surname: %s", FIELDS_MAX_LENGTH, surName)
+                format("Length of surname is more then %d. Surname: %s", FIELDS_MAX_LENGTH, employeeDto.getSurname())
             );
         }
 
-        if (position.length() > FIELDS_MAX_LENGTH) {
+        if (employeeDto.getPosition().length() > FIELDS_MAX_LENGTH) {
             throw new EmployeeFieldLengthExceededException(
-                format("Length of position is more then %d. Position: %s", FIELDS_MAX_LENGTH, position)
+                format("Length of position is more then %d. Position: %s", FIELDS_MAX_LENGTH, employeeDto.getPosition())
             );
         }
 
-        if (patronymic != null && patronymic.length() > FIELDS_MAX_LENGTH) {
+        if (employeeDto.getPatronymic() != null && employeeDto.getPatronymic().length() > FIELDS_MAX_LENGTH) {
             throw new EmployeeFieldLengthExceededException(
-                format("Length of patronymic is more then %d. Patronymic: %s", FIELDS_MAX_LENGTH, patronymic)
+                format("Length of patronymic is more then %d. Patronymic: %s", FIELDS_MAX_LENGTH, employeeDto.getPatronymic())
             );
         }
     }

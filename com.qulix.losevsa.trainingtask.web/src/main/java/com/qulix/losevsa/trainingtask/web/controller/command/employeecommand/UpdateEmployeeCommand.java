@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
-import com.qulix.losevsa.trainingtask.web.service.EmployeeService;
+import com.qulix.losevsa.trainingtask.web.dto.EmployeeDto;
+import com.qulix.losevsa.trainingtask.web.entity.Employee;
+import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 import com.qulix.losevsa.trainingtask.web.service.exception.EmployeeFieldLengthExceededException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
@@ -28,7 +30,7 @@ public class UpdateEmployeeCommand implements Command {
     private static final String NOT_FOUND_PATH = "/WEB-INF/jsp/notFoundPage.jsp";
 
     private static final String ID_PARAMETER = "id";
-    private static final String FIRSTNAME_PARAMETER = "firstname";
+    private static final String FIRST_NAME_PARAMETER = "firstname";
     private static final String SURNAME_PARAMETER = "surname";
     private static final String PATRONYMIC_PARAMETER = "patronymic";
     private static final String POSITION_PARAMETER = "position";
@@ -38,16 +40,18 @@ public class UpdateEmployeeCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        EmployeeService employeeService = serviceProvider.getEmployeeService();
+        Service<Employee, EmployeeDto> employeeService = serviceProvider.getEmployeeService();
 
         long id = Long.parseLong(request.getParameter(ID_PARAMETER));
-        String firsName = request.getParameter(FIRSTNAME_PARAMETER);
-        String surname = request.getParameter(SURNAME_PARAMETER);
-        String patronymic = request.getParameter(PATRONYMIC_PARAMETER);
-        String position = request.getParameter(POSITION_PARAMETER);
+
+        EmployeeDto employeeDto = new EmployeeDto();
+        employeeDto.setFirstName(request.getParameter(FIRST_NAME_PARAMETER));
+        employeeDto.setSurname(request.getParameter(SURNAME_PARAMETER));
+        employeeDto.setPatronymic(request.getParameter(PATRONYMIC_PARAMETER));
+        employeeDto.setPosition(request.getParameter(POSITION_PARAMETER));
 
         try {
-            employeeService.updateEmployee(id, firsName, surname, patronymic, position);
+            employeeService.update(id, employeeDto);
             response.sendRedirect(EMPLOYEE_LIST_PATH);
         }
         catch (NotFoundException e) {

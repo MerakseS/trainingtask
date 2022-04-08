@@ -7,6 +7,9 @@ import static java.lang.String.format;
 
 import org.apache.log4j.Logger;
 
+import com.qulix.losevsa.trainingtask.web.dto.EmployeeDto;
+import com.qulix.losevsa.trainingtask.web.dto.ProjectDto;
+import com.qulix.losevsa.trainingtask.web.dto.TaskDto;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
@@ -24,17 +27,17 @@ import com.qulix.losevsa.trainingtask.web.service.exception.WorkTimeNegativeExce
 import com.qulix.losevsa.trainingtask.web.service.exception.WorkTimeParseException;
 
 /**
- * The default implementation of the {@link TaskService}.
+ * The default {@link Task} implementation of {@link Service}.
  */
-public class DefaultTaskService implements TaskService {
+public class DefaultTaskService implements Service<Task, TaskDto> {
 
     private static final Logger LOG = Logger.getLogger(DefaultTaskService.class);
 
     private static final int NAME_MAX_LENGTH = 50;
 
     private final Repository<Task> taskRepository;
-    private final EmployeeService employeeService;
-    private final ProjectService projectService;
+    private final Service<Employee, EmployeeDto> employeeService;
+    private final Service<Project, ProjectDto> projectService;
 
     /**
      * Instantiates a new Default task service.
@@ -42,7 +45,7 @@ public class DefaultTaskService implements TaskService {
      * @param employeeService the employee service
      * @param projectService  the project service
      */
-    public DefaultTaskService(EmployeeService employeeService, ProjectService projectService) {
+    public DefaultTaskService(Service<Employee, EmployeeDto> employeeService, Service<Project, ProjectDto> projectService) {
         RepositoryProvider repositoryProvider = RepositoryProvider.getInstance();
         this.taskRepository = repositoryProvider.getTaskRepository();
         this.employeeService = employeeService;
@@ -50,20 +53,18 @@ public class DefaultTaskService implements TaskService {
     }
 
     @Override
-    public void createTask(String name, String strProjectId, String strWorkTime, String strStartDate,
-        String strEndDate, String strTaskStatus, String strEmployeeId) {
+    public void create(TaskDto taskDto) {
+        Integer workTime = parseInteger(taskDto.getWorkTime());
+        LocalDate startDate = parseDate(taskDto.getStartDate());
+        LocalDate endDate = parseDate(taskDto.getEndDate());
+        TaskStatus taskStatus = parseTaskStatus(taskDto.getTaskStatus());
+        Project project = parseProject(taskDto.getProjectId());
+        Employee employee = parseEmployee(taskDto.getEmployeeId());
 
-        Integer workTime = parseInteger(strWorkTime);
-        LocalDate startDate = parseDate(strStartDate);
-        LocalDate endDate = parseDate(strEndDate);
-        TaskStatus taskStatus = parseTaskStatus(strTaskStatus);
-        Project project = parseProject(strProjectId);
-        Employee employee = parseEmployee(strEmployeeId);
-
-        validateValues(name, workTime, startDate, endDate, taskStatus);
+        validateValues(taskDto.getName(), workTime, startDate, endDate, taskStatus);
 
         Task task = new Task();
-        task.setName(name);
+        task.setName(taskDto.getName());
         task.setProject(project);
         task.setWorkTime(workTime);
         task.setStartDate(startDate);
@@ -76,13 +77,13 @@ public class DefaultTaskService implements TaskService {
     }
 
     @Override
-    public List<Task> getAllTasks() {
+    public List<Task> getAll() {
         LOG.info("Getting all tasks");
         return taskRepository.getAll();
     }
 
     @Override
-    public Task getTask(long taskId) {
+    public Task get(long taskId) {
         LOG.info(format("Getting task with id %d", taskId));
         Task task = taskRepository.getById(taskId);
         if (task == null) {
@@ -93,26 +94,25 @@ public class DefaultTaskService implements TaskService {
     }
 
     @Override
-    public void updateTask(long taskId, String name, String strProjectId, String strWorkTime,
-        String strStartDate, String strEndDate, String strTaskStatus, String strEmployeeId) {
+    public void update(long taskId, TaskDto taskDto) {
 
         Task task = taskRepository.getById(taskId);
         if (task == null) {
             throw new NotFoundException(format("Task with id %d doesn't exist.", taskId));
         }
 
-        Integer workTime = parseInteger(strWorkTime);
-        LocalDate startDate = parseDate(strStartDate);
-        LocalDate endDate = parseDate(strEndDate);
-        TaskStatus taskStatus = parseTaskStatus(strTaskStatus);
-        Project project = parseProject(strProjectId);
-        Employee employee = parseEmployee(strEmployeeId);
+        Integer workTime = parseInteger(taskDto.getWorkTime());
+        LocalDate startDate = parseDate(taskDto.getStartDate());
+        LocalDate endDate = parseDate(taskDto.getEndDate());
+        TaskStatus taskStatus = parseTaskStatus(taskDto.getTaskStatus());
+        Project project = parseProject(taskDto.getProjectId());
+        Employee employee = parseEmployee(taskDto.getEmployeeId());
 
-        validateValues(name, workTime, startDate, endDate, taskStatus);
+        validateValues(taskDto.getName(), workTime, startDate, endDate, taskStatus);
 
         Task newTask = new Task();
         newTask.setId(taskId);
-        newTask.setName(name);
+        newTask.setName(taskDto.getName());
         newTask.setProject(project);
         newTask.setWorkTime(workTime);
         newTask.setStartDate(startDate);
@@ -125,7 +125,7 @@ public class DefaultTaskService implements TaskService {
     }
 
     @Override
-    public void deleteTask(long taskId) {
+    public void delete(long taskId) {
         Task task = taskRepository.getById(taskId);
         if (task == null) {
             throw new NotFoundException(format("Task with id %d doesn't exist.", taskId));
@@ -200,7 +200,7 @@ public class DefaultTaskService implements TaskService {
     private Project parseProject(String strProjectId) {
         try {
             long projectId = Long.parseLong(strProjectId);
-            return projectService.getProject(projectId);
+            return projectService.get(projectId);
         }
         catch (NumberFormatException e) {
             throw new NoProjectException(format("Incorrect project input. Project id: %s", strProjectId), e);
@@ -214,7 +214,7 @@ public class DefaultTaskService implements TaskService {
 
         try {
             long employeeId = Long.parseLong(strEmployeeId);
-            return employeeService.getEmployee(employeeId);
+            return employeeService.get(employeeId);
         }
         catch (NumberFormatException e) {
             return null;

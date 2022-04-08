@@ -32,7 +32,7 @@
         <c:forEach var="employee" items="${employeeList}">
             <jsp:useBean id="employee" class="com.qulix.losevsa.trainingtask.web.entity.Employee"/>
             <tr>
-                <td>${htmlUtils.escapeHtml(employee.surName)}</td>
+                <td>${htmlUtils.escapeHtml(employee.surname)}</td>
                 <td>${htmlUtils.escapeHtml(employee.firstName)}</td>
                 <td>${htmlUtils.escapeHtml(employee.patronymic)}</td>
                 <td>${htmlUtils.escapeHtml(employee.position)}</td>

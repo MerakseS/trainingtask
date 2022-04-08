@@ -138,7 +138,7 @@ public class DefaultEmployeeRepository implements Repository<Employee> {
 
     private void setValuesToStatement(Employee employee, PreparedStatement statement) throws SQLException {
         statement.setString(1, employee.getFirstName());
-        statement.setString(2, employee.getSurName());
+        statement.setString(2, employee.getSurname());
         statement.setString(3, employee.getPatronymic());
         statement.setString(4, employee.getPosition());
     }
@@ -147,7 +147,7 @@ public class DefaultEmployeeRepository implements Repository<Employee> {
         Employee employee = new Employee();
         employee.setId(result.getLong(EMPLOYEE_ID_COLUMN_NAME));
         employee.setFirstName(result.getString(EMPLOYEE_FIRST_NAME_COLUMN_NAME));
-        employee.setSurName(result.getString(EMPLOYEE_SURNAME_COLUMN_NAME));
+        employee.setSurname(result.getString(EMPLOYEE_SURNAME_COLUMN_NAME));
         employee.setPatronymic(result.getString(EMPLOYEE_PATRONYMIC_COLUMN_NAME));
         employee.setPosition(result.getString(EMPLOYEE_POSITION_COLUMN_NAME));
 

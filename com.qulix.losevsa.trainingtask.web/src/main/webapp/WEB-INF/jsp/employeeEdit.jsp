@@ -41,7 +41,7 @@
             </label> <br/><br/>
             <label>Фамилия*
                 <br/><input type="text" name="surname" placeholder="Фамилия"
-                            value="${htmlUtils.escapeHtml(param.surname != null ? param.surname : employee.surName)}"/>
+                            value="${htmlUtils.escapeHtml(param.surname != null ? param.surname : employee.surname)}"/>
             </label> <br/><br/>
             <label>Отчество
                 <br/><input type="text" name="patronymic" placeholder="Отчество"

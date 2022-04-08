@@ -1,17 +1,6 @@
-package com.qulix.losevsa.trainingtask.web.entity;
+package com.qulix.losevsa.trainingtask.web.dto;
 
-import java.io.Serializable;
-
-/**
- * The type Employee.
- */
-public class Employee implements Serializable {
-
-    /**
-     * Identifier of the employee.
-     */
-    private long id;
-
+public class EmployeeDto {
     /**
      * First name of the employee.
      */
@@ -31,14 +20,6 @@ public class Employee implements Serializable {
      * Position in company of the employee.
      */
     private String position;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getFirstName() {
         return firstName;

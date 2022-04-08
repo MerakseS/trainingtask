@@ -1,5 +1,12 @@
 package com.qulix.losevsa.trainingtask.web.service;
 
+import com.qulix.losevsa.trainingtask.web.dto.EmployeeDto;
+import com.qulix.losevsa.trainingtask.web.dto.ProjectDto;
+import com.qulix.losevsa.trainingtask.web.dto.TaskDto;
+import com.qulix.losevsa.trainingtask.web.entity.Employee;
+import com.qulix.losevsa.trainingtask.web.entity.Project;
+import com.qulix.losevsa.trainingtask.web.entity.Task;
+
 /**
  * A singleton class that provides all services.
  */
@@ -7,9 +14,9 @@ public class ServiceProvider {
 
     private static final ServiceProvider INSTANCE = new ServiceProvider();
 
-    private final EmployeeService employeeService;
-    private final ProjectService projectService;
-    private final TaskService taskService;
+    private final Service<Employee, EmployeeDto> employeeService;
+    private final Service<Project, ProjectDto> projectService;
+    private final Service<Task, TaskDto> taskService;
 
     /**
      * Instantiates a new Service provider.
@@ -34,7 +41,7 @@ public class ServiceProvider {
      *
      * @return the employee service
      */
-    public EmployeeService getEmployeeService() {
+    public Service<Employee, EmployeeDto> getEmployeeService() {
         return employeeService;
     }
 
@@ -43,7 +50,7 @@ public class ServiceProvider {
      *
      * @return the project service
      */
-    public ProjectService getProjectService() {
+    public Service<Project, ProjectDto> getProjectService() {
         return projectService;
     }
 
@@ -52,7 +59,7 @@ public class ServiceProvider {
      *
      * @return the task service
      */
-    public TaskService getTaskService() {
+    public Service<Task, TaskDto> getTaskService() {
         return taskService;
     }
 }

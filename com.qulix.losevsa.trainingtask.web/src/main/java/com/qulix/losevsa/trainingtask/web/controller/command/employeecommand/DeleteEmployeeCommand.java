@@ -1,7 +1,6 @@
 package com.qulix.losevsa.trainingtask.web.controller.command.employeecommand;
 
 import java.io.IOException;
-
 import static java.lang.String.format;
 
 import javax.servlet.ServletException;
@@ -11,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
-import com.qulix.losevsa.trainingtask.web.service.EmployeeService;
+import com.qulix.losevsa.trainingtask.web.dto.EmployeeDto;
+import com.qulix.losevsa.trainingtask.web.entity.Employee;
+import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 
@@ -32,12 +33,12 @@ public class DeleteEmployeeCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        EmployeeService employeeService = serviceProvider.getEmployeeService();
+        Service<Employee, EmployeeDto> employeeService = serviceProvider.getEmployeeService();
 
         long id = Long.parseLong(request.getParameter(ID_PARAMETER));
 
         try {
-            employeeService.deleteEmployee(id);
+            employeeService.delete(id);
             response.sendRedirect(EMPLOYEE_LIST_PATH);
         }
         catch (NotFoundException e) {

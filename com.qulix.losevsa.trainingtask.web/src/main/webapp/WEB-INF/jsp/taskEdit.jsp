@@ -1,13 +1,14 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.qulix.losevsa.trainingtask.web.service.ProjectService" %>
 <%@ page import="com.qulix.losevsa.trainingtask.web.entity.Project" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.qulix.losevsa.trainingtask.web.service.ServiceProvider" %>
-<%@ page import="com.qulix.losevsa.trainingtask.web.service.EmployeeService" %>
 <%@ page import="com.qulix.losevsa.trainingtask.web.entity.Employee" %>
 <%@ page import="com.qulix.losevsa.trainingtask.web.entity.TaskStatus" %>
 <%@ page import="static java.nio.charset.StandardCharsets.UTF_8" %>
+<%@ page import="com.qulix.losevsa.trainingtask.web.dto.ProjectDto" %>
+<%@ page import="com.qulix.losevsa.trainingtask.web.service.Service" %>
+<%@ page import="com.qulix.losevsa.trainingtask.web.dto.EmployeeDto" %>
 
 <jsp:useBean id="errorMessage" class="java.lang.String" scope="request"/>
 <jsp:useBean id="htmlUtils" class="com.qulix.losevsa.trainingtask.web.utils.HtmlUtils"/>
@@ -24,12 +25,12 @@
 <%
     ServiceProvider provider = ServiceProvider.getInstance();
 
-    ProjectService projectService = provider.getProjectService();
-    List<Project> projectList = projectService.getAllProjects();
+    Service<Project, ProjectDto> projectService = provider.getProjectService();
+    List<Project> projectList = projectService.getAll();
     request.setAttribute("projectList", projectList);
 
-    EmployeeService employeeService = provider.getEmployeeService();
-    List<Employee> employeeList = employeeService.getAllEmployees();
+    Service<Employee, EmployeeDto> employeeService = provider.getEmployeeService();
+    List<Employee> employeeList = employeeService.getAll();
     request.setAttribute("employeeList", employeeList);
 %>
 
@@ -136,7 +137,7 @@
                                 </c:if>
                         >
                                 ${htmlUtils.escapeHtml(employee.firstName)}
-                                ${htmlUtils.escapeHtml(employee.surName)}
+                                ${htmlUtils.escapeHtml(employee.surname)}
                                 ${htmlUtils.escapeHtml(employee.patronymic)}
                         </option>
                     </c:forEach>

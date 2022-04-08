@@ -8,8 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
+import com.qulix.losevsa.trainingtask.web.dto.EmployeeDto;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
-import com.qulix.losevsa.trainingtask.web.service.EmployeeService;
+import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 
 /**
@@ -22,9 +23,9 @@ public class ShowEmployeeListCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        EmployeeService employeeService = serviceProvider.getEmployeeService();
+        Service<Employee, EmployeeDto> employeeService = serviceProvider.getEmployeeService();
 
-        List<Employee> employeeList = employeeService.getAllEmployees();
+        List<Employee> employeeList = employeeService.getAll();
 
         request.setAttribute("employeeList", employeeList);
         request.getRequestDispatcher(EMPLOYEE_LIST_PATH).forward(request, response);

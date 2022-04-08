@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
+import com.qulix.losevsa.trainingtask.web.dto.TaskDto;
+import com.qulix.losevsa.trainingtask.web.entity.Task;
+import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
-import com.qulix.losevsa.trainingtask.web.service.TaskService;
 import com.qulix.losevsa.trainingtask.web.service.exception.DateParseException;
 import com.qulix.losevsa.trainingtask.web.service.exception.EndDateEarlierStartDateException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
@@ -49,20 +51,23 @@ public class UpdateTaskCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        TaskService taskService = serviceProvider.getTaskService();
+        Service<Task, TaskDto> taskService = serviceProvider.getTaskService();
 
         long taskId = Long.parseLong(request.getParameter(ID_PARAMETER));
-        String name = request.getParameter(NAME_PARAMETER);
-        String strProjectId = request.getParameter(PROJECT_ID_PARAMETER);
-        String workTime = request.getParameter(WORK_TIME_PARAMETER);
-        String startDate = request.getParameter(START_DATE_PARAMETER);
-        String endDate = request.getParameter(END_DATE_PARAMETER);
-        String taskStatus = request.getParameter(TASK_STATUS_PARAMETER);
-        String strEmployeeId = request.getParameter(EMPLOYEE_ID_PARAMETER);
+
+        TaskDto taskDto = new TaskDto();
+        taskDto.setName(request.getParameter(NAME_PARAMETER));
+        taskDto.setProjectId(request.getParameter(PROJECT_ID_PARAMETER));
+        taskDto.setWorkTime(request.getParameter(WORK_TIME_PARAMETER));
+        taskDto.setStartDate(request.getParameter(START_DATE_PARAMETER));
+        taskDto.setEndDate(request.getParameter(END_DATE_PARAMETER));
+        taskDto.setTaskStatus(request.getParameter(TASK_STATUS_PARAMETER));
+        taskDto.setEmployeeId(request.getParameter(EMPLOYEE_ID_PARAMETER));
+
         String strSelectedProjectId = request.getParameter(SELECTED_PROJECT_ID_PARAMETER);
 
         try {
-            taskService.updateTask(taskId, name, strProjectId, workTime, startDate, endDate, taskStatus, strEmployeeId);
+            taskService.update(taskId, taskDto);
             response.sendRedirect(strSelectedProjectId != null ?
                 PROJECT_EDIT_FORM_PATH + strSelectedProjectId :
                 TASK_LIST_PATH);

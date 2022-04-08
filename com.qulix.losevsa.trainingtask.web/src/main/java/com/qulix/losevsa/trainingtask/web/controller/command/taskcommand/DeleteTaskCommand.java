@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
+import com.qulix.losevsa.trainingtask.web.dto.TaskDto;
+import com.qulix.losevsa.trainingtask.web.entity.Task;
+import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
-import com.qulix.losevsa.trainingtask.web.service.TaskService;
 import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 
 /**
@@ -30,11 +32,11 @@ public class DeleteTaskCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        TaskService taskService = serviceProvider.getTaskService();
+        Service<Task, TaskDto> taskService = serviceProvider.getTaskService();
 
         long id = Long.parseLong(request.getParameter(ID_PARAMETER));
         try {
-            taskService.deleteTask(id);
+            taskService.delete(id);
             String referer = request.getHeader("Referer");
             response.sendRedirect(referer);
         }

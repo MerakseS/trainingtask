@@ -1,7 +1,6 @@
 package com.qulix.losevsa.trainingtask.web.controller.command.projectcommand;
 
 import java.io.IOException;
-
 import static java.lang.String.format;
 
 import javax.servlet.ServletException;
@@ -11,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
-import com.qulix.losevsa.trainingtask.web.service.ProjectService;
+import com.qulix.losevsa.trainingtask.web.dto.ProjectDto;
+import com.qulix.losevsa.trainingtask.web.entity.Project;
+import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 
@@ -32,12 +33,12 @@ public class DeleteProjectCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        ProjectService projectService = serviceProvider.getProjectService();
+        Service<Project, ProjectDto> projectService = serviceProvider.getProjectService();
 
         long id = Long.parseLong(request.getParameter(ID_PARAMETER));
 
         try {
-            projectService.deleteProject(id);
+            projectService.delete(id);
             response.sendRedirect(PROJECT_LIST_PATH);
         }
         catch (NotFoundException e) {

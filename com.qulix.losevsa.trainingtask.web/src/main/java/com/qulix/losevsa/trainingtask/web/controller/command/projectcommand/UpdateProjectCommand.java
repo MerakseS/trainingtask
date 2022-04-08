@@ -10,12 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
-import com.qulix.losevsa.trainingtask.web.service.ProjectService;
+import com.qulix.losevsa.trainingtask.web.dto.ProjectDto;
+import com.qulix.losevsa.trainingtask.web.entity.Project;
+import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
-import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
-import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 import com.qulix.losevsa.trainingtask.web.service.exception.DescriptionLengthExceededException;
+import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
 import com.qulix.losevsa.trainingtask.web.service.exception.NameLengthExceededException;
+import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 
 /**
  * Update project command.
@@ -37,14 +39,16 @@ public class UpdateProjectCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        ProjectService projectService = serviceProvider.getProjectService();
+        Service<Project, ProjectDto> projectService = serviceProvider.getProjectService();
 
         long id = Long.parseLong(request.getParameter(ID_PARAMETER));
-        String name = request.getParameter(NAME_PARAMETER);
-        String description = request.getParameter(DESCRIPTION_PARAMETER);
+
+        ProjectDto projectDto = new ProjectDto();
+        projectDto.setName(request.getParameter(NAME_PARAMETER));
+        projectDto.setDescription(request.getParameter(DESCRIPTION_PARAMETER));
 
         try {
-            projectService.updateProject(id, name, description);
+            projectService.update(id, projectDto);
             response.sendRedirect(PROJECT_LIST_PATH);
         }
         catch (NotFoundException e) {
