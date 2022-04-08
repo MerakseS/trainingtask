@@ -7,13 +7,13 @@ import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
-import com.qulix.losevsa.trainingtask.web.repository.ProjectRepository;
+import com.qulix.losevsa.trainingtask.web.repository.DefaultTaskRepository;
+import com.qulix.losevsa.trainingtask.web.repository.Repository;
 import com.qulix.losevsa.trainingtask.web.repository.RepositoryProvider;
-import com.qulix.losevsa.trainingtask.web.repository.TaskRepository;
-import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
-import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 import com.qulix.losevsa.trainingtask.web.service.exception.DescriptionLengthExceededException;
+import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
 import com.qulix.losevsa.trainingtask.web.service.exception.NameLengthExceededException;
+import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 
 /**
  * The default implementation of the {@link ProjectService}.
@@ -25,8 +25,8 @@ public class DefaultProjectService implements ProjectService {
     private static final int NAME_MAX_LENGTH = 30;
     private static final int DESCRIPTION_MAX_LENGTH = 200;
 
-    private final ProjectRepository projectRepository;
-    private final TaskRepository taskRepository;
+    private final Repository<Project> projectRepository;
+    private final Repository<Task> taskRepository;
 
     /**
      * Instantiates a new Default project service.
@@ -47,24 +47,24 @@ public class DefaultProjectService implements ProjectService {
             project.setDescription(description);
         }
 
-        project = projectRepository.saveProject(project);
+        project = projectRepository.save(project);
         LOG.info(format("Successfully created project with id %d", project.getId()));
     }
 
     @Override
     public List<Project> getAllProjects() {
         LOG.info("Getting all projects.");
-        return projectRepository.getAllProjects();
+        return projectRepository.getAll();
     }
 
     @Override
     public Project getProject(long id) {
-        Project project = projectRepository.getProjectById(id);
+        Project project = projectRepository.getById(id);
         if (project == null) {
             throw new NotFoundException(format("Project with id %d doesn't exist.", id));
         }
 
-        List<Task> taskList = taskRepository.getTaskListByProjectId(id);
+        List<Task> taskList = ((DefaultTaskRepository) taskRepository).getTaskListByProjectId(id);
         project.setTaskList(taskList);
         LOG.info(format("Successfully get project with id %d", id));
 
@@ -73,7 +73,7 @@ public class DefaultProjectService implements ProjectService {
 
     @Override
     public void updateProject(long id, String name, String description) {
-        Project project = projectRepository.getProjectById(id);
+        Project project = projectRepository.getById(id);
         if (project == null) {
             throw new NotFoundException(format("Project with id %d doesn't exist.", id));
         }
@@ -87,18 +87,18 @@ public class DefaultProjectService implements ProjectService {
             newProject.setDescription(description);
         }
 
-        newProject = projectRepository.updateProject(newProject);
+        newProject = projectRepository.update(newProject);
         LOG.info(format("Successfully updated project with id %d", newProject.getId()));
     }
 
     @Override
     public void deleteProject(long id) {
-        Project project = projectRepository.getProjectById(id);
+        Project project = projectRepository.getById(id);
         if (project == null) {
             throw new NotFoundException(format("Project with id %d doesn't exist.", id));
         }
 
-        id = projectRepository.deleteProjectById(id);
+        id = projectRepository.deleteById(id);
         LOG.info(format("Successfully deleted project with id %d", id));
     }
 

@@ -11,13 +11,11 @@ import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 import com.qulix.losevsa.trainingtask.web.database.DatabaseConnection;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
-import com.qulix.losevsa.trainingtask.web.repository.EmployeeRepository;
-import com.qulix.losevsa.trainingtask.web.repository.QueryExecutionException;
 
 /**
- * The default implementation of {@link EmployeeRepository}
+ * The default {@link Employee} implementation of {@link Repository}
  */
-public class DefaultEmployeeRepository implements EmployeeRepository {
+public class DefaultEmployeeRepository implements Repository<Employee> {
 
     private static final String EMPLOYEE_ID_COLUMN_NAME = "ID";
     private static final String EMPLOYEE_FIRST_NAME_COLUMN_NAME = "FIRST_NAME";
@@ -34,7 +32,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
     private static final String DELETE_EMPLOYEE_QUERY = "DELETE FROM EMPLOYEE WHERE ID = ?";
 
     @Override
-    public Employee saveEmployee(Employee employee) {
+    public Employee save(Employee employee) {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(SAVE_EMPLOYEE_QUERY, RETURN_GENERATED_KEYS)) {
 
@@ -64,7 +62,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
     }
 
     @Override
-    public List<Employee> getAllEmployees() {
+    public List<Employee> getAll() {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ALL_EMPLOYEES_QUERY)) {
             List<Employee> employeeList = new ArrayList<>();
@@ -83,7 +81,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
     }
 
     @Override
-    public Employee getEmployeeById(long id) {
+    public Employee getById(long id) {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_EMPLOYEE_BY_ID_QUERY)) {
 
@@ -98,7 +96,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
     }
 
     @Override
-    public Employee updateEmployee(Employee employee) {
+    public Employee update(Employee employee) {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_EMPLOYEE_QUERY)) {
 
@@ -120,7 +118,7 @@ public class DefaultEmployeeRepository implements EmployeeRepository {
     }
 
     @Override
-    public long deleteEmployeeById(long id) {
+    public long deleteById(long id) {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_EMPLOYEE_QUERY)) {
 

@@ -12,14 +12,15 @@ import static java.lang.String.format;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 import com.qulix.losevsa.trainingtask.web.database.DatabaseConnection;
+import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
 import com.qulix.losevsa.trainingtask.web.entity.TaskStatus;
 
 /**
- * The default implementation of {@link Task}
+ * The default {@link Task} implementation of {@link Repository}
  */
-public class DefaultTaskRepository implements TaskRepository {
+public class DefaultTaskRepository implements Repository<Task> {
 
     private static final String TASK_ID_COLUMN_NAME = "ID";
     private static final String TASK_STATUS_COLUMN_NAME = "STATUS";
@@ -39,8 +40,8 @@ public class DefaultTaskRepository implements TaskRepository {
         "WORK_TIME = ?, START_DATE = ?, END_DATE = ?, EXECUTOR = ? WHERE ID = ?";
     private static final String DELETE_TASK_QUERY = "DELETE FROM TASK WHERE ID = ?";
 
-    private final EmployeeRepository employeeRepository;
-    private final ProjectRepository projectRepository;
+    private final Repository<Employee> employeeRepository;
+    private final Repository<Project> projectRepository;
 
     /**
      * Instantiates a new Default task repository.
@@ -48,13 +49,13 @@ public class DefaultTaskRepository implements TaskRepository {
      * @param employeeRepository the employee repository
      * @param projectRepository  the project repository
      */
-    public DefaultTaskRepository(EmployeeRepository employeeRepository, ProjectRepository projectRepository) {
+    public DefaultTaskRepository(Repository<Employee> employeeRepository, Repository<Project> projectRepository) {
         this.employeeRepository = employeeRepository;
         this.projectRepository = projectRepository;
     }
 
     @Override
-    public Task saveTask(Task task) {
+    public Task save(Task task) {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(SAVE_TASK_QUERY, RETURN_GENERATED_KEYS)) {
 
@@ -81,7 +82,7 @@ public class DefaultTaskRepository implements TaskRepository {
     }
 
     @Override
-    public List<Task> getAllTasks() {
+    public List<Task> getAll() {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ALL_TASKS_QUERY)) {
 
@@ -99,7 +100,7 @@ public class DefaultTaskRepository implements TaskRepository {
         }
     }
 
-    @Override
+
     public List<Task> getTaskListByProjectId(long projectId) {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement =
@@ -124,7 +125,7 @@ public class DefaultTaskRepository implements TaskRepository {
     }
 
     @Override
-    public Task getTaskById(long taskId) {
+    public Task getById(long taskId) {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_TASK_BY_ID_QUERY)) {
 
@@ -139,7 +140,7 @@ public class DefaultTaskRepository implements TaskRepository {
     }
 
     @Override
-    public Task updateTask(Task task) {
+    public Task update(Task task) {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_TASK_QUERY)) {
 
@@ -159,7 +160,7 @@ public class DefaultTaskRepository implements TaskRepository {
     }
 
     @Override
-    public long deleteTaskById(long taskId) {
+    public long deleteById(long taskId) {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_TASK_QUERY)) {
 
@@ -218,7 +219,7 @@ public class DefaultTaskRepository implements TaskRepository {
         task.setName(result.getString(TASK_NAME_COLUMN_NAME));
 
         long projectId = result.getLong(TASK_PROJECT_COLUMN_NAME);
-        Project project = projectRepository.getProjectById(projectId);
+        Project project = projectRepository.getById(projectId);
         task.setProject(project);
 
         int workTime = result.getInt(TASK_WORK_TIME_COLUMN_NAME);
@@ -231,7 +232,7 @@ public class DefaultTaskRepository implements TaskRepository {
         task.setEndDate(sqlEndDate != null ? sqlEndDate.toLocalDate() : null);
 
         long employeeId = result.getLong(TASK_EXECUTOR_COLUMN_NAME);
-        task.setEmployee(result.wasNull() ? null : employeeRepository.getEmployeeById(employeeId));
+        task.setEmployee(result.wasNull() ? null : employeeRepository.getById(employeeId));
 
         return task;
     }

@@ -11,8 +11,8 @@ import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
 import com.qulix.losevsa.trainingtask.web.entity.TaskStatus;
+import com.qulix.losevsa.trainingtask.web.repository.Repository;
 import com.qulix.losevsa.trainingtask.web.repository.RepositoryProvider;
-import com.qulix.losevsa.trainingtask.web.repository.TaskRepository;
 import com.qulix.losevsa.trainingtask.web.service.exception.DateParseException;
 import com.qulix.losevsa.trainingtask.web.service.exception.EndDateEarlierStartDateException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
@@ -32,7 +32,7 @@ public class DefaultTaskService implements TaskService {
 
     private static final int NAME_MAX_LENGTH = 50;
 
-    private final TaskRepository taskRepository;
+    private final Repository<Task> taskRepository;
     private final EmployeeService employeeService;
     private final ProjectService projectService;
 
@@ -71,20 +71,20 @@ public class DefaultTaskService implements TaskService {
         task.setTaskStatus(taskStatus);
         task.setEmployee(employee);
 
-        task = taskRepository.saveTask(task);
+        task = taskRepository.save(task);
         LOG.info(format("Successfully created task with id %d", task.getId()));
     }
 
     @Override
     public List<Task> getAllTasks() {
         LOG.info("Getting all tasks");
-        return taskRepository.getAllTasks();
+        return taskRepository.getAll();
     }
 
     @Override
     public Task getTask(long taskId) {
         LOG.info(format("Getting task with id %d", taskId));
-        Task task = taskRepository.getTaskById(taskId);
+        Task task = taskRepository.getById(taskId);
         if (task == null) {
             throw new NotFoundException(format("Task with id %d doesn't exist.", taskId));
         }
@@ -96,7 +96,7 @@ public class DefaultTaskService implements TaskService {
     public void updateTask(long taskId, String name, String strProjectId, String strWorkTime,
         String strStartDate, String strEndDate, String strTaskStatus, String strEmployeeId) {
 
-        Task task = taskRepository.getTaskById(taskId);
+        Task task = taskRepository.getById(taskId);
         if (task == null) {
             throw new NotFoundException(format("Task with id %d doesn't exist.", taskId));
         }
@@ -120,18 +120,18 @@ public class DefaultTaskService implements TaskService {
         newTask.setTaskStatus(taskStatus);
         newTask.setEmployee(employee);
 
-        newTask = taskRepository.updateTask(newTask);
+        newTask = taskRepository.update(newTask);
         LOG.info(format("Successfully updated task with id %d", newTask.getId()));
     }
 
     @Override
     public void deleteTask(long taskId) {
-        Task task = taskRepository.getTaskById(taskId);
+        Task task = taskRepository.getById(taskId);
         if (task == null) {
             throw new NotFoundException(format("Task with id %d doesn't exist.", taskId));
         }
 
-        taskId = taskRepository.deleteTaskById(taskId);
+        taskId = taskRepository.deleteById(taskId);
         LOG.info(format("Successfully deleted task with id %d", taskId));
     }
 

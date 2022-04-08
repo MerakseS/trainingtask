@@ -11,13 +11,11 @@ import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 import com.qulix.losevsa.trainingtask.web.database.DatabaseConnection;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
-import com.qulix.losevsa.trainingtask.web.repository.ProjectRepository;
-import com.qulix.losevsa.trainingtask.web.repository.QueryExecutionException;
 
 /**
- * The default implementation of {@link ProjectRepository}
+ * The default {@link Project} implementation of {@link Repository}
  */
-public class DefaultProjectRepository implements ProjectRepository {
+public class DefaultProjectRepository implements Repository<Project> {
 
     private static final String PROJECT_ID_COLUMN_NAME = "ID";
     private static final String PROJECT_NAME_COLUMN_NAME = "NAME";
@@ -30,7 +28,7 @@ public class DefaultProjectRepository implements ProjectRepository {
     private static final String DELETE_PROJECT_QUERY = "DELETE FROM PROJECT WHERE ID = ?";
 
     @Override
-    public Project saveProject(Project project) {
+    public Project save(Project project) {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(SAVE_PROJECT_QUERY, RETURN_GENERATED_KEYS)) {
 
@@ -57,7 +55,7 @@ public class DefaultProjectRepository implements ProjectRepository {
     }
 
     @Override
-    public List<Project> getAllProjects() {
+    public List<Project> getAll() {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ALL_PROJECTS_QUERY)) {
 
@@ -76,7 +74,7 @@ public class DefaultProjectRepository implements ProjectRepository {
     }
 
     @Override
-    public Project getProjectById(long id) {
+    public Project getById(long id) {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_PROJECT_BY_ID_QUERY)) {
 
@@ -91,7 +89,7 @@ public class DefaultProjectRepository implements ProjectRepository {
     }
 
     @Override
-    public Project updateProject(Project project) {
+    public Project update(Project project) {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_PROJECT_QUERY)) {
 
@@ -111,7 +109,7 @@ public class DefaultProjectRepository implements ProjectRepository {
     }
 
     @Override
-    public long deleteProjectById(long id) {
+    public long deleteById(long id) {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_PROJECT_QUERY)) {
 

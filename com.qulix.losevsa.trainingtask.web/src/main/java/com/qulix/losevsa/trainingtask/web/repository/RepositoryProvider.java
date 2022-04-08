@@ -1,5 +1,9 @@
 package com.qulix.losevsa.trainingtask.web.repository;
 
+import com.qulix.losevsa.trainingtask.web.entity.Employee;
+import com.qulix.losevsa.trainingtask.web.entity.Project;
+import com.qulix.losevsa.trainingtask.web.entity.Task;
+
 /**
  * A singleton class that provides all repository objects.
  */
@@ -7,9 +11,9 @@ public class RepositoryProvider {
 
     private static final RepositoryProvider INSTANCE = new RepositoryProvider();
 
-    private final EmployeeRepository employeeRepository;
-    private final ProjectRepository projectRepository;
-    private final TaskRepository taskRepository;
+    private final Repository<Employee> employeeRepository;
+    private final Repository<Project> projectRepository;
+    private final Repository<Task> taskRepository;
 
     /**
      * Instantiates a new Repository provider.
@@ -34,7 +38,7 @@ public class RepositoryProvider {
      *
      * @return the employee repository
      */
-    public EmployeeRepository getEmployeeRepository() {
+    public Repository<Employee> getEmployeeRepository() {
         return employeeRepository;
     }
 
@@ -43,7 +47,7 @@ public class RepositoryProvider {
      *
      * @return the project repository
      */
-    public ProjectRepository getProjectRepository() {
+    public Repository<Project> getProjectRepository() {
         return projectRepository;
     }
 
@@ -52,7 +56,7 @@ public class RepositoryProvider {
      *
      * @return the task repository
      */
-    public TaskRepository getTaskRepository() {
+    public Repository<Task> getTaskRepository() {
         return taskRepository;
     }
 }

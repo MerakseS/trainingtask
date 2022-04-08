@@ -6,7 +6,7 @@ import static java.lang.String.format;
 import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
-import com.qulix.losevsa.trainingtask.web.repository.EmployeeRepository;
+import com.qulix.losevsa.trainingtask.web.repository.Repository;
 import com.qulix.losevsa.trainingtask.web.repository.RepositoryProvider;
 import com.qulix.losevsa.trainingtask.web.service.exception.EmployeeFieldLengthExceededException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
@@ -19,7 +19,7 @@ public class DefaultEmployeeService implements EmployeeService {
 
     private static final Logger LOG = Logger.getLogger(DefaultEmployeeService.class);
     private static final int FIELDS_MAX_LENGTH = 30;
-    private final EmployeeRepository employeeRepository;
+    private final Repository<Employee> employeeRepository;
 
     /**
      * Instantiates a new Default employee service.
@@ -41,19 +41,19 @@ public class DefaultEmployeeService implements EmployeeService {
             employee.setPatronymic(patronymic);
         }
 
-        employee = employeeRepository.saveEmployee(employee);
+        employee = employeeRepository.save(employee);
         LOG.info(format("Successfully created employee with id %d", employee.getId()));
     }
 
     @Override
     public List<Employee> getAllEmployees() {
         LOG.info("Getting all employees.");
-        return employeeRepository.getAllEmployees();
+        return employeeRepository.getAll();
     }
 
     @Override
     public Employee getEmployee(long employeeId) {
-        Employee employee = employeeRepository.getEmployeeById(employeeId);
+        Employee employee = employeeRepository.getById(employeeId);
         if (employee == null) {
             throw new NotFoundException(format("Employee with id %d doesn't exist.", employeeId));
         }
@@ -65,7 +65,7 @@ public class DefaultEmployeeService implements EmployeeService {
 
     @Override
     public void updateEmployee(long employeeId, String firstName, String surName, String patronymic, String position) {
-        Employee employee = employeeRepository.getEmployeeById(employeeId);
+        Employee employee = employeeRepository.getById(employeeId);
         if (employee == null) {
             throw new NotFoundException(format("Employee with id %d doesn't exist.", employeeId));
         }
@@ -81,18 +81,18 @@ public class DefaultEmployeeService implements EmployeeService {
             newEmployee.setPatronymic(patronymic);
         }
 
-        newEmployee = employeeRepository.updateEmployee(newEmployee);
+        newEmployee = employeeRepository.update(newEmployee);
         LOG.info(format("Successfully updated employee with id %d", newEmployee.getId()));
     }
 
     @Override
     public void deleteEmployee(long employeeId) {
-        Employee employee = employeeRepository.getEmployeeById(employeeId);
+        Employee employee = employeeRepository.getById(employeeId);
         if (employee == null) {
             throw new NotFoundException(format("Employee with id %d doesn't exist.", employeeId));
         }
 
-        employeeId = employeeRepository.deleteEmployeeById(employeeId);
+        employeeId = employeeRepository.deleteById(employeeId);
         LOG.info(format("Successfully deleted employee with id %d", employeeId));
     }
 
