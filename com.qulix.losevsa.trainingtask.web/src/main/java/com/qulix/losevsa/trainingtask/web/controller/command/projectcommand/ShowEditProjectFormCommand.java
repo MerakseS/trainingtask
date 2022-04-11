@@ -11,9 +11,15 @@ import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.dto.ProjectDto;
+import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
+import com.qulix.losevsa.trainingtask.web.entity.Task;
+import com.qulix.losevsa.trainingtask.web.repository.DefaultEmployeeRepository;
+import com.qulix.losevsa.trainingtask.web.repository.DefaultProjectRepository;
+import com.qulix.losevsa.trainingtask.web.repository.DefaultTaskRepository;
+import com.qulix.losevsa.trainingtask.web.repository.Repository;
+import com.qulix.losevsa.trainingtask.web.service.DefaultProjectService;
 import com.qulix.losevsa.trainingtask.web.service.Service;
-import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 
 /**
@@ -32,8 +38,10 @@ public class ShowEditProjectFormCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        Service<Project, ProjectDto> projectService = serviceProvider.getProjectService();
+        Repository<Employee> employeeRepository = new DefaultEmployeeRepository();
+        Repository<Project> projectRepository = new DefaultProjectRepository();
+        Repository<Task> taskRepository = new DefaultTaskRepository(employeeRepository, projectRepository);
+        Service<Project, ProjectDto> projectService = new DefaultProjectService(projectRepository, taskRepository);
 
         long id = Long.parseLong(request.getParameter(ID_PARAMETER));
 

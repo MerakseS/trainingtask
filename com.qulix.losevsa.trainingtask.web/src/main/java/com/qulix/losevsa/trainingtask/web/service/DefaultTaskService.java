@@ -15,7 +15,6 @@ import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
 import com.qulix.losevsa.trainingtask.web.entity.TaskStatus;
 import com.qulix.losevsa.trainingtask.web.repository.Repository;
-import com.qulix.losevsa.trainingtask.web.repository.RepositoryProvider;
 import com.qulix.losevsa.trainingtask.web.service.exception.DateParseException;
 import com.qulix.losevsa.trainingtask.web.service.exception.EndDateEarlierStartDateException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
@@ -44,12 +43,12 @@ public class DefaultTaskService implements Service<Task, TaskDto> {
      *
      * @param employeeService the employee service
      * @param projectService  the project service
+     * @param taskRepository  the repository for {@link Task}
      */
-    public DefaultTaskService(Service<Employee, EmployeeDto> employeeService, Service<Project, ProjectDto> projectService) {
-        RepositoryProvider repositoryProvider = RepositoryProvider.getInstance();
-        this.taskRepository = repositoryProvider.getTaskRepository();
+    public DefaultTaskService(Service<Employee, EmployeeDto> employeeService, Service<Project, ProjectDto> projectService, Repository<Task> taskRepository) {
         this.employeeService = employeeService;
         this.projectService = projectService;
+        this.taskRepository = taskRepository;
     }
 
     @Override

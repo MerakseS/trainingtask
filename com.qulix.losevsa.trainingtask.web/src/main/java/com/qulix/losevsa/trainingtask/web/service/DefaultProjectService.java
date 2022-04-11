@@ -10,7 +10,6 @@ import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
 import com.qulix.losevsa.trainingtask.web.repository.DefaultTaskRepository;
 import com.qulix.losevsa.trainingtask.web.repository.Repository;
-import com.qulix.losevsa.trainingtask.web.repository.RepositoryProvider;
 import com.qulix.losevsa.trainingtask.web.service.exception.DescriptionLengthExceededException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
 import com.qulix.losevsa.trainingtask.web.service.exception.NameLengthExceededException;
@@ -31,11 +30,12 @@ public class DefaultProjectService implements Service<Project, ProjectDto> {
 
     /**
      * Instantiates a new Default project service.
+     * @param projectRepository the repository for {@link Project}
+     * @param taskRepository the repository for {@link Task}
      */
-    public DefaultProjectService() {
-        RepositoryProvider provider = RepositoryProvider.getInstance();
-        projectRepository = provider.getProjectRepository();
-        taskRepository = provider.getTaskRepository();
+    public DefaultProjectService(Repository<Project> projectRepository, Repository<Task> taskRepository) {
+        this.projectRepository = projectRepository;
+        this.taskRepository = taskRepository;
     }
 
     @Override

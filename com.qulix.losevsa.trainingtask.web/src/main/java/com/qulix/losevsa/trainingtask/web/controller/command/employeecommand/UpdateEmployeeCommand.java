@@ -12,8 +12,10 @@ import org.apache.log4j.Logger;
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.dto.EmployeeDto;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
+import com.qulix.losevsa.trainingtask.web.repository.DefaultEmployeeRepository;
+import com.qulix.losevsa.trainingtask.web.repository.Repository;
+import com.qulix.losevsa.trainingtask.web.service.DefaultEmployeeService;
 import com.qulix.losevsa.trainingtask.web.service.Service;
-import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 import com.qulix.losevsa.trainingtask.web.service.exception.EmployeeFieldLengthExceededException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
 import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
@@ -39,8 +41,8 @@ public class UpdateEmployeeCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        Service<Employee, EmployeeDto> employeeService = serviceProvider.getEmployeeService();
+        Repository<Employee> employeeRepository = new DefaultEmployeeRepository();
+        Service<Employee, EmployeeDto> employeeService = new DefaultEmployeeService(employeeRepository);
 
         long id = Long.parseLong(request.getParameter(ID_PARAMETER));
 

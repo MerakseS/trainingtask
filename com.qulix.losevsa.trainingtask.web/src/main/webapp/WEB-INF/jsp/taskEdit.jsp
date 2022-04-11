@@ -2,13 +2,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.qulix.losevsa.trainingtask.web.entity.Project" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.qulix.losevsa.trainingtask.web.service.ServiceProvider" %>
 <%@ page import="com.qulix.losevsa.trainingtask.web.entity.Employee" %>
 <%@ page import="com.qulix.losevsa.trainingtask.web.entity.TaskStatus" %>
 <%@ page import="static java.nio.charset.StandardCharsets.UTF_8" %>
 <%@ page import="com.qulix.losevsa.trainingtask.web.dto.ProjectDto" %>
 <%@ page import="com.qulix.losevsa.trainingtask.web.service.Service" %>
 <%@ page import="com.qulix.losevsa.trainingtask.web.dto.EmployeeDto" %>
+<%@ page import="com.qulix.losevsa.trainingtask.web.service.DefaultProjectService" %>
+<%@ page import="com.qulix.losevsa.trainingtask.web.repository.Repository" %>
+<%@ page import="com.qulix.losevsa.trainingtask.web.repository.DefaultEmployeeRepository" %>
+<%@ page import="com.qulix.losevsa.trainingtask.web.repository.DefaultProjectRepository" %>
+<%@ page import="com.qulix.losevsa.trainingtask.web.entity.Task" %>
+<%@ page import="com.qulix.losevsa.trainingtask.web.repository.DefaultTaskRepository" %>
+<%@ page import="com.qulix.losevsa.trainingtask.web.service.DefaultEmployeeService" %>
 
 <jsp:useBean id="errorMessage" class="java.lang.String" scope="request"/>
 <jsp:useBean id="htmlUtils" class="com.qulix.losevsa.trainingtask.web.utils.HtmlUtils"/>
@@ -23,13 +29,16 @@
 </c:set>
 
 <%
-    ServiceProvider provider = ServiceProvider.getInstance();
+    Repository<Employee> employeeRepository = new DefaultEmployeeRepository();
+    Service<Employee, EmployeeDto> employeeService = new DefaultEmployeeService(employeeRepository);
 
-    Service<Project, ProjectDto> projectService = provider.getProjectService();
+    Repository<Project> projectRepository = new DefaultProjectRepository();
+    Repository<Task> taskRepository = new DefaultTaskRepository(employeeRepository, projectRepository);
+    Service<Project, ProjectDto> projectService = new DefaultProjectService(projectRepository, taskRepository);
+
     List<Project> projectList = projectService.getAll();
     request.setAttribute("projectList", projectList);
 
-    Service<Employee, EmployeeDto> employeeService = provider.getEmployeeService();
     List<Employee> employeeList = employeeService.getAll();
     request.setAttribute("employeeList", employeeList);
 %>

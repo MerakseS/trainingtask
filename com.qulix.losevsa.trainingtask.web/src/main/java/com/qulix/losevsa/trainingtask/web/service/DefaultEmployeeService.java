@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import com.qulix.losevsa.trainingtask.web.dto.EmployeeDto;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.repository.Repository;
-import com.qulix.losevsa.trainingtask.web.repository.RepositoryProvider;
 import com.qulix.losevsa.trainingtask.web.service.exception.EmployeeFieldLengthExceededException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
 import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
@@ -24,10 +23,10 @@ public class DefaultEmployeeService implements Service<Employee, EmployeeDto> {
 
     /**
      * Instantiates a new Default employee service.
+     * @param employeeRepository the repository for {@link Employee}
      */
-    public DefaultEmployeeService() {
-        RepositoryProvider provider = RepositoryProvider.getInstance();
-        employeeRepository = provider.getEmployeeRepository();
+    public DefaultEmployeeService(Repository<Employee> employeeRepository) {
+        this.employeeRepository = employeeRepository;
     }
 
     @Override

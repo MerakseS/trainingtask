@@ -10,10 +10,20 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
+import com.qulix.losevsa.trainingtask.web.dto.EmployeeDto;
+import com.qulix.losevsa.trainingtask.web.dto.ProjectDto;
 import com.qulix.losevsa.trainingtask.web.dto.TaskDto;
+import com.qulix.losevsa.trainingtask.web.entity.Employee;
+import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
+import com.qulix.losevsa.trainingtask.web.repository.DefaultEmployeeRepository;
+import com.qulix.losevsa.trainingtask.web.repository.DefaultProjectRepository;
+import com.qulix.losevsa.trainingtask.web.repository.DefaultTaskRepository;
+import com.qulix.losevsa.trainingtask.web.repository.Repository;
+import com.qulix.losevsa.trainingtask.web.service.DefaultEmployeeService;
+import com.qulix.losevsa.trainingtask.web.service.DefaultProjectService;
+import com.qulix.losevsa.trainingtask.web.service.DefaultTaskService;
 import com.qulix.losevsa.trainingtask.web.service.Service;
-import com.qulix.losevsa.trainingtask.web.service.ServiceProvider;
 import com.qulix.losevsa.trainingtask.web.service.exception.DateParseException;
 import com.qulix.losevsa.trainingtask.web.service.exception.EndDateEarlierStartDateException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
@@ -50,8 +60,12 @@ public class UpdateTaskCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ServiceProvider serviceProvider = ServiceProvider.getInstance();
-        Service<Task, TaskDto> taskService = serviceProvider.getTaskService();
+        Repository<Employee> employeeRepository = new DefaultEmployeeRepository();
+        Service<Employee, EmployeeDto> employeeService = new DefaultEmployeeService(employeeRepository);
+        Repository<Project> projectRepository = new DefaultProjectRepository();
+        Repository<Task> taskRepository = new DefaultTaskRepository(employeeRepository, projectRepository);
+        Service<Project, ProjectDto> projectService = new DefaultProjectService(projectRepository, taskRepository);
+        Service<Task, TaskDto> taskService = new DefaultTaskService(employeeService, projectService, taskRepository);
 
         long taskId = Long.parseLong(request.getParameter(ID_PARAMETER));
 
