@@ -107,7 +107,7 @@ public class UpdateTaskCommand implements Command {
             handleException(e.getMessage(), "Введите обязательные поля.", request, response);
         }
         catch (NameLengthExceededException e) {
-            handleException(e.getMessage(), "Длина наименования должна быть не больше 30 символов.", request, response);
+            handleException(e.getMessage(), "Длина наименования должна быть не больше 50 символов.", request, response);
         }
         catch (WorkTimeNegativeException e) {
             handleException(e.getMessage(), "Время работы не может быть отрицательным.", request, response);
