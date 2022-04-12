@@ -55,6 +55,8 @@
     </p>
 </div>
 
+<script type="text/javascript" src="../../js/index.js"></script>
+
 <div class="container">
     <c:if test="${project != null}">
         <h3>Список задач проекта</h3>

@@ -172,6 +172,8 @@
     </p>
 </div>
 
+<script type="text/javascript" src="../../js/index.js"></script>
+
 <jsp:include page="footer.jsp"/>
 
 </body>
