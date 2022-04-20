@@ -29,6 +29,8 @@ public class ShowEditProjectFormCommand implements Command {
 
     private static final Logger LOG = Logger.getLogger(ShowEditProjectFormCommand.class);
 
+    private final Service<Project, ProjectDto> projectService;
+
     private static final String PROJECT_EDIT_PATH = "/WEB-INF/jsp/projectEdit.jsp";
     private static final String NOT_FOUND_PATH = "/WEB-INF/jsp/notFoundPage.jsp";
 
@@ -36,13 +38,12 @@ public class ShowEditProjectFormCommand implements Command {
 
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
 
+    public ShowEditProjectFormCommand(Service<Project, ProjectDto> projectService) {
+        this.projectService = projectService;
+    }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Repository<Employee> employeeRepository = new DefaultEmployeeRepository();
-        Repository<Project> projectRepository = new DefaultProjectRepository();
-        Repository<Task> taskRepository = new DefaultTaskRepository(employeeRepository, projectRepository);
-        Service<Project, ProjectDto> projectService = new DefaultProjectService(projectRepository, taskRepository);
-
         long id = Long.parseLong(request.getParameter(ID_PARAMETER));
 
         try {

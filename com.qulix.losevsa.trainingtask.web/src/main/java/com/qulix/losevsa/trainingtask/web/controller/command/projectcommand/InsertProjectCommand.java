@@ -30,6 +30,8 @@ public class InsertProjectCommand implements Command {
 
     private static final Logger LOG = Logger.getLogger(InsertProjectCommand.class);
 
+    private final Service<Project, ProjectDto> projectService;
+
     private static final String PROJECT_LIST_PATH = "/project";
     private static final String NEW_PROJECT_FORM_PATH = "/project/new";
 
@@ -38,13 +40,12 @@ public class InsertProjectCommand implements Command {
 
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
 
+    public InsertProjectCommand(Service<Project, ProjectDto> projectService) {
+        this.projectService = projectService;
+    }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Repository<Employee> employeeRepository = new DefaultEmployeeRepository();
-        Repository<Project> projectRepository = new DefaultProjectRepository();
-        Repository<Task> taskRepository = new DefaultTaskRepository(employeeRepository, projectRepository);
-        Service<Project, ProjectDto> projectService = new DefaultProjectService(projectRepository, taskRepository);
-
         ProjectDto projectDto = new ProjectDto();
         projectDto.setName(request.getParameter(NAME_PARAMETER));
         projectDto.setDescription(request.getParameter(DESCRIPTION_PARAMETER));

@@ -33,21 +33,20 @@ public class DeleteTaskCommand implements Command {
 
     private static final Logger LOG = Logger.getLogger(DeleteTaskCommand.class);
 
+    private final Service<Task, TaskDto> taskService;
+
     private static final String NOT_FOUND_PATH = "/WEB-INF/jsp/notFoundPage.jsp";
 
     private static final String ID_PARAMETER = "taskId";
 
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
 
+    public DeleteTaskCommand(Service<Task, TaskDto> taskService) {
+        this.taskService = taskService;
+    }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Repository<Employee> employeeRepository = new DefaultEmployeeRepository();
-        Service<Employee, EmployeeDto> employeeService = new DefaultEmployeeService(employeeRepository);
-        Repository<Project> projectRepository = new DefaultProjectRepository();
-        Repository<Task> taskRepository = new DefaultTaskRepository(employeeRepository, projectRepository);
-        Service<Project, ProjectDto> projectService = new DefaultProjectService(projectRepository, taskRepository);
-        Service<Task, TaskDto> taskService = new DefaultTaskService(employeeService, projectService, taskRepository);
-
         long id = Long.parseLong(request.getParameter(ID_PARAMETER));
         try {
             taskService.delete(id);

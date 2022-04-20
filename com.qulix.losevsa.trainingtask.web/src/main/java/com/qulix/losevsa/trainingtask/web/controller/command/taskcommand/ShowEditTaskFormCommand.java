@@ -33,6 +33,9 @@ public class ShowEditTaskFormCommand implements Command {
 
     private static final Logger LOG = Logger.getLogger(ShowEditTaskFormCommand.class);
 
+    private final Service<Task, TaskDto> taskService;
+    private final Service<Project, ProjectDto> projectService;
+
     private static final String TASK_EDIT_PATH = "/WEB-INF/jsp/taskEdit.jsp";
     private static final String NOT_FOUND_PATH = "/WEB-INF/jsp/notFoundPage.jsp";
 
@@ -41,15 +44,13 @@ public class ShowEditTaskFormCommand implements Command {
 
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
 
+    public ShowEditTaskFormCommand(Service<Task, TaskDto> taskService, Service<Project, ProjectDto> projectService) {
+        this.taskService = taskService;
+        this.projectService = projectService;
+    }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Repository<Employee> employeeRepository = new DefaultEmployeeRepository();
-        Service<Employee, EmployeeDto> employeeService = new DefaultEmployeeService(employeeRepository);
-        Repository<Project> projectRepository = new DefaultProjectRepository();
-        Repository<Task> taskRepository = new DefaultTaskRepository(employeeRepository, projectRepository);
-        Service<Project, ProjectDto> projectService = new DefaultProjectService(projectRepository, taskRepository);
-        Service<Task, TaskDto> taskService = new DefaultTaskService(employeeService, projectService, taskRepository);
-
         long taskId = Long.parseLong(request.getParameter(TASK_ID_PARAMETER));
 
         try {

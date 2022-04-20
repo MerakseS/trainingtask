@@ -27,6 +27,8 @@ public class UpdateEmployeeCommand implements Command {
 
     private static final Logger LOG = Logger.getLogger(UpdateEmployeeCommand.class);
 
+    private final Service<Employee, EmployeeDto> employeeService;
+
     private static final String EMPLOYEE_LIST_PATH = "/employee";
     private static final String EDIT_EMPLOYEE_FORM_PATH = "/employee/edit";
     private static final String NOT_FOUND_PATH = "/WEB-INF/jsp/notFoundPage.jsp";
@@ -39,11 +41,12 @@ public class UpdateEmployeeCommand implements Command {
 
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
 
+    public UpdateEmployeeCommand(Service<Employee, EmployeeDto> employeeService) {
+        this.employeeService = employeeService;
+    }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Repository<Employee> employeeRepository = new DefaultEmployeeRepository();
-        Service<Employee, EmployeeDto> employeeService = new DefaultEmployeeService(employeeRepository);
-
         long id = Long.parseLong(request.getParameter(ID_PARAMETER));
 
         EmployeeDto employeeDto = new EmployeeDto();

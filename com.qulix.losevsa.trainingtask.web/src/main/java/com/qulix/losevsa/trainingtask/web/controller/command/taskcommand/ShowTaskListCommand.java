@@ -28,17 +28,16 @@ import com.qulix.losevsa.trainingtask.web.service.Service;
  */
 public class ShowTaskListCommand implements Command {
 
+    private final Service<Task, TaskDto> taskService;
+
     private static final String TASK_LIST_PATH = "/WEB-INF/jsp/taskList.jsp";
+
+    public ShowTaskListCommand(Service<Task, TaskDto> taskService) {
+        this.taskService = taskService;
+    }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Repository<Employee> employeeRepository = new DefaultEmployeeRepository();
-        Service<Employee, EmployeeDto> employeeService = new DefaultEmployeeService(employeeRepository);
-        Repository<Project> projectRepository = new DefaultProjectRepository();
-        Repository<Task> taskRepository = new DefaultTaskRepository(employeeRepository, projectRepository);
-        Service<Project, ProjectDto> projectService = new DefaultProjectService(projectRepository, taskRepository);
-        Service<Task, TaskDto> taskService = new DefaultTaskService(employeeService, projectService, taskRepository);
-
         List<Task> taskList = taskService.getAll();
 
         request.setAttribute("taskList", taskList);

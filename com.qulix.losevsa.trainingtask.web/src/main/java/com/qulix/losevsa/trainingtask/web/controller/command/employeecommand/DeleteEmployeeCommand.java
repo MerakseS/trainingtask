@@ -12,9 +12,6 @@ import org.apache.log4j.Logger;
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.dto.EmployeeDto;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
-import com.qulix.losevsa.trainingtask.web.repository.DefaultEmployeeRepository;
-import com.qulix.losevsa.trainingtask.web.repository.Repository;
-import com.qulix.losevsa.trainingtask.web.service.DefaultEmployeeService;
 import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 
@@ -25,6 +22,8 @@ public class DeleteEmployeeCommand implements Command {
 
     private static final Logger LOG = Logger.getLogger(DeleteEmployeeCommand.class);
 
+    private final Service<Employee, EmployeeDto> employeeService;
+
     private static final String ID_PARAMETER = "id";
 
     private static final String EMPLOYEE_LIST_PATH = "/employee";
@@ -32,11 +31,12 @@ public class DeleteEmployeeCommand implements Command {
 
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
 
+    public DeleteEmployeeCommand(Service<Employee, EmployeeDto> employeeService) {
+        this.employeeService = employeeService;
+    }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Repository<Employee> employeeRepository = new DefaultEmployeeRepository();
-        Service<Employee, EmployeeDto> employeeService = new DefaultEmployeeService(employeeRepository);
-
         long id = Long.parseLong(request.getParameter(ID_PARAMETER));
 
         try {

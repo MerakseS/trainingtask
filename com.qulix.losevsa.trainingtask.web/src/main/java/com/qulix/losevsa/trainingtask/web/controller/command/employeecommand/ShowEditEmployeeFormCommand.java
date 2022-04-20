@@ -25,6 +25,8 @@ public class ShowEditEmployeeFormCommand implements Command {
 
     private static final Logger LOG = Logger.getLogger(ShowEditEmployeeFormCommand.class);
 
+    private final Service<Employee, EmployeeDto> employeeService;
+
     private static final String EMPLOYEE_EDIT_PATH = "/WEB-INF/jsp/employeeEdit.jsp";
     private static final String NOT_FOUND_PATH = "/WEB-INF/jsp/notFoundPage.jsp";
 
@@ -32,11 +34,12 @@ public class ShowEditEmployeeFormCommand implements Command {
 
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
 
+    public ShowEditEmployeeFormCommand(Service<Employee, EmployeeDto> employeeService) {
+        this.employeeService = employeeService;
+    }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Repository<Employee> employeeRepository = new DefaultEmployeeRepository();
-        Service<Employee, EmployeeDto> employeeService = new DefaultEmployeeService(employeeRepository);
-
         long id = Long.parseLong(request.getParameter(ID_PARAMETER));
 
         try {

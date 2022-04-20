@@ -23,17 +23,18 @@ import com.qulix.losevsa.trainingtask.web.service.Service;
  */
 public class ShowNewTaskFormCommand implements Command {
 
+    private final Service<Project, ProjectDto> projectService;
+
     private static final String TASK_EDIT_PATH = "/WEB-INF/jsp/taskEdit.jsp";
 
     private static final String PROJECT_ID_PARAMETER = "selectedProjectId";
 
+    public ShowNewTaskFormCommand(Service<Project, ProjectDto> projectService) {
+        this.projectService = projectService;
+    }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Repository<Employee> employeeRepository = new DefaultEmployeeRepository();
-        Repository<Project> projectRepository = new DefaultProjectRepository();
-        Repository<Task> taskRepository = new DefaultTaskRepository(employeeRepository, projectRepository);
-        Service<Project, ProjectDto> projectService = new DefaultProjectService(projectRepository, taskRepository);
-
         String strProjectId = request.getParameter(PROJECT_ID_PARAMETER);
         if (strProjectId != null && !strProjectId.isBlank()) {
             long id = Long.parseLong(strProjectId);

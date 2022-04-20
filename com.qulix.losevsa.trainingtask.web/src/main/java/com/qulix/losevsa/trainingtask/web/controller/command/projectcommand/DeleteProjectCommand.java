@@ -29,6 +29,8 @@ public class DeleteProjectCommand implements Command {
 
     private static final Logger LOG = Logger.getLogger(DeleteProjectCommand.class);
 
+    private final Service<Project, ProjectDto> projectService;
+
     private static final String PROJECT_LIST_PATH = "/project";
     private static final String NOT_FOUND_PATH = "/WEB-INF/jsp/notFoundPage.jsp";
 
@@ -36,13 +38,12 @@ public class DeleteProjectCommand implements Command {
 
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
 
+    public DeleteProjectCommand(Service<Project, ProjectDto> projectService) {
+        this.projectService = projectService;
+    }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Repository<Employee> employeeRepository = new DefaultEmployeeRepository();
-        Repository<Project> projectRepository = new DefaultProjectRepository();
-        Repository<Task> taskRepository = new DefaultTaskRepository(employeeRepository, projectRepository);
-        Service<Project, ProjectDto> projectService = new DefaultProjectService(projectRepository, taskRepository);
-
         long id = Long.parseLong(request.getParameter(ID_PARAMETER));
 
         try {

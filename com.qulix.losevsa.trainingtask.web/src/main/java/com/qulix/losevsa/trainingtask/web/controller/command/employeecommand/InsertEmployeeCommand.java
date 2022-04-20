@@ -25,6 +25,8 @@ public class InsertEmployeeCommand implements Command {
 
     private static final Logger LOG = Logger.getLogger(InsertEmployeeCommand.class);
 
+    private final Service<Employee, EmployeeDto> employeeService;
+
     private static final String EMPLOYEE_LIST_PATH = "/employee";
     private static final String NEW_EMPLOYEE_FORM_PATH = "/employee/new";
 
@@ -35,11 +37,12 @@ public class InsertEmployeeCommand implements Command {
 
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
 
+    public InsertEmployeeCommand(Service<Employee, EmployeeDto> employeeService) {
+        this.employeeService = employeeService;
+    }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        Repository<Employee> employeeRepository = new DefaultEmployeeRepository();
-        Service<Employee, EmployeeDto> employeeService = new DefaultEmployeeService(employeeRepository);
-
         EmployeeDto employeeDto = new EmployeeDto();
         employeeDto.setFirstName(request.getParameter(FIRST_NAME_PARAMETER));
         employeeDto.setSurname(request.getParameter(SURNAME_PARAMETER));

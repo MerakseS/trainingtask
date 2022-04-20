@@ -41,6 +41,8 @@ public class UpdateTaskCommand implements Command {
 
     private static final Logger LOG = Logger.getLogger(UpdateTaskCommand.class);
 
+    private final Service<Task, TaskDto> taskService;
+
     private static final String TASK_LIST_PATH = "/task";
     private static final String PROJECT_EDIT_FORM_PATH = "/project/edit?id=";
     private static final String EDIT_TASK_FORM_PATH = "/task/edit";
@@ -58,15 +60,12 @@ public class UpdateTaskCommand implements Command {
 
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
 
+    public UpdateTaskCommand(Service<Task, TaskDto> taskService) {
+        this.taskService = taskService;
+    }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Repository<Employee> employeeRepository = new DefaultEmployeeRepository();
-        Service<Employee, EmployeeDto> employeeService = new DefaultEmployeeService(employeeRepository);
-        Repository<Project> projectRepository = new DefaultProjectRepository();
-        Repository<Task> taskRepository = new DefaultTaskRepository(employeeRepository, projectRepository);
-        Service<Project, ProjectDto> projectService = new DefaultProjectService(projectRepository, taskRepository);
-        Service<Task, TaskDto> taskService = new DefaultTaskService(employeeService, projectService, taskRepository);
-
         long taskId = Long.parseLong(request.getParameter(ID_PARAMETER));
 
         TaskDto taskDto = new TaskDto();
