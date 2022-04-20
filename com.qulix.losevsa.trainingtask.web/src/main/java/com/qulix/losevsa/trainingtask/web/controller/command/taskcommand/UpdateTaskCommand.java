@@ -87,39 +87,39 @@ public class UpdateTaskCommand implements Command {
                 TASK_LIST_PATH);
         }
         catch (NotFoundException e) {
-            LOG.warn(e.toString());
+            LOG.warn(e);
             request.setAttribute(ERROR_ATTRIBUTE_NAME, format("Задача с id %d не существует!", taskId));
             request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);
         }
         catch (WorkTimeParseException e) {
-            handleException(e.toString(), "Некорректный ввод работы.", request, response);
+            handleException(e, "Некорректный ввод работы.", request, response);
         }
         catch (DateParseException e) {
-            handleException(e.toString(), "Некорректный ввод даты.", request, response);
+            handleException(e, "Некорректный ввод даты.", request, response);
         }
         catch (TaskStatusParseException e) {
-            handleException(e.toString(), "Некорректный ввод статуса.", request, response);
+            handleException(e, "Некорректный ввод статуса.", request, response);
         }
         catch (NoProjectException e) {
-            handleException(e.toString(), "Для добавления задачи сначала создайте проект.", request, response);
+            handleException(e, "Для добавления задачи сначала создайте проект.", request, response);
         }
         catch (FieldNotFilledException e) {
-            handleException(e.toString(), "Введите обязательные поля.", request, response);
+            handleException(e, "Введите обязательные поля.", request, response);
         }
         catch (NameLengthExceededException e) {
-            handleException(e.toString(), "Длина наименования должна быть не больше 50 символов.", request, response);
+            handleException(e, "Длина наименования должна быть не больше 50 символов.", request, response);
         }
         catch (WorkTimeNegativeException e) {
-            handleException(e.toString(), "Время работы не может быть отрицательным.", request, response);
+            handleException(e, "Время работы не может быть отрицательным.", request, response);
         }
         catch (EndDateEarlierStartDateException e) {
-            handleException(e.toString(), "Дата окончания не может быть раньше даты начала.", request, response);
+            handleException(e, "Дата окончания не может быть раньше даты начала.", request, response);
         }
     }
 
-    private void handleException(String logMessage, String clientMessage,
+    private void handleException(Exception e, String clientMessage,
         HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOG.warn(logMessage);
+        LOG.warn("Can't update task cause:", e);
         request.setAttribute(ERROR_ATTRIBUTE_NAME, clientMessage);
         request.getRequestDispatcher(EDIT_TASK_FORM_PATH).forward(request, response);
     }

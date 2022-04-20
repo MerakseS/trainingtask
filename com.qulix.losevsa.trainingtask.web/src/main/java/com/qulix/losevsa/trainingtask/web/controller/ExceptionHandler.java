@@ -29,7 +29,7 @@ public class ExceptionHandler extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         Exception exception = (Exception) request.getAttribute(EXCEPTION_NAME);
         if (exception != null) {
-            LOG.error(exception.toString());
+            LOG.error("Unexpected error.", exception);
         }
 
         Integer statusCode;

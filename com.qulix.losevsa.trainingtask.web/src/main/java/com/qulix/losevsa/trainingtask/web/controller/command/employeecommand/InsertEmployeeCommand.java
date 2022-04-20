@@ -51,16 +51,16 @@ public class InsertEmployeeCommand implements Command {
             response.sendRedirect(EMPLOYEE_LIST_PATH);
         }
         catch (FieldNotFilledException e) {
-            handleException(e.toString(), "Введите обязательные поля.", request, response);
+            handleException(e, "Введите обязательные поля.", request, response);
         }
         catch (EmployeeFieldLengthExceededException e) {
-            handleException(e.toString(), "Длина полей работника должна быть не больше 30 символов.", request, response);
+            handleException(e, "Длина полей работника должна быть не больше 30 символов.", request, response);
         }
     }
 
-    private void handleException(String logMessage, String clientMessage,
+    private void handleException(Exception e, String clientMessage,
         HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOG.warn(logMessage);
+        LOG.warn("Can't create employee cause:", e);
         request.setAttribute(ERROR_ATTRIBUTE_NAME, clientMessage);
         request.getRequestDispatcher(NEW_EMPLOYEE_FORM_PATH).forward(request, response);
     }

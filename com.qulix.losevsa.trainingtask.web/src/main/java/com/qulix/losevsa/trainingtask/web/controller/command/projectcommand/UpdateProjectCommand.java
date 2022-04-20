@@ -65,19 +65,19 @@ public class UpdateProjectCommand implements Command {
             request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);
         }
         catch (FieldNotFilledException e) {
-            handleException(e.toString(), "Введите обязательные поля.", request, response);
+            handleException(e, "Введите обязательные поля.", request, response);
         }
         catch (NameLengthExceededException e) {
-            handleException(e.toString(), "Длина наименования должна быть не больше 30 символов.", request, response);
+            handleException(e, "Длина наименования должна быть не больше 30 символов.", request, response);
         }
         catch (DescriptionLengthExceededException e) {
-            handleException(e.toString(), "Длина описания должна быть не больше 200 символов.", request, response);
+            handleException(e, "Длина описания должна быть не больше 200 символов.", request, response);
         }
     }
 
-    private void handleException(String logMessage, String clientMessage,
+    private void handleException(Exception e, String clientMessage,
         HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        LOG.warn(logMessage);
+        LOG.warn("Can't update project cause:", e);
         request.setAttribute(ERROR_ATTRIBUTE_NAME, clientMessage);
         request.getRequestDispatcher(EDIT_PROJECT_FORM_PATH).forward(request, response);
     }

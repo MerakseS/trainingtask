@@ -16,6 +16,7 @@ import com.qulix.losevsa.trainingtask.web.entity.Task;
 import com.qulix.losevsa.trainingtask.web.entity.TaskStatus;
 import com.qulix.losevsa.trainingtask.web.repository.Repository;
 import com.qulix.losevsa.trainingtask.web.service.exception.DateParseException;
+import com.qulix.losevsa.trainingtask.web.service.exception.EmployeeIdParseException;
 import com.qulix.losevsa.trainingtask.web.service.exception.EndDateEarlierStartDateException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
 import com.qulix.losevsa.trainingtask.web.service.exception.NameLengthExceededException;
@@ -216,8 +217,7 @@ public class DefaultTaskService implements Service<Task, TaskDto> {
             return employeeService.get(employeeId);
         }
         catch (NumberFormatException e) {
-            LOG.warn(format("Can't parse employee id. Employee id: %s. Cause: %s", strEmployeeId, e.getMessage()));
-            return null;
+            throw new EmployeeIdParseException(format("Incorrect employee id input. Employee id: %s", strEmployeeId), e);
         }
     }
 }

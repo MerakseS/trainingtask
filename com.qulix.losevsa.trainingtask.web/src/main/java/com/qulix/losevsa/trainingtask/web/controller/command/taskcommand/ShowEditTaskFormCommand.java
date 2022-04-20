@@ -66,7 +66,7 @@ public class ShowEditTaskFormCommand implements Command {
             request.getRequestDispatcher(TASK_EDIT_PATH).forward(request, response);
         }
         catch (NotFoundException e) {
-            LOG.warn(e.toString());
+            LOG.warn("Can't show task form cause:", e);
             request.setAttribute(ERROR_ATTRIBUTE_NAME, format("Сотрудник с id %d не существует!", taskId));
             request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);
         }
