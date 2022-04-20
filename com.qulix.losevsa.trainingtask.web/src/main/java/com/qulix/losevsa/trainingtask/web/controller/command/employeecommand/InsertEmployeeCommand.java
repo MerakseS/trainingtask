@@ -23,7 +23,7 @@ import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledExcept
  */
 public class InsertEmployeeCommand implements Command {
 
-    public static final Logger LOG = Logger.getLogger(InsertEmployeeCommand.class);
+    private static final Logger LOG = Logger.getLogger(InsertEmployeeCommand.class);
 
     private static final String EMPLOYEE_LIST_PATH = "/employee";
     private static final String NEW_EMPLOYEE_FORM_PATH = "/employee/new";

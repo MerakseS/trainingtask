@@ -25,7 +25,7 @@ import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
  */
 public class UpdateEmployeeCommand implements Command {
 
-    public static final Logger LOG = Logger.getLogger(UpdateEmployeeCommand.class);
+    private static final Logger LOG = Logger.getLogger(UpdateEmployeeCommand.class);
 
     private static final String EMPLOYEE_LIST_PATH = "/employee";
     private static final String EDIT_EMPLOYEE_FORM_PATH = "/employee/edit";

@@ -5,8 +5,8 @@ import java.util.List;
 /**
  * The interface Service.
  *
- * @param <T>  the type parameter of object
- * @param <S>  the type parameter of data transfer object
+ * @param <T>   the type parameter of object
+ * @param <S>   the type parameter of data transfer object
  */
 public interface Service<T, S> {
 

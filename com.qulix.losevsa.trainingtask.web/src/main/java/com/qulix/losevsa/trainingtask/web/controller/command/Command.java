@@ -14,17 +14,10 @@ public interface Command {
     /**
      * Execute specified command.
      *
-     * @param request  the {@link HttpServletRequest} object that
-     * contains the request the client made of the servlet
-     *
-     * @param response the {@link HttpServletResponse} object that
-     * contains the response the servlet returns to the client
-     *
-     * @exception IOException if an input or output error occurs
-     * while the servlet is handling the HTTP request
-     *
-     * @exception ServletException if the HTTP request
-     * cannot be handled
+     * @param request the {@link HttpServletRequest} object that contains the request the client made of the servlet
+     * @param response the {@link HttpServletResponse} object that contains the response the servlet returns to the client
+     * @throws ServletException if the HTTP request cannot be handled
+     * @throws IOException if an input or output error occurs while the servlet is handling the HTTP request
      */
     void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 

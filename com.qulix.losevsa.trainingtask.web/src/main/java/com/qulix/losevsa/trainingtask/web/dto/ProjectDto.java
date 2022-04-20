@@ -1,5 +1,10 @@
 package com.qulix.losevsa.trainingtask.web.dto;
 
+import com.qulix.losevsa.trainingtask.web.entity.Project;
+
+/**
+ * The Data transfer object of the {@link Project}.
+ */
 public class ProjectDto {
 
     /**

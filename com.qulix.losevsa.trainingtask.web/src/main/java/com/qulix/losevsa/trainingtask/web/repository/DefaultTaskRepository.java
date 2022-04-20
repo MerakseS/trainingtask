@@ -47,7 +47,7 @@ public class DefaultTaskRepository implements Repository<Task> {
      * Instantiates a new Default task repository.
      *
      * @param employeeRepository the employee repository
-     * @param projectRepository  the project repository
+     * @param projectRepository the project repository
      */
     public DefaultTaskRepository(Repository<Employee> employeeRepository, Repository<Project> projectRepository) {
         this.employeeRepository = employeeRepository;
@@ -101,6 +101,12 @@ public class DefaultTaskRepository implements Repository<Task> {
     }
 
 
+    /**
+     * Gets task list by project id.
+     *
+     * @param projectId the project id
+     * @return the task list by project id
+     */
     public List<Task> getTaskListByProjectId(long projectId) {
         try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement =

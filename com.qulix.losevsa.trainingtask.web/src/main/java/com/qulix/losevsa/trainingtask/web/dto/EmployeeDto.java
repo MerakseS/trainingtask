@@ -1,6 +1,12 @@
 package com.qulix.losevsa.trainingtask.web.dto;
 
+import com.qulix.losevsa.trainingtask.web.entity.Employee;
+
+/**
+ * The Data transfer object of the {@link Employee}.
+ */
 public class EmployeeDto {
+
     /**
      * First name of the employee.
      */

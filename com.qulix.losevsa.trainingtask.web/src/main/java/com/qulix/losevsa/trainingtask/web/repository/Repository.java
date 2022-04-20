@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * The interface Repository.
  *
- * @param <T>  the type parameter of object in repository
+ * @param <T>   the type parameter of object in repository
  */
 public interface Repository<T> {
 

@@ -42,8 +42,8 @@ public class DefaultTaskService implements Service<Task, TaskDto> {
      * Instantiates a new Default task service.
      *
      * @param employeeService the employee service
-     * @param projectService  the project service
-     * @param taskRepository  the repository for {@link Task}
+     * @param projectService the project service
+     * @param taskRepository the repository for {@link Task}
      */
     public DefaultTaskService(Service<Employee, EmployeeDto> employeeService, Service<Project, ProjectDto> projectService, Repository<Task> taskRepository) {
         this.employeeService = employeeService;

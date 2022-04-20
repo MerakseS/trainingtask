@@ -1,7 +1,11 @@
 package com.qulix.losevsa.trainingtask.web.dto;
 
+import com.qulix.losevsa.trainingtask.web.entity.Task;
 import com.qulix.losevsa.trainingtask.web.entity.TaskStatus;
 
+/**
+ * The Data transfer object of the {@link Task}.
+ */
 public class TaskDto {
 
     /**
