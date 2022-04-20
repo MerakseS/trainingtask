@@ -1,6 +1,7 @@
 package com.qulix.losevsa.trainingtask.web.controller.command;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Represents the base class for command providers.
@@ -45,7 +46,7 @@ public abstract class CommandProvider {
     /**
      * The Commands map that contains path as a key and command as a value.
      */
-    private final HashMap<String, Command> commands;
+    private final Map<String, Command> commands;
 
     /**
      * Instantiates a new Command provider.
@@ -54,7 +55,7 @@ public abstract class CommandProvider {
         commands = new HashMap<>();
     }
 
-    public HashMap<String, Command> getCommands() {
+    public Map<String, Command> getCommands() {
         return commands;
     }
 

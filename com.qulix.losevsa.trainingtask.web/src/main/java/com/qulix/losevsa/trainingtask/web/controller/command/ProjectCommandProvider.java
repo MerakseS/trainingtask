@@ -1,6 +1,6 @@
 package com.qulix.losevsa.trainingtask.web.controller.command;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.projectcommand.DeleteProjectCommand;
 import com.qulix.losevsa.trainingtask.web.controller.command.projectcommand.InsertProjectCommand;
@@ -19,7 +19,7 @@ public class ProjectCommandProvider extends CommandProvider {
      */
     public ProjectCommandProvider() {
         super();
-        HashMap<String, Command> commands = getCommands();
+        Map<String, Command> commands = getCommands();
         Command showListCommand = new ShowProjectListCommand();
         commands.put(EMPTY_COMMAND, showListCommand);
         commands.put(SHOW_LIST_COMMAND, showListCommand);

@@ -34,7 +34,6 @@ public class DefaultTaskRepository implements Repository<Task> {
     private static final String SAVE_TASK_QUERY = "INSERT INTO TASK (STATUS, NAME, PROJECT, " +
         "WORK_TIME, START_DATE, END_DATE, EXECUTOR) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final String GET_ALL_TASKS_QUERY = "SELECT * FROM TASK";
-    private static final String GET_TASKS_BY_PROJECT_ID_QUERY = "SELECT * FROM TASK WHERE PROJECT = ?";
     private static final String GET_TASK_BY_ID_QUERY = "SELECT * FROM TASK WHERE ID = ?";
     private static final String UPDATE_TASK_QUERY = "UPDATE TASK SET STATUS = ?, NAME = ?, PROJECT = ?, " +
         "WORK_TIME = ?, START_DATE = ?, END_DATE = ?, EXECUTOR = ? WHERE ID = ?";
@@ -97,36 +96,6 @@ public class DefaultTaskRepository implements Repository<Task> {
         }
         catch (SQLException e) {
             throw new QueryExecutionException(format("Can't get all tasks cause: %s", e.getMessage()), e);
-        }
-    }
-
-
-    /**
-     * Gets task list by project id.
-     *
-     * @param projectId the project id
-     * @return the task list by project id
-     */
-    public List<Task> getTaskListByProjectId(long projectId) {
-        try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement statement =
-                 connection.prepareStatement(GET_TASKS_BY_PROJECT_ID_QUERY)) {
-
-            statement.setLong(1, projectId);
-
-            ResultSet result = statement.executeQuery();
-            List<Task> taskList = new ArrayList<>();
-            while (result.next()) {
-                Task task = getTaskByResultSet(result);
-                taskList.add(task);
-            }
-
-            return taskList;
-        }
-        catch (SQLException e) {
-            throw new QueryExecutionException(
-                format("Can't get task list cause: %s. Project id: %d", e.getMessage(), projectId), e
-            );
         }
     }
 
