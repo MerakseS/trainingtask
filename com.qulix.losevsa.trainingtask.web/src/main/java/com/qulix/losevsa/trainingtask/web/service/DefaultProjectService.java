@@ -1,5 +1,6 @@
 package com.qulix.losevsa.trainingtask.web.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import static java.lang.String.format;
 
@@ -8,7 +9,6 @@ import org.apache.log4j.Logger;
 import com.qulix.losevsa.trainingtask.web.dto.ProjectDto;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
-import com.qulix.losevsa.trainingtask.web.repository.DefaultTaskRepository;
 import com.qulix.losevsa.trainingtask.web.repository.Repository;
 import com.qulix.losevsa.trainingtask.web.service.exception.DescriptionLengthExceededException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
@@ -65,7 +65,13 @@ public class DefaultProjectService implements Service<Project, ProjectDto> {
             throw new NotFoundException(format("Project with id %d doesn't exist.", id));
         }
 
-        List<Task> taskList = ((DefaultTaskRepository) taskRepository).getTaskListByProjectId(id);
+        List<Task> taskList = new ArrayList<>();
+        for (Task task : taskRepository.getAll()) {
+            if (task.getProject().getId() == id) {
+                taskList.add(task);
+            }
+        }
+
         project.setTaskList(taskList);
         LOG.info(format("Successfully get project with id %d", id));
 
