@@ -54,13 +54,13 @@ public class InsertProjectCommand implements Command {
             response.sendRedirect(PROJECT_LIST_PATH);
         }
         catch (FieldNotFilledException e) {
-            handleException(e.getMessage(), "Введите обязательные поля.", request, response);
+            handleException(e.toString(), "Введите обязательные поля.", request, response);
         }
         catch (NameLengthExceededException e) {
-            handleException(e.getMessage(), "Длина наименования должна быть не больше 30 символов.", request, response);
+            handleException(e.toString(), "Длина наименования должна быть не больше 30 символов.", request, response);
         }
         catch (DescriptionLengthExceededException e) {
-            handleException(e.getMessage(), "Длина описания должна быть не больше 200 символов.", request, response);
+            handleException(e.toString(), "Длина описания должна быть не больше 200 символов.", request, response);
         }
     }
 

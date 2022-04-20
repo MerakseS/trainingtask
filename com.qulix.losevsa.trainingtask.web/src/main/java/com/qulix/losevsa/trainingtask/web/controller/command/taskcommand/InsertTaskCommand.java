@@ -81,28 +81,28 @@ public class InsertTaskCommand implements Command {
                 TASK_LIST_PATH);
         }
         catch (WorkTimeParseException e) {
-            handleException(e.getMessage(), "Некорректный ввод работы.", request, response);
+            handleException(e.toString(), "Некорректный ввод работы.", request, response);
         }
         catch (DateParseException e) {
-            handleException(e.getMessage(), "Некорректный ввод даты.", request, response);
+            handleException(e.toString(), "Некорректный ввод даты.", request, response);
         }
         catch (TaskStatusParseException e) {
-            handleException(e.getMessage(), "Некорректный ввод статуса.", request, response);
+            handleException(e.toString(), "Некорректный ввод статуса.", request, response);
         }
         catch (NoProjectException e) {
-            handleException(e.getMessage(), "Для добавления задачи сначала создайте проект.", request, response);
+            handleException(e.toString(), "Для добавления задачи сначала создайте проект.", request, response);
         }
         catch (FieldNotFilledException e) {
-            handleException(e.getMessage(), "Введите обязательные поля.", request, response);
+            handleException(e.toString(), "Введите обязательные поля.", request, response);
         }
         catch (NameLengthExceededException e) {
-            handleException(e.getMessage(), "Длина наименования должна быть не больше 50 символов.", request, response);
+            handleException(e.toString(), "Длина наименования должна быть не больше 50 символов.", request, response);
         }
         catch (WorkTimeNegativeException e) {
-            handleException(e.getMessage(), "Время работы не может быть отрицательным.", request, response);
+            handleException(e.toString(), "Время работы не может быть отрицательным.", request, response);
         }
         catch (EndDateEarlierStartDateException e) {
-            handleException(e.getMessage(), "Дата окончания не может быть раньше даты начала.", request, response);
+            handleException(e.toString(), "Дата окончания не может быть раньше даты начала.", request, response);
         }
     }
 

@@ -50,7 +50,7 @@ public class DeleteProjectCommand implements Command {
             response.sendRedirect(PROJECT_LIST_PATH);
         }
         catch (NotFoundException e) {
-            LOG.warn(e.getMessage());
+            LOG.warn(e.toString());
             request.setAttribute(ERROR_ATTRIBUTE_NAME, format("Проект с id %d не существует!", id));
             request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);
         }

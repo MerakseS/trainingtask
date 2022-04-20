@@ -51,10 +51,10 @@ public class InsertEmployeeCommand implements Command {
             response.sendRedirect(EMPLOYEE_LIST_PATH);
         }
         catch (FieldNotFilledException e) {
-            handleException(e.getMessage(), "Введите обязательные поля.", request, response);
+            handleException(e.toString(), "Введите обязательные поля.", request, response);
         }
         catch (EmployeeFieldLengthExceededException e) {
-            handleException(e.getMessage(), "Длина полей работника должна быть не больше 30 символов.", request, response);
+            handleException(e.toString(), "Длина полей работника должна быть не больше 30 символов.", request, response);
         }
     }
 

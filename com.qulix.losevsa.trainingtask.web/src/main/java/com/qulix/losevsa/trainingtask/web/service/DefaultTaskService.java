@@ -216,6 +216,7 @@ public class DefaultTaskService implements Service<Task, TaskDto> {
             return employeeService.get(employeeId);
         }
         catch (NumberFormatException e) {
+            LOG.warn(format("Can't parse employee id. Employee id: %s. Cause: %s", strEmployeeId, e.getMessage()));
             return null;
         }
     }

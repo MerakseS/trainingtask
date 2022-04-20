@@ -44,7 +44,7 @@ public class DeleteEmployeeCommand implements Command {
             response.sendRedirect(EMPLOYEE_LIST_PATH);
         }
         catch (NotFoundException e) {
-            LOG.warn(e.getMessage());
+            LOG.warn(e.toString());
             request.setAttribute(ERROR_ATTRIBUTE_NAME, format("Сотрудник с id %d не существует!", id));
             request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);
         }

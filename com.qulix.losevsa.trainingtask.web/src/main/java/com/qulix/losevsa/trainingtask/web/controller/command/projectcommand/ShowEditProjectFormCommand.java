@@ -51,7 +51,7 @@ public class ShowEditProjectFormCommand implements Command {
             request.getRequestDispatcher(PROJECT_EDIT_PATH).forward(request, response);
         }
         catch (NotFoundException e) {
-            LOG.warn(e.getMessage());
+            LOG.warn(e.toString());
             request.setAttribute(ERROR_ATTRIBUTE_NAME, format("Сотрудник с id %d не существует!", id));
             request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);
         }

@@ -55,7 +55,7 @@ public class DeleteTaskCommand implements Command {
             response.sendRedirect(referer);
         }
         catch (NotFoundException e) {
-            LOG.warn(e.getMessage());
+            LOG.warn(e.toString());
             request.setAttribute(ERROR_ATTRIBUTE_NAME, format("Задача с id %d не существует!", id));
             request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);
         }

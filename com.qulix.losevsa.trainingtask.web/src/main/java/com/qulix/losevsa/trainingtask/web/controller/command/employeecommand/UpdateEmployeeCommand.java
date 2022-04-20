@@ -57,15 +57,15 @@ public class UpdateEmployeeCommand implements Command {
             response.sendRedirect(EMPLOYEE_LIST_PATH);
         }
         catch (NotFoundException e) {
-            LOG.warn(e.getMessage());
+            LOG.warn(e.toString());
             request.setAttribute(ERROR_ATTRIBUTE_NAME, format("Сотрудник с id %d не существует!", id));
             request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);
         }
         catch (FieldNotFilledException e) {
-            handleException(e.getMessage(), "Введите обязательные поля.", request, response);
+            handleException(e.toString(), "Введите обязательные поля.", request, response);
         }
         catch (EmployeeFieldLengthExceededException e) {
-            handleException(e.getMessage(), "Длина полей работника должна быть не больше 30 символов.", request, response);
+            handleException(e.toString(), "Длина полей работника должна быть не больше 30 символов.", request, response);
         }
     }
 
