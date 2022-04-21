@@ -3,7 +3,7 @@ package com.qulix.losevsa.trainingtask.web.repository;
 import java.util.List;
 
 /**
- * The interface Repository.
+ * The interface for repository layer, that used for working with database.
  *
  * @param <T>   the type parameter of object in repository
  */

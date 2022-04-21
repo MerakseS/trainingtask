@@ -3,7 +3,7 @@ package com.qulix.losevsa.trainingtask.web.service;
 import java.util.List;
 
 /**
- * The interface Service.
+ * The interface for service layer, that used for working with business logic.
  *
  * @param <T>   the type parameter of object
  * @param <S>   the type parameter of data transfer object
@@ -25,7 +25,7 @@ public interface Service<T, S> {
     List<T> getAll();
 
     /**
-     * Get object by id..
+     * Get object by id.
      *
      * @param id the id of the object.
      * @return the object by id.
