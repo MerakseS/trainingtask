@@ -1,10 +1,12 @@
 package com.qulix.losevsa.trainingtask.web.controller.command.employeecommand;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -29,6 +31,7 @@ public class InsertEmployeeCommand implements Command {
     private static final String PATRONYMIC_PARAMETER = "patronymic";
     private static final String POSITION_PARAMETER = "position";
 
+    private static final String DUPLICATES_ATTRIBUTE_NAME = "duplicates";
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
 
     private final Service<Employee> employeeService;
@@ -50,7 +53,22 @@ public class InsertEmployeeCommand implements Command {
                 employee.setPatronymic(patronymic);
             }
 
-            employeeService.create(employee);
+            HttpSession session = request.getSession();
+            ArrayList<String> duplicates = (ArrayList<String>) session.getAttribute(DUPLICATES_ATTRIBUTE_NAME);
+            if (duplicates == null) {
+                employeeService.create(employee);
+
+                duplicates = new ArrayList<>();
+                duplicates.add(employee.toString());
+                session.setAttribute(DUPLICATES_ATTRIBUTE_NAME, duplicates);
+            }
+            else if (!duplicates.contains(employee.toString())) {
+                employeeService.create(employee);
+
+                duplicates.add(employee.toString());
+                session.setAttribute(DUPLICATES_ATTRIBUTE_NAME, duplicates);
+            }
+
             response.sendRedirect(EMPLOYEE_LIST_PATH);
         }
         catch (FieldNotFilledException e) {

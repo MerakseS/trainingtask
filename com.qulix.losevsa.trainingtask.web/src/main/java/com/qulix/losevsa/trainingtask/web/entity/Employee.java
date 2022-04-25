@@ -1,6 +1,7 @@
 package com.qulix.losevsa.trainingtask.web.entity;
 
 import java.io.Serializable;
+import static java.lang.String.format;
 
 /**
  * The type Employee.
@@ -70,5 +71,10 @@ public class Employee implements Serializable {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    @Override
+    public String toString() {
+        return format("%s %s %s %s", position, firstName, surname, patronymic);
     }
 }

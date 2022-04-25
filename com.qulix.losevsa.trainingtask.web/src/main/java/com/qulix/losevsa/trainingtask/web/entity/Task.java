@@ -1,6 +1,7 @@
 package com.qulix.losevsa.trainingtask.web.entity;
 
 import java.time.LocalDate;
+import static java.lang.String.format;
 
 /**
  * Represents a task.
@@ -111,5 +112,18 @@ public class Task {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    @Override
+    public String toString() {
+        return format("%s [%s], due date %s--%s (%d), project: %d, employee: %d",
+            name,
+            taskStatus != null ? taskStatus.getName() : null,
+            startDate,
+            endDate,
+            workTime,
+            project != null ? project.getId() : null,
+            employee != null ? employee.getId() : null
+        );
     }
 }

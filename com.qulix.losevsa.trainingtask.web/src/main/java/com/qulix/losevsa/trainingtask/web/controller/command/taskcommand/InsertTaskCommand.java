@@ -1,10 +1,12 @@
 package com.qulix.losevsa.trainingtask.web.controller.command.taskcommand;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -41,6 +43,7 @@ public class InsertTaskCommand implements Command {
     private static final String EMPLOYEE_ID_PARAMETER = "employeeId";
     private static final String SELECTED_PROJECT_ID_PARAMETER = "selectedProjectId";
 
+    private static final String DUPLICATES_ATTRIBUTE_NAME = "duplicates";
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
 
     private final Service<Task> taskService;
@@ -71,7 +74,22 @@ public class InsertTaskCommand implements Command {
 
             String strSelectedProjectId = request.getParameter(SELECTED_PROJECT_ID_PARAMETER);
 
-            taskService.create(task);
+            HttpSession session = request.getSession();
+            ArrayList<String> duplicates = (ArrayList<String>) session.getAttribute(DUPLICATES_ATTRIBUTE_NAME);
+            if (duplicates == null) {
+                taskService.create(task);
+
+                duplicates = new ArrayList<>();
+                duplicates.add(task.toString());
+                session.setAttribute(DUPLICATES_ATTRIBUTE_NAME, duplicates);
+            }
+            else if (!duplicates.contains(task.toString())) {
+                taskService.create(task);
+
+                duplicates.add(task.toString());
+                session.setAttribute(DUPLICATES_ATTRIBUTE_NAME, duplicates); //update the variable
+            }
+
             response.sendRedirect(strSelectedProjectId != null ?
                 PROJECT_EDIT_FORM_PATH + strSelectedProjectId :
                 TASK_LIST_PATH);

@@ -1,6 +1,7 @@
 package com.qulix.losevsa.trainingtask.web.entity;
 
 import java.util.List;
+import static java.lang.String.format;
 
 /**
  * Represents a project.
@@ -59,5 +60,10 @@ public class Project {
 
     public void setTaskList(List<Task> taskList) {
         this.taskList = taskList;
+    }
+
+    @Override
+    public String toString() {
+        return format("%s (%s)", name, description);
     }
 }

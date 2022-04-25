@@ -1,10 +1,12 @@
 package com.qulix.losevsa.trainingtask.web.controller.command.projectcommand;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -28,6 +30,7 @@ public class InsertProjectCommand implements Command {
     private static final String NAME_PARAMETER = "name";
     private static final String DESCRIPTION_PARAMETER = "description";
 
+    private static final String DUPLICATES_ATTRIBUTE_NAME = "duplicates";
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
 
     private final Service<Project> projectService;
@@ -52,7 +55,22 @@ public class InsertProjectCommand implements Command {
                 project.setDescription(description);
             }
 
-            projectService.create(project);
+            HttpSession session = request.getSession();
+            ArrayList<String> duplicates = (ArrayList<String>) session.getAttribute(DUPLICATES_ATTRIBUTE_NAME);
+            if (duplicates == null) {
+                projectService.create(project);
+
+                duplicates = new ArrayList<>();
+                duplicates.add(project.toString());
+                session.setAttribute(DUPLICATES_ATTRIBUTE_NAME, duplicates);
+            }
+            else if (!duplicates.contains(project.toString())) {
+                projectService.create(project);
+
+                duplicates.add(project.toString());
+                session.setAttribute(DUPLICATES_ATTRIBUTE_NAME, duplicates);
+            }
+
             response.sendRedirect(PROJECT_LIST_PATH);
         }
         catch (FieldNotFilledException e) {
