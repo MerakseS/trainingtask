@@ -5,7 +5,6 @@ import static java.lang.String.format;
 
 import org.apache.log4j.Logger;
 
-import com.qulix.losevsa.trainingtask.web.dto.EmployeeDto;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.repository.Repository;
 import com.qulix.losevsa.trainingtask.web.service.exception.EmployeeFieldLengthExceededException;
@@ -15,7 +14,7 @@ import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 /**
  * The default {@link Employee} implementation of {@link Service}.
  */
-public class DefaultEmployeeService implements Service<Employee, EmployeeDto> {
+public class DefaultEmployeeService implements Service<Employee> {
 
     private static final Logger LOG = Logger.getLogger(DefaultEmployeeService.class);
     private static final int FIELDS_MAX_LENGTH = 30;
@@ -30,17 +29,8 @@ public class DefaultEmployeeService implements Service<Employee, EmployeeDto> {
     }
 
     @Override
-    public void create(EmployeeDto employeeDto) {
-        validateValues(employeeDto);
-
-        Employee employee = new Employee();
-        employee.setFirstName(employeeDto.getFirstName());
-        employee.setSurname(employeeDto.getSurname());
-        employee.setPosition(employeeDto.getPosition());
-        if (employeeDto.getPatronymic() != null && !employeeDto.getPatronymic().isBlank()) {
-            employee.setPatronymic(employeeDto.getPatronymic());
-        }
-
+    public void create(Employee employee) {
+        validateValues(employee);
         employee = employeeRepository.save(employee);
         LOG.info(format("Successfully created employee with id %d", employee.getId()));
     }
@@ -64,25 +54,15 @@ public class DefaultEmployeeService implements Service<Employee, EmployeeDto> {
     }
 
     @Override
-    public void update(long employeeId, EmployeeDto employeeDto) {
-        Employee employee = employeeRepository.getById(employeeId);
-        if (employee == null) {
-            throw new NotFoundException(format("Employee with id %d doesn't exist.", employeeId));
+    public void update(Employee employee) {
+        Employee oldEmployee = employeeRepository.getById(employee.getId());
+        if (oldEmployee == null) {
+            throw new NotFoundException(format("Employee with id %d doesn't exist.", employee.getId()));
         }
 
-        validateValues(employeeDto);
-
-        Employee newEmployee = new Employee();
-        newEmployee.setId(employeeId);
-        newEmployee.setFirstName(employeeDto.getFirstName());
-        newEmployee.setSurname(employeeDto.getSurname());
-        newEmployee.setPosition(employeeDto.getPosition());
-        if (employeeDto.getPatronymic() != null && !employeeDto.getPatronymic().isBlank()) {
-            newEmployee.setPatronymic(employeeDto.getPatronymic());
-        }
-
-        newEmployee = employeeRepository.update(newEmployee);
-        LOG.info(format("Successfully updated employee with id %d", newEmployee.getId()));
+        validateValues(employee);
+        employee = employeeRepository.update(employee);
+        LOG.info(format("Successfully updated employee with id %d", employee.getId()));
     }
 
     @Override
@@ -96,36 +76,36 @@ public class DefaultEmployeeService implements Service<Employee, EmployeeDto> {
         LOG.info(format("Successfully deleted employee with id %d", employeeId));
     }
 
-    private void validateValues(EmployeeDto employeeDto) {
-        if (employeeDto.getFirstName() == null || employeeDto.getFirstName().isBlank()
-            || employeeDto.getSurname() == null || employeeDto.getSurname().isBlank()
-            || employeeDto.getPosition() == null || employeeDto.getPosition().isBlank()) {
+    private void validateValues(Employee employee) {
+        if (employee.getFirstName() == null || employee.getFirstName().isBlank()
+            || employee.getSurname() == null || employee.getSurname().isBlank()
+            || employee.getPosition() == null || employee.getPosition().isBlank()) {
             throw new FieldNotFilledException(
-                format("Required fields are empty. First name: '%s', surname: '%s', position: '%s'", employeeDto.getFirstName(), employeeDto.getSurname(), employeeDto.getPosition())
+                format("Required fields are empty. First name: '%s', surname: '%s', position: '%s'", employee.getFirstName(), employee.getSurname(), employee.getPosition())
             );
         }
 
-        if (employeeDto.getFirstName().length() > FIELDS_MAX_LENGTH) {
+        if (employee.getFirstName().length() > FIELDS_MAX_LENGTH) {
             throw new EmployeeFieldLengthExceededException(
-                format("Length of first name is more then %d. First name: %s", FIELDS_MAX_LENGTH, employeeDto.getFirstName())
+                format("Length of first name is more then %d. First name: %s", FIELDS_MAX_LENGTH, employee.getFirstName())
             );
         }
 
-        if (employeeDto.getSurname().length() > FIELDS_MAX_LENGTH) {
+        if (employee.getSurname().length() > FIELDS_MAX_LENGTH) {
             throw new EmployeeFieldLengthExceededException(
-                format("Length of surname is more then %d. Surname: %s", FIELDS_MAX_LENGTH, employeeDto.getSurname())
+                format("Length of surname is more then %d. Surname: %s", FIELDS_MAX_LENGTH, employee.getSurname())
             );
         }
 
-        if (employeeDto.getPosition().length() > FIELDS_MAX_LENGTH) {
+        if (employee.getPosition().length() > FIELDS_MAX_LENGTH) {
             throw new EmployeeFieldLengthExceededException(
-                format("Length of position is more then %d. Position: %s", FIELDS_MAX_LENGTH, employeeDto.getPosition())
+                format("Length of position is more then %d. Position: %s", FIELDS_MAX_LENGTH, employee.getPosition())
             );
         }
 
-        if (employeeDto.getPatronymic() != null && employeeDto.getPatronymic().length() > FIELDS_MAX_LENGTH) {
+        if (employee.getPatronymic() != null && employee.getPatronymic().length() > FIELDS_MAX_LENGTH) {
             throw new EmployeeFieldLengthExceededException(
-                format("Length of patronymic is more then %d. Patronymic: %s", FIELDS_MAX_LENGTH, employeeDto.getPatronymic())
+                format("Length of patronymic is more then %d. Patronymic: %s", FIELDS_MAX_LENGTH, employee.getPatronymic())
             );
         }
     }

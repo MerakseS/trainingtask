@@ -8,7 +8,6 @@ import com.qulix.losevsa.trainingtask.web.controller.command.employeecommand.Sho
 import com.qulix.losevsa.trainingtask.web.controller.command.employeecommand.ShowEmployeeListCommand;
 import com.qulix.losevsa.trainingtask.web.controller.command.employeecommand.ShowNewEmployeeFormCommand;
 import com.qulix.losevsa.trainingtask.web.controller.command.employeecommand.UpdateEmployeeCommand;
-import com.qulix.losevsa.trainingtask.web.dto.EmployeeDto;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.service.Service;
 
@@ -21,7 +20,7 @@ public class EmployeeCommandProvider extends CommandProvider {
      * Initialize employee commands with command names
      * @param employeeService the service for {@link Employee}
      */
-    public EmployeeCommandProvider(Service<Employee, EmployeeDto> employeeService) {
+    public EmployeeCommandProvider(Service<Employee> employeeService) {
         super();
         Map<String, Command> commands = getCommands();
         Command showListCommand = new ShowEmployeeListCommand(employeeService);

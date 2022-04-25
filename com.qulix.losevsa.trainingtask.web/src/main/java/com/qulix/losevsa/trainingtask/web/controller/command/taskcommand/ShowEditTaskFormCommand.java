@@ -10,19 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
-import com.qulix.losevsa.trainingtask.web.dto.EmployeeDto;
-import com.qulix.losevsa.trainingtask.web.dto.ProjectDto;
-import com.qulix.losevsa.trainingtask.web.dto.TaskDto;
-import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
-import com.qulix.losevsa.trainingtask.web.repository.DefaultEmployeeRepository;
-import com.qulix.losevsa.trainingtask.web.repository.DefaultProjectRepository;
-import com.qulix.losevsa.trainingtask.web.repository.DefaultTaskRepository;
-import com.qulix.losevsa.trainingtask.web.repository.Repository;
-import com.qulix.losevsa.trainingtask.web.service.DefaultEmployeeService;
-import com.qulix.losevsa.trainingtask.web.service.DefaultProjectService;
-import com.qulix.losevsa.trainingtask.web.service.DefaultTaskService;
 import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 
@@ -33,9 +22,6 @@ public class ShowEditTaskFormCommand implements Command {
 
     private static final Logger LOG = Logger.getLogger(ShowEditTaskFormCommand.class);
 
-    private final Service<Task, TaskDto> taskService;
-    private final Service<Project, ProjectDto> projectService;
-
     private static final String TASK_EDIT_PATH = "/WEB-INF/jsp/taskEdit.jsp";
     private static final String NOT_FOUND_PATH = "/WEB-INF/jsp/notFoundPage.jsp";
 
@@ -44,16 +30,24 @@ public class ShowEditTaskFormCommand implements Command {
 
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
 
-    public ShowEditTaskFormCommand(Service<Task, TaskDto> taskService, Service<Project, ProjectDto> projectService) {
+    private final Service<Task> taskService;
+    private final Service<Project> projectService;
+
+    /**
+     * Instantiates a new Show edit task form command.
+     *
+     * @param taskService the task service
+     * @param projectService the project service
+     */
+    public ShowEditTaskFormCommand(Service<Task> taskService, Service<Project> projectService) {
         this.taskService = taskService;
         this.projectService = projectService;
     }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        long taskId = Long.parseLong(request.getParameter(TASK_ID_PARAMETER));
-
         try {
+            long taskId = Long.parseLong(request.getParameter(TASK_ID_PARAMETER));
             Task task = taskService.get(taskId);
             request.setAttribute("task", task);
 
@@ -66,9 +60,12 @@ public class ShowEditTaskFormCommand implements Command {
 
             request.getRequestDispatcher(TASK_EDIT_PATH).forward(request, response);
         }
-        catch (NotFoundException e) {
+        catch (NotFoundException | NumberFormatException e) {
             LOG.warn("Can't show task form cause:", e);
-            request.setAttribute(ERROR_ATTRIBUTE_NAME, format("Сотрудник с id %d не существует!", taskId));
+            request.setAttribute(
+                ERROR_ATTRIBUTE_NAME,
+                format("Сотрудник с id %s не существует!", request.getParameter(TASK_ID_PARAMETER))
+            );
             request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);
         }
     }

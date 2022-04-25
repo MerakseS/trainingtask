@@ -9,19 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
-import com.qulix.losevsa.trainingtask.web.dto.EmployeeDto;
-import com.qulix.losevsa.trainingtask.web.dto.ProjectDto;
-import com.qulix.losevsa.trainingtask.web.dto.TaskDto;
-import com.qulix.losevsa.trainingtask.web.entity.Employee;
-import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
-import com.qulix.losevsa.trainingtask.web.repository.DefaultEmployeeRepository;
-import com.qulix.losevsa.trainingtask.web.repository.DefaultProjectRepository;
-import com.qulix.losevsa.trainingtask.web.repository.DefaultTaskRepository;
-import com.qulix.losevsa.trainingtask.web.repository.Repository;
-import com.qulix.losevsa.trainingtask.web.service.DefaultEmployeeService;
-import com.qulix.losevsa.trainingtask.web.service.DefaultProjectService;
-import com.qulix.losevsa.trainingtask.web.service.DefaultTaskService;
 import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.exception.DateParseException;
 import com.qulix.losevsa.trainingtask.web.service.exception.EndDateEarlierStartDateException;
@@ -31,6 +19,7 @@ import com.qulix.losevsa.trainingtask.web.service.exception.NoProjectException;
 import com.qulix.losevsa.trainingtask.web.service.exception.TaskStatusParseException;
 import com.qulix.losevsa.trainingtask.web.service.exception.WorkTimeNegativeException;
 import com.qulix.losevsa.trainingtask.web.service.exception.WorkTimeParseException;
+import com.qulix.losevsa.trainingtask.web.utils.ParseUtils;
 
 /**
  * Insert task command.
@@ -38,8 +27,6 @@ import com.qulix.losevsa.trainingtask.web.service.exception.WorkTimeParseExcepti
 public class InsertTaskCommand implements Command {
 
     private static final Logger LOG = Logger.getLogger(InsertTaskCommand.class);
-
-    private final Service<Task, TaskDto> taskService;
 
     private static final String TASK_LIST_PATH = "/task";
     private static final String PROJECT_EDIT_FORM_PATH = "/project/edit?id=";
@@ -56,25 +43,35 @@ public class InsertTaskCommand implements Command {
 
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
 
-    public InsertTaskCommand(Service<Task, TaskDto> taskService) {
+    private final Service<Task> taskService;
+    private final ParseUtils parseUtils;
+
+    /**
+     * Instantiates a new Insert task command.
+     *
+     * @param taskService the task service
+     * @param parseUtils the parse utils
+     */
+    public InsertTaskCommand(Service<Task> taskService, ParseUtils parseUtils) {
         this.taskService = taskService;
+        this.parseUtils = parseUtils;
     }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        TaskDto taskDto = new TaskDto();
-        taskDto.setName(request.getParameter(NAME_PARAMETER));
-        taskDto.setProjectId(request.getParameter(PROJECT_ID_PARAMETER));
-        taskDto.setWorkTime(request.getParameter(WORK_TIME_PARAMETER));
-        taskDto.setStartDate(request.getParameter(START_DATE_PARAMETER));
-        taskDto.setEndDate(request.getParameter(END_DATE_PARAMETER));
-        taskDto.setTaskStatus(request.getParameter(TASK_STATUS_PARAMETER));
-        taskDto.setEmployeeId(request.getParameter(EMPLOYEE_ID_PARAMETER));
-
-        String strSelectedProjectId = request.getParameter(SELECTED_PROJECT_ID_PARAMETER);
-
         try {
-            taskService.create(taskDto);
+            Task task = new Task();
+            task.setName(request.getParameter(NAME_PARAMETER));
+            task.setProject(parseUtils.parseProject(request.getParameter(PROJECT_ID_PARAMETER)));
+            task.setWorkTime(parseUtils.parseInteger(request.getParameter(WORK_TIME_PARAMETER)));
+            task.setStartDate(parseUtils.parseDate(request.getParameter(START_DATE_PARAMETER)));
+            task.setEndDate(parseUtils.parseDate(request.getParameter(END_DATE_PARAMETER)));
+            task.setTaskStatus(parseUtils.parseTaskStatus(request.getParameter(TASK_STATUS_PARAMETER)));
+            task.setEmployee(parseUtils.parseEmployee(request.getParameter(EMPLOYEE_ID_PARAMETER)));
+
+            String strSelectedProjectId = request.getParameter(SELECTED_PROJECT_ID_PARAMETER);
+
+            taskService.create(task);
             response.sendRedirect(strSelectedProjectId != null ?
                 PROJECT_EDIT_FORM_PATH + strSelectedProjectId :
                 TASK_LIST_PATH);

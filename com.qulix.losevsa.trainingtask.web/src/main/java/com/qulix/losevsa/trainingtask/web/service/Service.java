@@ -6,16 +6,15 @@ import java.util.List;
  * The interface for service layer, that used for working with business logic.
  *
  * @param <T>   the type parameter of object
- * @param <S>   the type parameter of data transfer object
  */
-public interface Service<T, S> {
+public interface Service<T> {
 
     /**
      * Create object from data.
      *
-     * @param s the data to create.
+     * @param t the object to create.
      */
-    void create(S s);
+    void create(T t);
 
     /**
      * Gets all objects.
@@ -35,10 +34,9 @@ public interface Service<T, S> {
     /**
      * Update object by id.
      *
-     * @param id the id of the object to update.
-     * @param s the new data to update.
+     * @param t the object to update.
      */
-    void update(long id, S s);
+    void update(T t);
 
     /**
      * Delete object by id.

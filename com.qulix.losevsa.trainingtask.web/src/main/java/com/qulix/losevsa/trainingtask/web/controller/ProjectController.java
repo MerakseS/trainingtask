@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.controller.command.ProjectCommandProvider;
-import com.qulix.losevsa.trainingtask.web.dto.ProjectDto;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
@@ -29,12 +28,15 @@ public class ProjectController extends HttpServlet {
 
     private final ProjectCommandProvider projectCommandProvider;
 
+    /**
+     * Instantiates a new Project controller.
+     */
     public ProjectController() {
         Repository<Employee> employeeRepository = new DefaultEmployeeRepository();
         Repository<Project> projectRepository = new DefaultProjectRepository();
         Repository<Task> taskRepository = new DefaultTaskRepository(employeeRepository, projectRepository);
 
-        Service<Project, ProjectDto> projectService = new DefaultProjectService(projectRepository, taskRepository);
+        Service<Project> projectService = new DefaultProjectService(projectRepository, taskRepository);
         projectCommandProvider = new ProjectCommandProvider(projectService);
     }
 

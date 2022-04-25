@@ -5,9 +5,7 @@
 <%@ page import="com.qulix.losevsa.trainingtask.web.entity.Employee" %>
 <%@ page import="com.qulix.losevsa.trainingtask.web.entity.TaskStatus" %>
 <%@ page import="static java.nio.charset.StandardCharsets.UTF_8" %>
-<%@ page import="com.qulix.losevsa.trainingtask.web.dto.ProjectDto" %>
 <%@ page import="com.qulix.losevsa.trainingtask.web.service.Service" %>
-<%@ page import="com.qulix.losevsa.trainingtask.web.dto.EmployeeDto" %>
 <%@ page import="com.qulix.losevsa.trainingtask.web.service.DefaultProjectService" %>
 <%@ page import="com.qulix.losevsa.trainingtask.web.repository.Repository" %>
 <%@ page import="com.qulix.losevsa.trainingtask.web.repository.DefaultEmployeeRepository" %>
@@ -30,11 +28,11 @@
 
 <%
     Repository<Employee> employeeRepository = new DefaultEmployeeRepository();
-    Service<Employee, EmployeeDto> employeeService = new DefaultEmployeeService(employeeRepository);
+    Service<Employee> employeeService = new DefaultEmployeeService(employeeRepository);
 
     Repository<Project> projectRepository = new DefaultProjectRepository();
     Repository<Task> taskRepository = new DefaultTaskRepository(employeeRepository, projectRepository);
-    Service<Project, ProjectDto> projectService = new DefaultProjectService(projectRepository, taskRepository);
+    Service<Project> projectService = new DefaultProjectService(projectRepository, taskRepository);
 
     List<Project> projectList = projectService.getAll();
     request.setAttribute("projectList", projectList);

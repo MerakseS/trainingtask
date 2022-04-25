@@ -7,15 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
-import com.qulix.losevsa.trainingtask.web.dto.ProjectDto;
-import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
-import com.qulix.losevsa.trainingtask.web.entity.Task;
-import com.qulix.losevsa.trainingtask.web.repository.DefaultEmployeeRepository;
-import com.qulix.losevsa.trainingtask.web.repository.DefaultProjectRepository;
-import com.qulix.losevsa.trainingtask.web.repository.DefaultTaskRepository;
-import com.qulix.losevsa.trainingtask.web.repository.Repository;
-import com.qulix.losevsa.trainingtask.web.service.DefaultProjectService;
 import com.qulix.losevsa.trainingtask.web.service.Service;
 
 /**
@@ -23,13 +15,18 @@ import com.qulix.losevsa.trainingtask.web.service.Service;
  */
 public class ShowNewTaskFormCommand implements Command {
 
-    private final Service<Project, ProjectDto> projectService;
-
     private static final String TASK_EDIT_PATH = "/WEB-INF/jsp/taskEdit.jsp";
 
     private static final String PROJECT_ID_PARAMETER = "selectedProjectId";
 
-    public ShowNewTaskFormCommand(Service<Project, ProjectDto> projectService) {
+    private final Service<Project> projectService;
+
+    /**
+     * Instantiates a new Show new task form command.
+     *
+     * @param projectService the project service
+     */
+    public ShowNewTaskFormCommand(Service<Project> projectService) {
         this.projectService = projectService;
     }
 

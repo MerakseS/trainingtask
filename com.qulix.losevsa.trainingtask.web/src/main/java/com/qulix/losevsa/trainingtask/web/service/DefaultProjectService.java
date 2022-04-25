@@ -6,7 +6,6 @@ import static java.lang.String.format;
 
 import org.apache.log4j.Logger;
 
-import com.qulix.losevsa.trainingtask.web.dto.ProjectDto;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
 import com.qulix.losevsa.trainingtask.web.repository.Repository;
@@ -18,7 +17,7 @@ import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
 /**
  * The default {@link Project} implementation of {@link Service}.
  */
-public class DefaultProjectService implements Service<Project, ProjectDto> {
+public class DefaultProjectService implements Service<Project> {
 
     private static final Logger LOG = Logger.getLogger(DefaultProjectService.class);
 
@@ -39,15 +38,8 @@ public class DefaultProjectService implements Service<Project, ProjectDto> {
     }
 
     @Override
-    public void create(ProjectDto projectDto) {
-        validateValues(projectDto);
-
-        Project project = new Project();
-        project.setName(projectDto.getName());
-        if (projectDto.getDescription() != null && !projectDto.getDescription().isBlank()) {
-            project.setDescription(projectDto.getDescription());
-        }
-
+    public void create(Project project) {
+        validateValues(project);
         project = projectRepository.save(project);
         LOG.info(format("Successfully created project with id %d", project.getId()));
     }
@@ -79,23 +71,15 @@ public class DefaultProjectService implements Service<Project, ProjectDto> {
     }
 
     @Override
-    public void update(long id, ProjectDto projectDto) {
-        Project project = projectRepository.getById(id);
-        if (project == null) {
-            throw new NotFoundException(format("Project with id %d doesn't exist.", id));
+    public void update(Project project) {
+        Project oldProject = projectRepository.getById(project.getId());
+        if (oldProject == null) {
+            throw new NotFoundException(format("Project with id %d doesn't exist.", project.getId()));
         }
 
-        validateValues(projectDto);
-
-        Project newProject = new Project();
-        newProject.setId(id);
-        newProject.setName(projectDto.getName());
-        if (projectDto.getDescription() != null && !projectDto.getDescription().isBlank()) {
-            newProject.setDescription(projectDto.getDescription());
-        }
-
-        newProject = projectRepository.update(newProject);
-        LOG.info(format("Successfully updated project with id %d", newProject.getId()));
+        validateValues(project);
+        project = projectRepository.update(project);
+        LOG.info(format("Successfully updated project with id %d", project.getId()));
     }
 
     @Override
@@ -109,20 +93,20 @@ public class DefaultProjectService implements Service<Project, ProjectDto> {
         LOG.info(format("Successfully deleted project with id %d", id));
     }
 
-    private void validateValues(ProjectDto projectDto) {
-        if (projectDto.getName() == null || projectDto.getName().isBlank()) {
-            throw new FieldNotFilledException(format("Required field are empty. Name: %s", projectDto.getName()));
+    private void validateValues(Project project) {
+        if (project.getName() == null || project.getName().isBlank()) {
+            throw new FieldNotFilledException(format("Required field are empty. Name: %s", project.getName()));
         }
 
-        if (projectDto.getName().length() > NAME_MAX_LENGTH) {
+        if (project.getName().length() > NAME_MAX_LENGTH) {
             throw new NameLengthExceededException(
-                format("Length of name is more then %d. Name: %s", NAME_MAX_LENGTH, projectDto.getName())
+                format("Length of name is more then %d. Name: %s", NAME_MAX_LENGTH, project.getName())
             );
         }
 
-        if (projectDto.getDescription() != null && projectDto.getDescription().length() > DESCRIPTION_MAX_LENGTH) {
+        if (project.getDescription() != null && project.getDescription().length() > DESCRIPTION_MAX_LENGTH) {
             throw new DescriptionLengthExceededException(
-                format("Length of patronymic is more then %d. Patronymic: %s", DESCRIPTION_MAX_LENGTH, projectDto.getDescription())
+                format("Length of patronymic is more then %d. Patronymic: %s", DESCRIPTION_MAX_LENGTH, project.getDescription())
             );
         }
     }

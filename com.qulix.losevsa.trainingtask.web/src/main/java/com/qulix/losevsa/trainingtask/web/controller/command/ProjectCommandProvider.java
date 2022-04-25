@@ -8,7 +8,6 @@ import com.qulix.losevsa.trainingtask.web.controller.command.projectcommand.Show
 import com.qulix.losevsa.trainingtask.web.controller.command.projectcommand.ShowNewProjectFormCommand;
 import com.qulix.losevsa.trainingtask.web.controller.command.projectcommand.ShowProjectListCommand;
 import com.qulix.losevsa.trainingtask.web.controller.command.projectcommand.UpdateProjectCommand;
-import com.qulix.losevsa.trainingtask.web.dto.ProjectDto;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.service.Service;
 
@@ -21,7 +20,7 @@ public class ProjectCommandProvider extends CommandProvider {
      * Initialize project commands with command names
      * @param projectService the service for the {@link Project}
      */
-    public ProjectCommandProvider(Service<Project, ProjectDto> projectService) {
+    public ProjectCommandProvider(Service<Project> projectService) {
         super();
         Map<String, Command> commands = getCommands();
         Command showListCommand = new ShowProjectListCommand(projectService);

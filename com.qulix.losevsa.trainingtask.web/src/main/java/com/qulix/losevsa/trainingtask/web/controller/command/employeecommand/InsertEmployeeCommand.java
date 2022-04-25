@@ -9,11 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
-import com.qulix.losevsa.trainingtask.web.dto.EmployeeDto;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
-import com.qulix.losevsa.trainingtask.web.repository.DefaultEmployeeRepository;
-import com.qulix.losevsa.trainingtask.web.repository.Repository;
-import com.qulix.losevsa.trainingtask.web.service.DefaultEmployeeService;
 import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.exception.EmployeeFieldLengthExceededException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
@@ -25,8 +21,6 @@ public class InsertEmployeeCommand implements Command {
 
     private static final Logger LOG = Logger.getLogger(InsertEmployeeCommand.class);
 
-    private final Service<Employee, EmployeeDto> employeeService;
-
     private static final String EMPLOYEE_LIST_PATH = "/employee";
     private static final String NEW_EMPLOYEE_FORM_PATH = "/employee/new";
 
@@ -37,20 +31,26 @@ public class InsertEmployeeCommand implements Command {
 
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
 
-    public InsertEmployeeCommand(Service<Employee, EmployeeDto> employeeService) {
+    private final Service<Employee> employeeService;
+
+    public InsertEmployeeCommand(Service<Employee> employeeService) {
         this.employeeService = employeeService;
     }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        EmployeeDto employeeDto = new EmployeeDto();
-        employeeDto.setFirstName(request.getParameter(FIRST_NAME_PARAMETER));
-        employeeDto.setSurname(request.getParameter(SURNAME_PARAMETER));
-        employeeDto.setPatronymic(request.getParameter(PATRONYMIC_PARAMETER));
-        employeeDto.setPosition(request.getParameter(POSITION_PARAMETER));
-
         try {
-            employeeService.create(employeeDto);
+            Employee employee = new Employee();
+            employee.setFirstName(request.getParameter(FIRST_NAME_PARAMETER));
+            employee.setSurname(request.getParameter(SURNAME_PARAMETER));
+            employee.setPosition(request.getParameter(POSITION_PARAMETER));
+
+            String patronymic = request.getParameter(PATRONYMIC_PARAMETER);
+            if (patronymic != null && !patronymic.isBlank()) {
+                employee.setPatronymic(patronymic);
+            }
+
+            employeeService.create(employee);
             response.sendRedirect(EMPLOYEE_LIST_PATH);
         }
         catch (FieldNotFilledException e) {

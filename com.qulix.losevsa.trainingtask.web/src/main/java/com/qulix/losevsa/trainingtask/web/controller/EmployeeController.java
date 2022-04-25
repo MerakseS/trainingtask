@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.controller.command.EmployeeCommandProvider;
-import com.qulix.losevsa.trainingtask.web.dto.EmployeeDto;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.repository.DefaultEmployeeRepository;
 import com.qulix.losevsa.trainingtask.web.repository.Repository;
@@ -25,9 +24,12 @@ public class EmployeeController extends HttpServlet {
 
     private final EmployeeCommandProvider employeeCommandProvider;
 
+    /**
+     * Instantiates a new Employee controller.
+     */
     public EmployeeController() {
         Repository<Employee> employeeRepository = new DefaultEmployeeRepository();
-        Service<Employee, EmployeeDto> employeeService = new DefaultEmployeeService(employeeRepository);
+        Service<Employee> employeeService = new DefaultEmployeeService(employeeRepository);
         employeeCommandProvider = new EmployeeCommandProvider(employeeService);
     }
 

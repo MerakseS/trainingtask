@@ -8,12 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
-import com.qulix.losevsa.trainingtask.web.dto.EmployeeDto;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
-import com.qulix.losevsa.trainingtask.web.repository.DefaultEmployeeRepository;
-import com.qulix.losevsa.trainingtask.web.repository.DefaultTaskRepository;
-import com.qulix.losevsa.trainingtask.web.repository.Repository;
-import com.qulix.losevsa.trainingtask.web.service.DefaultEmployeeService;
 import com.qulix.losevsa.trainingtask.web.service.Service;
 
 /**
@@ -21,18 +16,22 @@ import com.qulix.losevsa.trainingtask.web.service.Service;
  */
 public class ShowEmployeeListCommand implements Command {
 
-    private final Service<Employee, EmployeeDto> employeeService;
-
     private static final String EMPLOYEE_LIST_PATH = "/WEB-INF/jsp/employeeList.jsp";
 
-    public ShowEmployeeListCommand(Service<Employee, EmployeeDto> employeeService) {
+    private final Service<Employee> employeeService;
+
+    /**
+     * Instantiates a new Show employee list command.
+     *
+     * @param employeeService the employee service
+     */
+    public ShowEmployeeListCommand(Service<Employee> employeeService) {
         this.employeeService = employeeService;
     }
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Employee> employeeList = employeeService.getAll();
-
         request.setAttribute("employeeList", employeeList);
         request.getRequestDispatcher(EMPLOYEE_LIST_PATH).forward(request, response);
     }
