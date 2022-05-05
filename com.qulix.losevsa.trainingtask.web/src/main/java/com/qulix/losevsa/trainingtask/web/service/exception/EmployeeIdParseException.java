@@ -1,5 +1,8 @@
 package com.qulix.losevsa.trainingtask.web.service.exception;
 
+/**
+ * The type Employee id parse exception.
+ */
 public class EmployeeIdParseException extends RuntimeException {
 
     /**

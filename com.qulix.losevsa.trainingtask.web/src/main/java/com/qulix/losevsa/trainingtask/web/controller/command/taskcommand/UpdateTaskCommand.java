@@ -13,6 +13,7 @@ import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
 import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.exception.DateParseException;
+import com.qulix.losevsa.trainingtask.web.service.exception.EmployeeIdParseException;
 import com.qulix.losevsa.trainingtask.web.service.exception.EndDateEarlierStartDateException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
 import com.qulix.losevsa.trainingtask.web.service.exception.NameLengthExceededException;
@@ -112,6 +113,9 @@ public class UpdateTaskCommand implements Command {
         }
         catch (EndDateEarlierStartDateException e) {
             handleException(e, "Дата окончания не может быть раньше даты начала.", request, response);
+        }
+        catch (EmployeeIdParseException e) {
+            handleException(e, "Некорректный ввод id сотрудника.", request, response);
         }
     }
 
