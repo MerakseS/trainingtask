@@ -49,7 +49,10 @@ public class DeleteProjectCommand implements Command {
         }
         catch (NotFoundException e) {
             LOG.warn("Can't delete project cause:", e);
-            request.setAttribute(ERROR_ATTRIBUTE_NAME, format("Проект с id %s не существует!", request.getParameter(ID_PARAMETER)));
+            request.setAttribute(
+                ERROR_ATTRIBUTE_NAME,
+                format("Проект с id %s не существует!", request.getParameter(ID_PARAMETER))
+            );
             request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);
         }
     }

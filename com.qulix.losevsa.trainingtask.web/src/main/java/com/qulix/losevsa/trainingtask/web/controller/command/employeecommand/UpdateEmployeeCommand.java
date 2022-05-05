@@ -64,7 +64,7 @@ public class UpdateEmployeeCommand implements Command {
             response.sendRedirect(EMPLOYEE_LIST_PATH);
         }
         catch (NotFoundException | NumberFormatException e) {
-            LOG.warn("Can't delete employee cause:", e);
+            LOG.warn("Can't update employee cause:", e);
             request.setAttribute(
                 ERROR_ATTRIBUTE_NAME,
                 format("Сотрудник с id %s не существует!", request.getParameter(ID_PARAMETER))

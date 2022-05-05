@@ -82,7 +82,7 @@ public class UpdateTaskCommand implements Command {
                 TASK_LIST_PATH);
         }
         catch (NotFoundException | NumberFormatException e) {
-            LOG.warn("Can't delete task cause:", e);
+            LOG.warn("Can't update task cause:", e);
             request.setAttribute(
                 ERROR_ATTRIBUTE_NAME,
                 format("Задача с id %s не существует!", request.getParameter(ID_PARAMETER))

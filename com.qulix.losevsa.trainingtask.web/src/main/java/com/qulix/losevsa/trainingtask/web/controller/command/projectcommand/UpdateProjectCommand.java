@@ -61,10 +61,10 @@ public class UpdateProjectCommand implements Command {
             response.sendRedirect(PROJECT_LIST_PATH);
         }
         catch (NotFoundException e) {
-            LOG.warn(e.toString());
+            LOG.warn("Can't update project cause:", e);
             request.setAttribute(
                 ERROR_ATTRIBUTE_NAME,
-                format("Сотрудник с id %s не существует!", request.getParameter(ID_PARAMETER))
+                format("Проект с id %s не существует!", request.getParameter(ID_PARAMETER))
             );
             request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);
         }

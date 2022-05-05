@@ -50,7 +50,7 @@ public class ShowEditProjectFormCommand implements Command {
             LOG.warn("Can't show project form cause:", e);
             request.setAttribute(
                 ERROR_ATTRIBUTE_NAME,
-                format("Сотрудник с id %s не существует!", request.getParameter(ID_PARAMETER))
+                format("Проект с id %s не существует!", request.getParameter(ID_PARAMETER))
             );
             request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);
         }

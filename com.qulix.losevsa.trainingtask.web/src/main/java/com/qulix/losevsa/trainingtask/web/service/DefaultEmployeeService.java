@@ -81,7 +81,10 @@ public class DefaultEmployeeService implements Service<Employee> {
             || employee.getSurname() == null || employee.getSurname().isBlank()
             || employee.getPosition() == null || employee.getPosition().isBlank()) {
             throw new FieldNotFilledException(
-                format("Required fields are empty. First name: '%s', surname: '%s', position: '%s'", employee.getFirstName(), employee.getSurname(), employee.getPosition())
+                format("Required fields are empty. First name: '%s', surname: '%s', position: '%s'",
+                    employee.getFirstName(),
+                    employee.getSurname(),
+                    employee.getPosition())
             );
         }
 
