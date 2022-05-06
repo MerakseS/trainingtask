@@ -9,7 +9,7 @@ import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.repository.Repository;
 import com.qulix.losevsa.trainingtask.web.service.exception.EmployeeFieldLengthExceededException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
-import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
+import com.qulix.losevsa.trainingtask.web.service.exception.PageNotFoundException;
 
 /**
  * The default {@link Employee} implementation of {@link Service}.
@@ -45,7 +45,7 @@ public class DefaultEmployeeService implements Service<Employee> {
     public Employee get(long employeeId) {
         Employee employee = employeeRepository.getById(employeeId);
         if (employee == null) {
-            throw new NotFoundException(format("Employee with id %d doesn't exist.", employeeId));
+            throw new PageNotFoundException(format("Employee with id %d doesn't exist.", employeeId));
         }
 
         LOG.info(format("Successfully get employee with id %d", employeeId));
@@ -57,7 +57,7 @@ public class DefaultEmployeeService implements Service<Employee> {
     public void update(Employee employee) {
         Employee oldEmployee = employeeRepository.getById(employee.getId());
         if (oldEmployee == null) {
-            throw new NotFoundException(format("Employee with id %d doesn't exist.", employee.getId()));
+            throw new PageNotFoundException(format("Employee with id %d doesn't exist.", employee.getId()));
         }
 
         validateValues(employee);
@@ -69,7 +69,7 @@ public class DefaultEmployeeService implements Service<Employee> {
     public void delete(long employeeId) {
         Employee employee = employeeRepository.getById(employeeId);
         if (employee == null) {
-            throw new NotFoundException(format("Employee with id %d doesn't exist.", employeeId));
+            throw new PageNotFoundException(format("Employee with id %d doesn't exist.", employeeId));
         }
 
         employeeId = employeeRepository.deleteById(employeeId);

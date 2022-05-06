@@ -15,7 +15,7 @@ import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.exception.DescriptionLengthExceededException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
 import com.qulix.losevsa.trainingtask.web.service.exception.NameLengthExceededException;
-import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
+import com.qulix.losevsa.trainingtask.web.service.exception.PageNotFoundException;
 
 /**
  * Update project command.
@@ -60,7 +60,7 @@ public class UpdateProjectCommand implements Command {
             projectService.update(project);
             response.sendRedirect(PROJECT_LIST_PATH);
         }
-        catch (NotFoundException e) {
+        catch (PageNotFoundException e) {
             LOG.warn("Can't update project cause:", e);
             request.setAttribute(
                 ERROR_ATTRIBUTE_NAME,

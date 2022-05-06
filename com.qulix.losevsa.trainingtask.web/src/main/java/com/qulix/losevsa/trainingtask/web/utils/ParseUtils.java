@@ -10,7 +10,7 @@ import com.qulix.losevsa.trainingtask.web.entity.TaskStatus;
 import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.exception.DateParseException;
 import com.qulix.losevsa.trainingtask.web.service.exception.EmployeeIdParseException;
-import com.qulix.losevsa.trainingtask.web.service.exception.NoProjectException;
+import com.qulix.losevsa.trainingtask.web.service.exception.ProjectIdParseException;
 import com.qulix.losevsa.trainingtask.web.service.exception.TaskStatusParseException;
 import com.qulix.losevsa.trainingtask.web.service.exception.WorkTimeParseException;
 
@@ -100,7 +100,7 @@ public class ParseUtils {
      *
      * @param s a {@code String} containing the {@link Project} id representation to be parsed.
      * @return the {@link Project} represented by the argument id. 
-     * @throws NoProjectException if the string does not contain a parsable {@link Project} id.
+     * @throws ProjectIdParseException if the string does not contain a parsable {@link Project} id.
      */
     public Project parseProject(String s) {
         try {
@@ -108,7 +108,7 @@ public class ParseUtils {
             return projectService.get(projectId);
         }
         catch (NumberFormatException e) {
-            throw new NoProjectException(format("Incorrect project input. Project id: %s", s), e);
+            throw new ProjectIdParseException(format("Incorrect project input. Project id: %s", s), e);
         }
     }
 

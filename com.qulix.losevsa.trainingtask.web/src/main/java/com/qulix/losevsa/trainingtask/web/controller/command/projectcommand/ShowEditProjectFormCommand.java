@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.service.Service;
-import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
+import com.qulix.losevsa.trainingtask.web.service.exception.PageNotFoundException;
 
 /**
  * Show edit project form command.
@@ -46,7 +46,7 @@ public class ShowEditProjectFormCommand implements Command {
             request.setAttribute("project", project);
             request.getRequestDispatcher(PROJECT_EDIT_PATH).forward(request, response);
         }
-        catch (NotFoundException e) {
+        catch (PageNotFoundException e) {
             LOG.warn("Can't show project form cause:", e);
             request.setAttribute(
                 ERROR_ATTRIBUTE_NAME,

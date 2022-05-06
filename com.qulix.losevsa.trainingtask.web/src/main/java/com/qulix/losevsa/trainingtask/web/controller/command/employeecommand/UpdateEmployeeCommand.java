@@ -14,7 +14,7 @@ import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.exception.EmployeeFieldLengthExceededException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
-import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
+import com.qulix.losevsa.trainingtask.web.service.exception.PageNotFoundException;
 
 /**
  * Update employee command.
@@ -63,7 +63,7 @@ public class UpdateEmployeeCommand implements Command {
             employeeService.update(employee);
             response.sendRedirect(EMPLOYEE_LIST_PATH);
         }
-        catch (NotFoundException | NumberFormatException e) {
+        catch (PageNotFoundException | NumberFormatException e) {
             LOG.warn("Can't update employee cause:", e);
             request.setAttribute(
                 ERROR_ATTRIBUTE_NAME,

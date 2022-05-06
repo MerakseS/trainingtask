@@ -17,8 +17,8 @@ import com.qulix.losevsa.trainingtask.web.service.exception.EmployeeIdParseExcep
 import com.qulix.losevsa.trainingtask.web.service.exception.EndDateEarlierStartDateException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
 import com.qulix.losevsa.trainingtask.web.service.exception.NameLengthExceededException;
-import com.qulix.losevsa.trainingtask.web.service.exception.NoProjectException;
-import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
+import com.qulix.losevsa.trainingtask.web.service.exception.ProjectIdParseException;
+import com.qulix.losevsa.trainingtask.web.service.exception.PageNotFoundException;
 import com.qulix.losevsa.trainingtask.web.service.exception.TaskStatusParseException;
 import com.qulix.losevsa.trainingtask.web.service.exception.WorkTimeNegativeException;
 import com.qulix.losevsa.trainingtask.web.service.exception.WorkTimeParseException;
@@ -82,7 +82,7 @@ public class UpdateTaskCommand implements Command {
                 PROJECT_EDIT_FORM_PATH + strSelectedProjectId :
                 TASK_LIST_PATH);
         }
-        catch (NotFoundException | NumberFormatException e) {
+        catch (PageNotFoundException | NumberFormatException e) {
             LOG.warn("Can't update task cause:", e);
             request.setAttribute(
                 ERROR_ATTRIBUTE_NAME,
@@ -99,7 +99,7 @@ public class UpdateTaskCommand implements Command {
         catch (TaskStatusParseException e) {
             handleException(e, "Некорректный ввод статуса.", request, response);
         }
-        catch (NoProjectException e) {
+        catch (ProjectIdParseException e) {
             handleException(e, "Для добавления задачи сначала создайте проект.", request, response);
         }
         catch (FieldNotFilledException e) {

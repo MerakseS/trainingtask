@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.service.Service;
-import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
+import com.qulix.losevsa.trainingtask.web.service.exception.PageNotFoundException;
 
 /**
  * Delete project command.
@@ -47,7 +47,7 @@ public class DeleteProjectCommand implements Command {
             projectService.delete(id);
             response.sendRedirect(PROJECT_LIST_PATH);
         }
-        catch (NotFoundException e) {
+        catch (PageNotFoundException e) {
             LOG.warn("Can't delete project cause:", e);
             request.setAttribute(
                 ERROR_ATTRIBUTE_NAME,

@@ -12,7 +12,7 @@ import com.qulix.losevsa.trainingtask.web.repository.Repository;
 import com.qulix.losevsa.trainingtask.web.service.exception.DescriptionLengthExceededException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
 import com.qulix.losevsa.trainingtask.web.service.exception.NameLengthExceededException;
-import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
+import com.qulix.losevsa.trainingtask.web.service.exception.PageNotFoundException;
 
 /**
  * The default {@link Project} implementation of {@link Service}.
@@ -54,7 +54,7 @@ public class DefaultProjectService implements Service<Project> {
     public Project get(long id) {
         Project project = projectRepository.getById(id);
         if (project == null) {
-            throw new NotFoundException(format("Project with id %d doesn't exist.", id));
+            throw new PageNotFoundException(format("Project with id %d doesn't exist.", id));
         }
 
         List<Task> taskList = new ArrayList<>();
@@ -74,7 +74,7 @@ public class DefaultProjectService implements Service<Project> {
     public void update(Project project) {
         Project oldProject = projectRepository.getById(project.getId());
         if (oldProject == null) {
-            throw new NotFoundException(format("Project with id %d doesn't exist.", project.getId()));
+            throw new PageNotFoundException(format("Project with id %d doesn't exist.", project.getId()));
         }
 
         validateValues(project);
@@ -86,7 +86,7 @@ public class DefaultProjectService implements Service<Project> {
     public void delete(long id) {
         Project project = projectRepository.getById(id);
         if (project == null) {
-            throw new NotFoundException(format("Project with id %d doesn't exist.", id));
+            throw new PageNotFoundException(format("Project with id %d doesn't exist.", id));
         }
 
         id = projectRepository.deleteById(id);

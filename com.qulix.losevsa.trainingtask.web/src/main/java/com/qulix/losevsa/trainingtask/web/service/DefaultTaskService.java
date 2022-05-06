@@ -10,7 +10,7 @@ import com.qulix.losevsa.trainingtask.web.repository.Repository;
 import com.qulix.losevsa.trainingtask.web.service.exception.EndDateEarlierStartDateException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
 import com.qulix.losevsa.trainingtask.web.service.exception.NameLengthExceededException;
-import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
+import com.qulix.losevsa.trainingtask.web.service.exception.PageNotFoundException;
 import com.qulix.losevsa.trainingtask.web.service.exception.WorkTimeNegativeException;
 
 /**
@@ -51,7 +51,7 @@ public class DefaultTaskService implements Service<Task> {
         LOG.info(format("Getting task with id %d", taskId));
         Task task = taskRepository.getById(taskId);
         if (task == null) {
-            throw new NotFoundException(format("Task with id %d doesn't exist.", taskId));
+            throw new PageNotFoundException(format("Task with id %d doesn't exist.", taskId));
         }
 
         return task;
@@ -61,7 +61,7 @@ public class DefaultTaskService implements Service<Task> {
     public void update(Task task) {
         Task oldTask = taskRepository.getById(task.getId());
         if (oldTask == null) {
-            throw new NotFoundException(format("Task with id %d doesn't exist.", task.getId()));
+            throw new PageNotFoundException(format("Task with id %d doesn't exist.", task.getId()));
         }
 
         validateValues(task);
@@ -73,7 +73,7 @@ public class DefaultTaskService implements Service<Task> {
     public void delete(long taskId) {
         Task task = taskRepository.getById(taskId);
         if (task == null) {
-            throw new NotFoundException(format("Task with id %d doesn't exist.", taskId));
+            throw new PageNotFoundException(format("Task with id %d doesn't exist.", taskId));
         }
 
         taskId = taskRepository.deleteById(taskId);

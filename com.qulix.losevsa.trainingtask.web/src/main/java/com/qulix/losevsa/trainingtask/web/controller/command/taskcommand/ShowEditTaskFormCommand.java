@@ -13,7 +13,7 @@ import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
 import com.qulix.losevsa.trainingtask.web.service.Service;
-import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
+import com.qulix.losevsa.trainingtask.web.service.exception.PageNotFoundException;
 
 /**
  * Show edit task form command.
@@ -60,7 +60,7 @@ public class ShowEditTaskFormCommand implements Command {
 
             request.getRequestDispatcher(TASK_EDIT_PATH).forward(request, response);
         }
-        catch (NotFoundException | NumberFormatException e) {
+        catch (PageNotFoundException | NumberFormatException e) {
             LOG.warn("Can't show task form cause:", e);
             request.setAttribute(
                 ERROR_ATTRIBUTE_NAME,

@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.service.Service;
-import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
+import com.qulix.losevsa.trainingtask.web.service.exception.PageNotFoundException;
 
 /**
  * The command that show employee form for editing.
@@ -47,7 +47,7 @@ public class ShowEditEmployeeFormCommand implements Command {
             request.setAttribute("employee", employee);
             request.getRequestDispatcher(EMPLOYEE_EDIT_PATH).forward(request, response);
         }
-        catch (NotFoundException e) {
+        catch (PageNotFoundException e) {
             LOG.warn("Can't show employee form cause:", e);
             request.setAttribute(
                 ERROR_ATTRIBUTE_NAME,

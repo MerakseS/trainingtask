@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.service.Service;
-import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
+import com.qulix.losevsa.trainingtask.web.service.exception.PageNotFoundException;
 
 /**
  * Delete employee command.
@@ -46,7 +46,7 @@ public class DeleteEmployeeCommand implements Command {
             employeeService.delete(id);
             response.sendRedirect(EMPLOYEE_LIST_PATH);
         }
-        catch (NotFoundException | NumberFormatException e) {
+        catch (PageNotFoundException | NumberFormatException e) {
             LOG.warn("Can't delete employee cause:", e);
             request.setAttribute(
                 ERROR_ATTRIBUTE_NAME,

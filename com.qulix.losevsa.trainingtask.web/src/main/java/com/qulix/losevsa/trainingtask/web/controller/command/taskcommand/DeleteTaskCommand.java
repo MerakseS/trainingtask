@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
 import com.qulix.losevsa.trainingtask.web.service.Service;
-import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
+import com.qulix.losevsa.trainingtask.web.service.exception.PageNotFoundException;
 
 /**
  * Delete task command.
@@ -46,7 +46,7 @@ public class DeleteTaskCommand implements Command {
             String referer = request.getHeader("Referer");
             response.sendRedirect(referer);
         }
-        catch (NotFoundException | NumberFormatException e) {
+        catch (PageNotFoundException | NumberFormatException e) {
             LOG.warn("Can't delete task cause:", e);
             request.setAttribute(
                 ERROR_ATTRIBUTE_NAME,

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.qulix.losevsa.trainingtask.web.service.exception.NotFoundException;
+import com.qulix.losevsa.trainingtask.web.service.exception.PageNotFoundException;
 
 /**
  * The Exception handler.
@@ -33,7 +33,7 @@ public class ExceptionHandler extends HttpServlet {
         }
 
         Integer statusCode;
-        if (exception instanceof NotFoundException) {
+        if (exception instanceof PageNotFoundException) {
             statusCode = 404;
             response.setStatus(statusCode);
         }
