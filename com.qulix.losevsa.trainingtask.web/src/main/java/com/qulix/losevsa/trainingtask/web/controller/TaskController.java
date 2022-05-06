@@ -44,7 +44,7 @@ public class TaskController extends HttpServlet {
         Service<Task> taskService = new DefaultTaskService(taskRepository);
 
         ParseUtils parseUtils = new ParseUtils(employeeService, projectService);
-        taskCommandProvider = new TaskCommandProvider(taskService, projectService, parseUtils);
+        taskCommandProvider = new TaskCommandProvider(taskService, projectService, employeeService, parseUtils);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.qulix.losevsa.trainingtask.web.controller.command.taskcommand;
 
 import java.io.IOException;
+import java.util.List;
 import static java.lang.String.format;
 
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
+import com.qulix.losevsa.trainingtask.web.entity.Employee;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
 import com.qulix.losevsa.trainingtask.web.service.Service;
@@ -32,16 +34,20 @@ public class ShowEditTaskFormCommand implements Command {
 
     private final Service<Task> taskService;
     private final Service<Project> projectService;
+    private final Service<Employee> employeeService;
 
     /**
      * Instantiates a new Show edit task form command.
-     *
-     * @param taskService the task service
+     *  @param taskService the task service
      * @param projectService the project service
+     * @param employeeService the employee service
      */
-    public ShowEditTaskFormCommand(Service<Task> taskService, Service<Project> projectService) {
+    public ShowEditTaskFormCommand(Service<Task> taskService,
+        Service<Project> projectService,
+        Service<Employee> employeeService) {
         this.taskService = taskService;
         this.projectService = projectService;
+        this.employeeService = employeeService;
     }
 
     @Override
@@ -57,6 +63,11 @@ public class ShowEditTaskFormCommand implements Command {
                 Project project = projectService.get(id);
                 request.setAttribute("selectedProject", project);
             }
+
+            List<Project> projectList = projectService.getAll();
+            request.setAttribute("projectList", projectList);
+            List<Employee> employeeList = employeeService.getAll();
+            request.setAttribute("employeeList", employeeList);
 
             request.getRequestDispatcher(TASK_EDIT_PATH).forward(request, response);
         }
