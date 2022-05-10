@@ -76,7 +76,7 @@ public class DefaultTaskRepository implements Repository<Task> {
             return task;
         }
         catch (SQLException e) {
-            throw new QueryExecutionException(format("Can't save task cause: %s. Employee: %s", e.getMessage(), task), e);
+            throw new QueryExecutionException(format("Can't save task. Task: %s", task), e);
         }
     }
 
@@ -95,7 +95,7 @@ public class DefaultTaskRepository implements Repository<Task> {
             return taskList;
         }
         catch (SQLException e) {
-            throw new QueryExecutionException(format("Can't get all tasks cause: %s", e.getMessage()), e);
+            throw new QueryExecutionException("Can't get all tasks", e);
         }
     }
 
@@ -110,7 +110,7 @@ public class DefaultTaskRepository implements Repository<Task> {
             return result.next() ? getTaskByResultSet(result) : null;
         }
         catch (SQLException e) {
-            throw new QueryExecutionException(format("Can't get task cause: %s. Employee: %d", e.getMessage(), taskId), e);
+            throw new QueryExecutionException(format("Can't get task. Task's id: %d", taskId), e);
         }
     }
 
@@ -130,7 +130,7 @@ public class DefaultTaskRepository implements Repository<Task> {
             return task;
         }
         catch (SQLException e) {
-            throw new QueryExecutionException(format("Can't update task cause: %s. Employee: %s", e.getMessage(), task), e);
+            throw new QueryExecutionException(format("Can't update task. Task: %s", task), e);
         }
     }
 
@@ -143,13 +143,13 @@ public class DefaultTaskRepository implements Repository<Task> {
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
-                throw new QueryExecutionException(format("Can't delete task. No rows affected. Task's id: %s", taskId));
+                throw new QueryExecutionException(format("Can't delete task. No rows affected. Task's id: %d", taskId));
             }
 
             return taskId;
         }
         catch (SQLException e) {
-            throw new QueryExecutionException(format("Can't delete task cause: %s. Employee: %s", e.getMessage(), taskId), e);
+            throw new QueryExecutionException(format("Can't delete task. Task's id: %d", taskId), e);
         }
     }
 

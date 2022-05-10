@@ -54,10 +54,7 @@ public class DefaultEmployeeRepository implements Repository<Employee> {
             return employee;
         }
         catch (SQLException e) {
-            throw new QueryExecutionException(
-                format("Can't save employee cause: %s. Employee: %s", e.getMessage(), employee),
-                e
-            );
+            throw new QueryExecutionException(format("Can't save employee. Employee: %s", employee), e);
         }
     }
 
@@ -76,7 +73,7 @@ public class DefaultEmployeeRepository implements Repository<Employee> {
             return employeeList;
         }
         catch (SQLException e) {
-            throw new QueryExecutionException(format("Can't get all employees cause: %s", e.getMessage()), e);
+            throw new QueryExecutionException("Can't get all employees", e);
         }
     }
 
@@ -91,7 +88,7 @@ public class DefaultEmployeeRepository implements Repository<Employee> {
             return result.next() ? getEmployeeByResultSet(result) : null;
         }
         catch (SQLException e) {
-            throw new QueryExecutionException(format("Can't get employee cause: %s. Employee: %d", e.getMessage(), id), e);
+            throw new QueryExecutionException(format("Can't get employee. Employee's id: %d" , id), e);
         }
     }
 
@@ -111,9 +108,7 @@ public class DefaultEmployeeRepository implements Repository<Employee> {
             return employee;
         }
         catch (SQLException e) {
-            throw new QueryExecutionException(
-                format("Can't update employee cause: %s. Employee: %s", e.getMessage(), employee), e
-            );
+            throw new QueryExecutionException(format("Can't update employee. Employee: %s", employee), e);
         }
     }
 
@@ -126,13 +121,13 @@ public class DefaultEmployeeRepository implements Repository<Employee> {
 
             int affectedRows = statement.executeUpdate();
             if (affectedRows == 0) {
-                throw new QueryExecutionException(format("Can't update employee. No rows affected. Employee's id: %s", id));
+                throw new QueryExecutionException(format("Can't update employee. No rows affected. Employee's id: %d", id));
             }
 
             return id;
         }
         catch (SQLException e) {
-            throw new QueryExecutionException(format("Can't delete employee cause: %s. Employee: %s", e.getMessage(), id), e);
+            throw new QueryExecutionException(format("Can't delete employee. Employee's id: %d", id), e);
         }
     }
 

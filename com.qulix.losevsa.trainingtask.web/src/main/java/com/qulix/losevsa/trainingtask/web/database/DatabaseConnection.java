@@ -29,7 +29,7 @@ public class DatabaseConnection {
             );
         }
         catch (ClassNotFoundException | SQLException e) {
-            throw new NoConnectionException(format("Can't get connection cause: %s", e.getMessage()), e);
+            throw new NoConnectionException("Can't get database connection", e);
         }
     }
 }
