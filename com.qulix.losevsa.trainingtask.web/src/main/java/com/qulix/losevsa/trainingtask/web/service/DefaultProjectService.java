@@ -39,7 +39,7 @@ public class DefaultProjectService implements Service<Project> {
 
     @Override
     public void create(Project project) {
-        validateValues(project);
+        validateProject(project);
         project = projectRepository.save(project);
         LOG.info(format("Successfully created project with id %d", project.getId()));
     }
@@ -77,7 +77,7 @@ public class DefaultProjectService implements Service<Project> {
             throw new PageNotFoundException(format("Project with id %d doesn't exist.", project.getId()));
         }
 
-        validateValues(project);
+        validateProject(project);
         project = projectRepository.update(project);
         LOG.info(format("Successfully updated project with id %d", project.getId()));
     }
@@ -93,7 +93,7 @@ public class DefaultProjectService implements Service<Project> {
         LOG.info(format("Successfully deleted project with id %d", id));
     }
 
-    private void validateValues(Project project) {
+    private void validateProject(Project project) {
         if (project.getName() == null || project.getName().isBlank()) {
             throw new FieldNotFilledException(format("Required field are empty. Name: %s", project.getName()));
         }

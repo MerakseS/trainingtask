@@ -30,7 +30,7 @@ public class DefaultEmployeeService implements Service<Employee> {
 
     @Override
     public void create(Employee employee) {
-        validateValues(employee);
+        validateEmployee(employee);
         employee = employeeRepository.save(employee);
         LOG.info(format("Successfully created employee with id %d", employee.getId()));
     }
@@ -60,7 +60,7 @@ public class DefaultEmployeeService implements Service<Employee> {
             throw new PageNotFoundException(format("Employee with id %d doesn't exist.", employee.getId()));
         }
 
-        validateValues(employee);
+        validateEmployee(employee);
         employee = employeeRepository.update(employee);
         LOG.info(format("Successfully updated employee with id %d", employee.getId()));
     }
@@ -76,7 +76,7 @@ public class DefaultEmployeeService implements Service<Employee> {
         LOG.info(format("Successfully deleted employee with id %d", employeeId));
     }
 
-    private void validateValues(Employee employee) {
+    private void validateEmployee(Employee employee) {
         if (employee.getFirstName() == null || employee.getFirstName().isBlank()
             || employee.getSurname() == null || employee.getSurname().isBlank()
             || employee.getPosition() == null || employee.getPosition().isBlank()) {
