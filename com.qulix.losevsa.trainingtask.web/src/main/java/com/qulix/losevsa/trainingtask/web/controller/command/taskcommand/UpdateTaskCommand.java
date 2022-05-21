@@ -1,15 +1,18 @@
 package com.qulix.losevsa.trainingtask.web.controller.command.taskcommand;
 
 import java.io.IOException;
+import java.util.List;
 import static java.lang.String.format;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
+import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
 import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.exception.DateParseException;
@@ -17,8 +20,8 @@ import com.qulix.losevsa.trainingtask.web.service.exception.EmployeeIdParseExcep
 import com.qulix.losevsa.trainingtask.web.service.exception.EndDateEarlierStartDateException;
 import com.qulix.losevsa.trainingtask.web.service.exception.FieldNotFilledException;
 import com.qulix.losevsa.trainingtask.web.service.exception.NameLengthExceededException;
-import com.qulix.losevsa.trainingtask.web.service.exception.ProjectIdParseException;
 import com.qulix.losevsa.trainingtask.web.service.exception.PageNotFoundException;
+import com.qulix.losevsa.trainingtask.web.service.exception.ProjectIdParseException;
 import com.qulix.losevsa.trainingtask.web.service.exception.TaskStatusParseException;
 import com.qulix.losevsa.trainingtask.web.service.exception.WorkTimeNegativeException;
 import com.qulix.losevsa.trainingtask.web.service.exception.WorkTimeParseException;
@@ -32,8 +35,9 @@ public class UpdateTaskCommand implements Command {
     private static final Logger LOG = Logger.getLogger(UpdateTaskCommand.class);
 
     private static final String TASK_LIST_PATH = "/task";
-    private static final String PROJECT_EDIT_FORM_PATH = "/project/edit?id=";
     private static final String EDIT_TASK_FORM_PATH = "/task/edit";
+    private static final String PROJECT_EDIT_FORM_PATH_FORMAT = "/project/edit?id=%d";
+    private static final String PROJECT_NEW_FORM_PATH = "/project/new";
     private static final String NOT_FOUND_PATH = "/WEB-INF/jsp/notFoundPage.jsp";
 
     private static final String ID_PARAMETER = "taskId";
@@ -44,9 +48,9 @@ public class UpdateTaskCommand implements Command {
     private static final String END_DATE_PARAMETER = "endDate";
     private static final String TASK_STATUS_PARAMETER = "taskStatus";
     private static final String EMPLOYEE_ID_PARAMETER = "employeeId";
-    private static final String SELECTED_PROJECT_ID_PARAMETER = "selectedProjectId";
 
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
+    private static final String EDITED_PROJECT_ATTRIBUTE_NAME = "editedProject";
 
     private final Service<Task> taskService;
     private final ParseUtils parseUtils;
@@ -65,22 +69,40 @@ public class UpdateTaskCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            HttpSession session = request.getSession();
+            Project editedProject = (Project) session.getAttribute(EDITED_PROJECT_ATTRIBUTE_NAME);
+
             Task task = new Task();
             task.setId(Long.parseLong(request.getParameter(ID_PARAMETER)));
             task.setName(request.getParameter(NAME_PARAMETER));
-            task.setProject(parseUtils.parseProject(request.getParameter(PROJECT_ID_PARAMETER)));
             task.setWorkTime(parseUtils.parseInteger(request.getParameter(WORK_TIME_PARAMETER)));
             task.setStartDate(parseUtils.parseDate(request.getParameter(START_DATE_PARAMETER)));
             task.setEndDate(parseUtils.parseDate(request.getParameter(END_DATE_PARAMETER)));
             task.setTaskStatus(parseUtils.parseTaskStatus(request.getParameter(TASK_STATUS_PARAMETER)));
             task.setEmployee(parseUtils.parseEmployee(request.getParameter(EMPLOYEE_ID_PARAMETER)));
+            if (editedProject == null) {
+                task.setProject(parseUtils.parseProject(request.getParameter(PROJECT_ID_PARAMETER)));
+            }
 
-            String strSelectedProjectId = request.getParameter(SELECTED_PROJECT_ID_PARAMETER);
+            if (editedProject == null) {
+                taskService.update(task);
+            }
+            else {
+                updateProjectTask(task, editedProject.getTaskList());
+                session.setAttribute(EDITED_PROJECT_ATTRIBUTE_NAME, editedProject);
+            }
 
-            taskService.update(task);
-            response.sendRedirect(strSelectedProjectId != null ?
-                PROJECT_EDIT_FORM_PATH + strSelectedProjectId :
-                TASK_LIST_PATH);
+            if (editedProject != null) {
+                if (editedProject.getId() != 0) {
+                    response.sendRedirect(format(PROJECT_EDIT_FORM_PATH_FORMAT, editedProject.getId()));
+                }
+                else {
+                    response.sendRedirect(PROJECT_NEW_FORM_PATH);
+                }
+            }
+            else {
+                response.sendRedirect(TASK_LIST_PATH);
+            }
         }
         catch (PageNotFoundException | NumberFormatException e) {
             LOG.warn("Can't update task cause:", e);
@@ -117,6 +139,17 @@ public class UpdateTaskCommand implements Command {
         catch (EmployeeIdParseException e) {
             handleException(e, "Некорректный ввод id сотрудника.", request, response);
         }
+    }
+
+    private void updateProjectTask(Task updatedTask, List<Task> projectTaskList) {
+        taskService.validate(updatedTask);
+        Task oldTask = projectTaskList.stream().filter(task -> task.getId() == updatedTask.getId()).findFirst()
+            .orElseThrow(() -> {
+                throw new PageNotFoundException(format("Task with id %d doesn't exist.", updatedTask.getId()));
+            });
+
+        int index = projectTaskList.indexOf(oldTask);
+        projectTaskList.set(index, updatedTask);
     }
 
     private void handleException(Exception e, String clientMessage,

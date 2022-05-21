@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.entity.Project;
@@ -15,6 +16,8 @@ import com.qulix.losevsa.trainingtask.web.service.Service;
  * Show project list command.
  */
 public class ShowProjectListCommand implements Command {
+
+    private static final String EDITED_PROJECT_ATTRIBUTE_NAME = "editedProject";
 
     private static final String PROJECT_LIST_PATH = "/WEB-INF/jsp/projectList.jsp";
 
@@ -33,6 +36,12 @@ public class ShowProjectListCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Project> projectList = projectService.getAll();
         request.setAttribute("projectList", projectList);
+
+        HttpSession session = request.getSession();
+        if (session.getAttribute(EDITED_PROJECT_ATTRIBUTE_NAME) != null) {
+            session.removeAttribute(EDITED_PROJECT_ATTRIBUTE_NAME);
+        }
+
         request.getRequestDispatcher(PROJECT_LIST_PATH).forward(request, response);
     }
 }

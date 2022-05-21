@@ -35,7 +35,7 @@ public class DefaultTaskService implements Service<Task> {
 
     @Override
     public void create(Task task) {
-        validateTask(task);
+        validate(task);
         task = taskRepository.save(task);
         LOG.info(format("Successfully created task with id %d", task.getId()));
     }
@@ -64,7 +64,7 @@ public class DefaultTaskService implements Service<Task> {
             throw new PageNotFoundException(format("Task with id %d doesn't exist.", task.getId()));
         }
 
-        validateTask(task);
+        validate(task);
         task = taskRepository.update(task);
         LOG.info(format("Successfully updated task with id %d", task.getId()));
     }
@@ -80,7 +80,8 @@ public class DefaultTaskService implements Service<Task> {
         LOG.info(format("Successfully deleted task with id %d", taskId));
     }
 
-    private void validateTask(Task task) {
+    @Override
+    public void validate(Task task) {
         if (task.getName() == null || task.getName().isBlank() || task.getTaskStatus() == null) {
             throw new FieldNotFilledException(
                 format("Required fields are empty. Name: %s, task status: %s", task.getName(), task.getTaskStatus())

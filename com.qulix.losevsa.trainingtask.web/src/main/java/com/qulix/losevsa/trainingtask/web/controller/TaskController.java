@@ -40,8 +40,8 @@ public class TaskController extends HttpServlet {
         Repository<Task> taskRepository = new DefaultTaskRepository(employeeRepository, projectRepository);
 
         Service<Employee> employeeService = new DefaultEmployeeService(employeeRepository);
-        Service<Project> projectService = new DefaultProjectService(projectRepository, taskRepository);
         Service<Task> taskService = new DefaultTaskService(taskRepository);
+        Service<Project> projectService = new DefaultProjectService(projectRepository, taskService);
 
         ParseUtils parseUtils = new ParseUtils(employeeService, projectService);
         taskCommandProvider = new TaskCommandProvider(taskService, projectService, employeeService, parseUtils);

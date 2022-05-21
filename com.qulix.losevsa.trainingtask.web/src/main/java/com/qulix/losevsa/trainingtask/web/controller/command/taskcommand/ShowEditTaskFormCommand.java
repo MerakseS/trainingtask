@@ -7,6 +7,7 @@ import static java.lang.String.format;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -28,8 +29,14 @@ public class ShowEditTaskFormCommand implements Command {
     private static final String NOT_FOUND_PATH = "/WEB-INF/jsp/notFoundPage.jsp";
 
     private static final String TASK_ID_PARAMETER = "taskId";
-    private static final String PROJECT_ID_PARAMETER = "selectedProjectId";
+    private static final String PROJECT_ID_PARAMETER = "projectId";
+    private static final String PROJECT_NAME_PARAMETER = "projectName";
+    private static final String PROJECT_DESCRIPTION_PARAMETER = "projectDescription";
 
+    private static final String EDITED_PROJECT_ATTRIBUTE_NAME = "editedProject";
+    private static final String EDITED_TASK_ATTRIBUTE_NAME = "task";
+    private static final String PROJECT_LIST_ATTRIBUTE_NAME = "projectList";
+    private static final String EMPLOYEE_LIST_ATTRIBUTE_NAME = "employeeList";
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
 
     private final Service<Task> taskService;
@@ -38,7 +45,7 @@ public class ShowEditTaskFormCommand implements Command {
 
     /**
      * Instantiates a new Show edit task form command.
-     *  @param taskService the task service
+     * @param taskService the task service
      * @param projectService the project service
      * @param employeeService the employee service
      */
@@ -54,20 +61,14 @@ public class ShowEditTaskFormCommand implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             long taskId = Long.parseLong(request.getParameter(TASK_ID_PARAMETER));
-            Task task = taskService.get(taskId);
-            request.setAttribute("task", task);
-
-            String strProjectId = request.getParameter(PROJECT_ID_PARAMETER);
-            if (strProjectId != null && !strProjectId.isBlank()) {
-                long id = Long.parseLong(strProjectId);
-                Project project = projectService.get(id);
-                request.setAttribute("selectedProject", project);
-            }
+            Project editedProject = setEditedProject(request);
+            request.setAttribute(EDITED_TASK_ATTRIBUTE_NAME,
+                editedProject == null ? taskService.get(taskId) : editedProject.getTaskList().get((int) taskId));
 
             List<Project> projectList = projectService.getAll();
-            request.setAttribute("projectList", projectList);
+            request.setAttribute(PROJECT_LIST_ATTRIBUTE_NAME, projectList);
             List<Employee> employeeList = employeeService.getAll();
-            request.setAttribute("employeeList", employeeList);
+            request.setAttribute(EMPLOYEE_LIST_ATTRIBUTE_NAME, employeeList);
 
             request.getRequestDispatcher(TASK_EDIT_PATH).forward(request, response);
         }
@@ -79,5 +80,31 @@ public class ShowEditTaskFormCommand implements Command {
             );
             request.getRequestDispatcher(NOT_FOUND_PATH).forward(request, response);
         }
+    }
+
+    private Project setEditedProject(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Project editedProject = (Project) session.getAttribute(EDITED_PROJECT_ATTRIBUTE_NAME);
+        if (editedProject != null) {
+            String strProjectId = request.getParameter(PROJECT_ID_PARAMETER);
+            if (strProjectId != null && !strProjectId.isBlank()) {
+                long id = Long.parseLong(strProjectId);
+                editedProject.setId(id);
+            }
+
+            String name = request.getParameter(PROJECT_NAME_PARAMETER);
+            if (name != null && !name.isBlank()) {
+                editedProject.setName(name);
+            }
+
+            String description = request.getParameter(PROJECT_DESCRIPTION_PARAMETER);
+            if (description != null && !description.isBlank()) {
+                editedProject.setDescription(description);
+            }
+
+            session.setAttribute(EDITED_PROJECT_ATTRIBUTE_NAME, editedProject);
+        }
+
+        return editedProject;
     }
 }

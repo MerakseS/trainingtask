@@ -2,6 +2,8 @@ package com.qulix.losevsa.trainingtask.web.controller.command.taskcommand;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import static java.lang.String.format;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
+import com.qulix.losevsa.trainingtask.web.entity.Project;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
 import com.qulix.losevsa.trainingtask.web.service.Service;
 import com.qulix.losevsa.trainingtask.web.service.exception.DateParseException;
@@ -32,8 +35,9 @@ public class InsertTaskCommand implements Command {
     private static final Logger LOG = Logger.getLogger(InsertTaskCommand.class);
 
     private static final String TASK_LIST_PATH = "/task";
-    private static final String PROJECT_EDIT_FORM_PATH = "/project/edit?id=";
     private static final String NEW_TASK_FORM_PATH = "/task/new";
+    private static final String PROJECT_EDIT_FORM_PATH_FORMAT = "/project/edit?id=%d";
+    private static final String PROJECT_NEW_FORM_PATH = "/project/new";
 
     private static final String NAME_PARAMETER = "name";
     private static final String PROJECT_ID_PARAMETER = "projectId";
@@ -42,10 +46,10 @@ public class InsertTaskCommand implements Command {
     private static final String END_DATE_PARAMETER = "endDate";
     private static final String TASK_STATUS_PARAMETER = "taskStatus";
     private static final String EMPLOYEE_ID_PARAMETER = "employeeId";
-    private static final String SELECTED_PROJECT_ID_PARAMETER = "selectedProjectId";
 
     private static final String DUPLICATES_ATTRIBUTE_NAME = "duplicates";
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
+    private static final String EDITED_PROJECT_ATTRIBUTE_NAME = "editedProject";
 
     private final Service<Task> taskService;
     private final ParseUtils parseUtils;
@@ -64,36 +68,33 @@ public class InsertTaskCommand implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            HttpSession session = request.getSession();
+            Project editedProject = (Project) session.getAttribute(EDITED_PROJECT_ATTRIBUTE_NAME);
+
             Task task = new Task();
             task.setName(request.getParameter(NAME_PARAMETER));
-            task.setProject(parseUtils.parseProject(request.getParameter(PROJECT_ID_PARAMETER)));
             task.setWorkTime(parseUtils.parseInteger(request.getParameter(WORK_TIME_PARAMETER)));
             task.setStartDate(parseUtils.parseDate(request.getParameter(START_DATE_PARAMETER)));
             task.setEndDate(parseUtils.parseDate(request.getParameter(END_DATE_PARAMETER)));
             task.setTaskStatus(parseUtils.parseTaskStatus(request.getParameter(TASK_STATUS_PARAMETER)));
             task.setEmployee(parseUtils.parseEmployee(request.getParameter(EMPLOYEE_ID_PARAMETER)));
-
-            String strSelectedProjectId = request.getParameter(SELECTED_PROJECT_ID_PARAMETER);
-
-            HttpSession session = request.getSession();
-            ArrayList<String> duplicates = (ArrayList<String>) session.getAttribute(DUPLICATES_ATTRIBUTE_NAME);
-            if (duplicates == null) {
-                taskService.create(task);
-
-                duplicates = new ArrayList<>();
-                duplicates.add(task.toString());
-                session.setAttribute(DUPLICATES_ATTRIBUTE_NAME, duplicates);
-            }
-            else if (!duplicates.contains(task.toString())) {
-                taskService.create(task);
-
-                duplicates.add(task.toString());
-                session.setAttribute(DUPLICATES_ATTRIBUTE_NAME, duplicates); //update the variable
+            if (editedProject == null) {
+                task.setProject(parseUtils.parseProject(request.getParameter(PROJECT_ID_PARAMETER)));
             }
 
-            response.sendRedirect(strSelectedProjectId != null ?
-                PROJECT_EDIT_FORM_PATH + strSelectedProjectId :
-                TASK_LIST_PATH);
+            createNotDuplicatedTask(task, session, editedProject);
+
+            if (editedProject != null) {
+                if (editedProject.getId() != 0) {
+                    response.sendRedirect(format(PROJECT_EDIT_FORM_PATH_FORMAT, editedProject.getId()));
+                }
+                else {
+                    response.sendRedirect(PROJECT_NEW_FORM_PATH);
+                }
+            }
+            else {
+                response.sendRedirect(TASK_LIST_PATH);
+            }
         }
         catch (WorkTimeParseException e) {
             handleException(e, "Некорректный ввод работы.", request, response);
@@ -122,6 +123,31 @@ public class InsertTaskCommand implements Command {
         catch (EmployeeIdParseException e) {
             handleException(e, "Некорректный ввод id сотрудника.", request, response);
         }
+    }
+
+    private void createNotDuplicatedTask(Task task, HttpSession session, Project editedProject) {
+        List<String> duplicates = (List<String>) session.getAttribute(DUPLICATES_ATTRIBUTE_NAME);
+        if (duplicates == null) {
+            duplicates = new ArrayList<>();
+        }
+
+        if (!duplicates.contains(task.toString())) {
+            if (editedProject == null) {
+                taskService.create(task);
+            }
+            else {
+                createProjectTask(task, editedProject.getTaskList());
+                session.setAttribute(EDITED_PROJECT_ATTRIBUTE_NAME, editedProject);
+            }
+
+            duplicates.add(task.toString());
+            session.setAttribute(DUPLICATES_ATTRIBUTE_NAME, duplicates);
+        }
+    }
+
+    private void createProjectTask(Task task, List<Task> projectTaskList) {
+        taskService.validate(task);
+        projectTaskList.add(task);
     }
 
     private void handleException(Exception e, String clientMessage,

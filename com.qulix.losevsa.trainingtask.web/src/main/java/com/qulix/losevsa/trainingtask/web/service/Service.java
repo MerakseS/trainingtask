@@ -44,4 +44,6 @@ public interface Service<T> {
      * @param id the id of the object.
      */
     void delete(long id);
+
+    void validate(T t);
 }

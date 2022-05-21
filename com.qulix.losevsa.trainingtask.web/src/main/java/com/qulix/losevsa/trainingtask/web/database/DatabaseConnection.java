@@ -3,7 +3,6 @@ package com.qulix.losevsa.trainingtask.web.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import static java.lang.String.format;
 
 /**
  * The class for creating database connection.

@@ -88,7 +88,7 @@ public class DefaultEmployeeRepository implements Repository<Employee> {
             return result.next() ? getEmployeeByResultSet(result) : null;
         }
         catch (SQLException e) {
-            throw new QueryExecutionException(format("Can't get employee. Employee's id: %d" , id), e);
+            throw new QueryExecutionException(format("Can't get employee. Employee's id: %d", id), e);
         }
     }
 

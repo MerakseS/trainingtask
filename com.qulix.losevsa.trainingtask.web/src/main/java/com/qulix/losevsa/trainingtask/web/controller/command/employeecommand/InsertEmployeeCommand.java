@@ -2,6 +2,7 @@ package com.qulix.losevsa.trainingtask.web.controller.command.employeecommand;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -53,22 +54,7 @@ public class InsertEmployeeCommand implements Command {
                 employee.setPatronymic(patronymic);
             }
 
-            HttpSession session = request.getSession();
-            ArrayList<String> duplicates = (ArrayList<String>) session.getAttribute(DUPLICATES_ATTRIBUTE_NAME);
-            if (duplicates == null) {
-                employeeService.create(employee);
-
-                duplicates = new ArrayList<>();
-                duplicates.add(employee.toString());
-                session.setAttribute(DUPLICATES_ATTRIBUTE_NAME, duplicates);
-            }
-            else if (!duplicates.contains(employee.toString())) {
-                employeeService.create(employee);
-
-                duplicates.add(employee.toString());
-                session.setAttribute(DUPLICATES_ATTRIBUTE_NAME, duplicates);
-            }
-
+            createNotDuplicatedEmployee(employee, request.getSession());
             response.sendRedirect(EMPLOYEE_LIST_PATH);
         }
         catch (FieldNotFilledException e) {
@@ -76,6 +62,19 @@ public class InsertEmployeeCommand implements Command {
         }
         catch (EmployeeFieldLengthExceededException e) {
             handleException(e, "Длина полей работника должна быть не больше 30 символов.", request, response);
+        }
+    }
+
+    private void createNotDuplicatedEmployee(Employee employee, HttpSession session) {
+        List<String> duplicates = (List<String>) session.getAttribute(DUPLICATES_ATTRIBUTE_NAME);
+        if (duplicates == null) {
+            duplicates = new ArrayList<>();
+        }
+
+        if (!duplicates.contains(employee.toString())) {
+            employeeService.create(employee);
+            duplicates.add(employee.toString());
+            session.setAttribute(DUPLICATES_ATTRIBUTE_NAME, duplicates);
         }
     }
 

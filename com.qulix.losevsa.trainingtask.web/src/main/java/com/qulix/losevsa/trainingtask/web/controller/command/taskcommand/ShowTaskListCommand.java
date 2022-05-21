@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.entity.Task;
@@ -15,6 +16,8 @@ import com.qulix.losevsa.trainingtask.web.service.Service;
  * Show task list command.
  */
 public class ShowTaskListCommand implements Command {
+
+    private static final String EDITED_PROJECT_ATTRIBUTE_NAME = "editedProject";
 
     private static final String TASK_LIST_PATH = "/WEB-INF/jsp/taskList.jsp";
 
@@ -31,6 +34,11 @@ public class ShowTaskListCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute(EDITED_PROJECT_ATTRIBUTE_NAME) != null) {
+            session.removeAttribute(EDITED_PROJECT_ATTRIBUTE_NAME);
+        }
+
         List<Task> taskList = taskService.getAll();
         request.setAttribute("taskList", taskList);
         request.getRequestDispatcher(TASK_LIST_PATH).forward(request, response);

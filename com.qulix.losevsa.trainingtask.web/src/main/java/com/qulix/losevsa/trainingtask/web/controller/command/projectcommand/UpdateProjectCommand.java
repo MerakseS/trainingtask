@@ -6,6 +6,7 @@ import static java.lang.String.format;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -28,11 +29,12 @@ public class UpdateProjectCommand implements Command {
     private static final String EDIT_PROJECT_FORM_PATH = "/project/edit";
     private static final String NOT_FOUND_PATH = "/WEB-INF/jsp/notFoundPage.jsp";
 
-    private static final String ID_PARAMETER = "id";
-    private static final String NAME_PARAMETER = "name";
-    private static final String DESCRIPTION_PARAMETER = "description";
+    private static final String ID_PARAMETER = "projectId";
+    private static final String NAME_PARAMETER = "projectName";
+    private static final String DESCRIPTION_PARAMETER = "projectDescription";
 
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
+    private static final String EDITED_PROJECT_ATTRIBUTE_NAME = "editedProject";
 
     private final Service<Project> projectService;
 
@@ -57,7 +59,12 @@ public class UpdateProjectCommand implements Command {
                 project.setDescription(description);
             }
 
+            HttpSession session = request.getSession();
+            Project editedProject = (Project) session.getAttribute(EDITED_PROJECT_ATTRIBUTE_NAME);
+            project.setTaskList(editedProject.getTaskList());
+
             projectService.update(project);
+            session.removeAttribute(EDITED_PROJECT_ATTRIBUTE_NAME);
             response.sendRedirect(PROJECT_LIST_PATH);
         }
         catch (PageNotFoundException e) {

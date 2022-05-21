@@ -2,6 +2,7 @@ package com.qulix.losevsa.trainingtask.web.controller.command.projectcommand;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,11 +28,12 @@ public class InsertProjectCommand implements Command {
     private static final String PROJECT_LIST_PATH = "/project";
     private static final String NEW_PROJECT_FORM_PATH = "/project/new";
 
-    private static final String NAME_PARAMETER = "name";
-    private static final String DESCRIPTION_PARAMETER = "description";
+    private static final String NAME_PARAMETER = "projectName";
+    private static final String DESCRIPTION_PARAMETER = "projectDescription";
 
     private static final String DUPLICATES_ATTRIBUTE_NAME = "duplicates";
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
+    private static final String EDITED_PROJECT_ATTRIBUTE_NAME = "editedProject";
 
     private final Service<Project> projectService;
 
@@ -56,21 +58,11 @@ public class InsertProjectCommand implements Command {
             }
 
             HttpSession session = request.getSession();
-            ArrayList<String> duplicates = (ArrayList<String>) session.getAttribute(DUPLICATES_ATTRIBUTE_NAME);
-            if (duplicates == null) {
-                projectService.create(project);
+            Project editedProject = (Project) session.getAttribute(EDITED_PROJECT_ATTRIBUTE_NAME);
+            project.setTaskList(editedProject.getTaskList());
 
-                duplicates = new ArrayList<>();
-                duplicates.add(project.toString());
-                session.setAttribute(DUPLICATES_ATTRIBUTE_NAME, duplicates);
-            }
-            else if (!duplicates.contains(project.toString())) {
-                projectService.create(project);
-
-                duplicates.add(project.toString());
-                session.setAttribute(DUPLICATES_ATTRIBUTE_NAME, duplicates);
-            }
-
+            createNotDuplicatedProject(project, session);
+            session.removeAttribute(EDITED_PROJECT_ATTRIBUTE_NAME);
             response.sendRedirect(PROJECT_LIST_PATH);
         }
         catch (FieldNotFilledException e) {
@@ -81,6 +73,19 @@ public class InsertProjectCommand implements Command {
         }
         catch (DescriptionLengthExceededException e) {
             handleException(e, "Длина описания должна быть не больше 200 символов.", request, response);
+        }
+    }
+
+    private void createNotDuplicatedProject(Project project, HttpSession session) {
+        List<String> duplicates = (List<String>) session.getAttribute(DUPLICATES_ATTRIBUTE_NAME);
+        if (duplicates == null) {
+            duplicates = new ArrayList<>();
+        }
+
+        if (!duplicates.contains(project.toString())) {
+            projectService.create(project);
+            duplicates.add(project.toString());
+            session.setAttribute(DUPLICATES_ATTRIBUTE_NAME, duplicates);
         }
     }
 

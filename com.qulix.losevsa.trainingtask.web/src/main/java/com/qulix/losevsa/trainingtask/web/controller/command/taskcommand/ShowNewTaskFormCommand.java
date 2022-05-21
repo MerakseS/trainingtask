@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.qulix.losevsa.trainingtask.web.controller.command.Command;
 import com.qulix.losevsa.trainingtask.web.entity.Employee;
@@ -19,7 +20,13 @@ public class ShowNewTaskFormCommand implements Command {
 
     private static final String TASK_EDIT_PATH = "/WEB-INF/jsp/taskEdit.jsp";
 
-    private static final String PROJECT_ID_PARAMETER = "selectedProjectId";
+    private static final String PROJECT_ID_PARAMETER = "projectId";
+    private static final String PROJECT_NAME_PARAMETER = "projectName";
+    private static final String PROJECT_DESCRIPTION_PARAMETER = "projectDescription";
+
+    private static final String EDITED_PROJECT_ATTRIBUTE_NAME = "editedProject";
+    private static final String PROJECT_LIST_ATTRIBUTE_NAME = "projectList";
+    private static final String EMPLOYEE_LIST_ATTRIBUTE_NAME = "employeeList";
 
     private final Service<Project> projectService;
     private final Service<Employee> employeeService;
@@ -37,18 +44,37 @@ public class ShowNewTaskFormCommand implements Command {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String strProjectId = request.getParameter(PROJECT_ID_PARAMETER);
-        if (strProjectId != null && !strProjectId.isBlank()) {
-            long id = Long.parseLong(strProjectId);
-            Project project = projectService.get(id);
-            request.setAttribute("selectedProject", project);
-        }
+        setEditedProject(request);
 
         List<Project> projectList = projectService.getAll();
-        request.setAttribute("projectList", projectList);
+        request.setAttribute(PROJECT_LIST_ATTRIBUTE_NAME, projectList);
         List<Employee> employeeList = employeeService.getAll();
-        request.setAttribute("employeeList", employeeList);
+        request.setAttribute(EMPLOYEE_LIST_ATTRIBUTE_NAME, employeeList);
 
         request.getRequestDispatcher(TASK_EDIT_PATH).forward(request, response);
+    }
+
+    private void setEditedProject(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Project editedProject = (Project) session.getAttribute(EDITED_PROJECT_ATTRIBUTE_NAME);
+        if (editedProject != null) {
+            String strProjectId = request.getParameter(PROJECT_ID_PARAMETER);
+            if (strProjectId != null && !strProjectId.isBlank()) {
+                long id = Long.parseLong(strProjectId);
+                editedProject.setId(id);
+            }
+
+            String name = request.getParameter(PROJECT_NAME_PARAMETER);
+            if (name != null && !name.isBlank()) {
+                editedProject.setName(name);
+            }
+
+            String description = request.getParameter(PROJECT_DESCRIPTION_PARAMETER);
+            if (description != null && !description.isBlank()) {
+                editedProject.setDescription(description);
+            }
+
+            session.setAttribute(EDITED_PROJECT_ATTRIBUTE_NAME, editedProject);
+        }
     }
 }

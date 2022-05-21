@@ -27,21 +27,21 @@
 
 <div class="container">
     <c:if test="${project != null}">
-    <form action="update" method="POST">
+    <form id="projectForm" action="update" method="POST">
         </c:if>
         <c:if test="${project == null}">
-        <form action="insert" method="POST">
+        <form id="projectForm" action="insert" method="POST">
             </c:if>
             <c:if test="${project != null}">
-                <input type="hidden" name="id" value="${project.id}"/>
+                <input type="hidden" name="projectId" value="${project.id}"/>
             </c:if>
             <label>Наименование*
-                <br/><input type="text" name="name" placeholder="Наименование"
-                            value="${htmlUtils.escapeHtml(param.name != null ? param.name : project.name)}"/>
+                <br/><input type="text" name="projectName" placeholder="Наименование"
+                            value="${htmlUtils.escapeHtml(param.name != null ? param.name : editedProject.name)}"/>
             </label> <br/><br/>
             <label>Описание
-                <br/><textarea name="description" rows="5"
-                               placeholder="Описание">${htmlUtils.escapeHtml(param.description != null ? param.description : project.description)}</textarea>
+                <br/><textarea name="projectDescription" rows="5"
+                               placeholder="Описание">${htmlUtils.escapeHtml(param.description != null ? param.description : editedProject.description)}</textarea>
             </label> <br/>
             <p>* – обязательные поля.</p>
             <input type="submit" value="${title}">
@@ -56,57 +56,52 @@
 </div>
 
 <div class="container">
-    <c:if test="${project != null}">
-        <h3>Список задач проекта</h3>
-        <table>
-            <thead>
+    <h3>Список задач проекта</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Статус</th>
+            <th>Наименование</th>
+            <th>Работа</th>
+            <th>Дата начала</th>
+            <th>Дата окончания</th>
+            <th>Исполнитель</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="task" items="${editedProject.taskList}" varStatus="loop">
+            <jsp:useBean id="task" type="com.qulix.losevsa.trainingtask.web.entity.Task"/>
             <tr>
-                <th>Статус</th>
-                <th>Наименование</th>
-                <th>Работа</th>
-                <th>Дата начала</th>
-                <th>Дата окончания</th>
-                <th>Исполнитель</th>
-                <th></th>
-                <th></th>
+                <td>
+                    <%= new String(task.getTaskStatus().getName().getBytes(), UTF_8)%>
+                </td>
+                <td>${htmlUtils.escapeHtml(task.name)}</td>
+                <td>${task.workTime == null ? "" : task.workTime}</td>
+                <td>${task.startDate}</td>
+                <td>${task.endDate}</td>
+                <td>
+                        ${htmlUtils.escapeHtml(task.employee.firstName)}
+                        ${htmlUtils.escapeHtml(task.employee.surname)}
+                        ${htmlUtils.escapeHtml(task.employee.patronymic)}
+                </td>
+                <td>
+                    <input form="projectForm" type="submit" value="Изменить" formmethod="POST"
+                           formaction="<c:url value="/task/edit?taskId=${loop.index}"/>">
+                </td>
+                <td>
+                    <input form="projectForm" type="submit" value="Удалить" formmethod="POST"
+                           formaction="<c:url value="/task/delete?taskId=${loop.index}"/>">
+                </td>
             </tr>
-            </thead>
-            <tbody>
-            <c:forEach var="task" items="${project.taskList}">
-                <jsp:useBean id="task" type="com.qulix.losevsa.trainingtask.web.entity.Task"/>
-                <tr>
-                    <td>
-                        <%= new String(task.getTaskStatus().getName().getBytes(), UTF_8)%>
-                    </td>
-                    <td>${htmlUtils.escapeHtml(task.name)}</td>
-                    <td>${task.workTime == null ? "" : task.workTime}</td>
-                    <td>${task.startDate}</td>
-                    <td>${task.endDate}</td>
-                    <td>
-                            ${htmlUtils.escapeHtml(task.employee.firstName)}
-                            ${htmlUtils.escapeHtml(task.employee.surname)}
-                            ${htmlUtils.escapeHtml(task.employee.patronymic)}
-                    </td>
-                    <td>
-                        <a href="<c:url value="/task/edit?taskId=${task.id}&selectedProjectId=${project.id}"/>">
-                            <button>Изменить</button>
-                        </a>
-                    </td>
-                    <td>
-                        <a href="<c:url value="/task/delete?taskId=${task.id}"/>">
-                            <button>Удалить</button>
-                        </a>
-                    </td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-        <br/>
-        <a href="<c:url value="/task/new?selectedProjectId=${project.id}"/>">
-            <button>Добавить задачу</button>
-        </a>
-        <br/><br/>
-    </c:if>
+        </c:forEach>
+        </tbody>
+    </table>
+    <br/>
+    <input form="projectForm" type="submit" value="Добавить задачу" formmethod="POST"
+           formaction="<c:url value="/task/new"/>">
+    <br/><br/>
 </div>
 
 <jsp:include page="footer.jsp"/>

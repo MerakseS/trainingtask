@@ -6,6 +6,7 @@ import static java.lang.String.format;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -27,6 +28,8 @@ public class ShowEditProjectFormCommand implements Command {
     private static final String ID_PARAMETER = "id";
 
     private static final String ERROR_ATTRIBUTE_NAME = "errorMessage";
+    private static final String EDITED_PROJECT_ATTRIBUTE_NAME = "editedProject";
+
     private final Service<Project> projectService;
 
     /**
@@ -44,6 +47,12 @@ public class ShowEditProjectFormCommand implements Command {
             long id = Long.parseLong(request.getParameter(ID_PARAMETER));
             Project project = projectService.get(id);
             request.setAttribute("project", project);
+
+            HttpSession session = request.getSession();
+            if (session.getAttribute(EDITED_PROJECT_ATTRIBUTE_NAME) == null) {
+                session.setAttribute(EDITED_PROJECT_ATTRIBUTE_NAME, project);
+            }
+
             request.getRequestDispatcher(PROJECT_EDIT_PATH).forward(request, response);
         }
         catch (PageNotFoundException e) {

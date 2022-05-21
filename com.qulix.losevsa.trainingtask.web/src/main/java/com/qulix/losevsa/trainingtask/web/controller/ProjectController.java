@@ -18,6 +18,7 @@ import com.qulix.losevsa.trainingtask.web.repository.DefaultProjectRepository;
 import com.qulix.losevsa.trainingtask.web.repository.DefaultTaskRepository;
 import com.qulix.losevsa.trainingtask.web.repository.Repository;
 import com.qulix.losevsa.trainingtask.web.service.DefaultProjectService;
+import com.qulix.losevsa.trainingtask.web.service.DefaultTaskService;
 import com.qulix.losevsa.trainingtask.web.service.Service;
 
 /**
@@ -36,7 +37,9 @@ public class ProjectController extends HttpServlet {
         Repository<Project> projectRepository = new DefaultProjectRepository();
         Repository<Task> taskRepository = new DefaultTaskRepository(employeeRepository, projectRepository);
 
-        Service<Project> projectService = new DefaultProjectService(projectRepository, taskRepository);
+        Service<Task> taskService = new DefaultTaskService(taskRepository);
+        Service<Project> projectService = new DefaultProjectService(projectRepository, taskService);
+
         projectCommandProvider = new ProjectCommandProvider(projectService);
     }
 

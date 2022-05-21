@@ -37,8 +37,8 @@
                 <input type="hidden" name="taskId" value="${task.id}"/>
             </c:if>
 
-            <c:if test="${selectedProject != null}">
-                <input type="hidden" name="selectedProjectId" value="${selectedProject.id}">
+            <c:if test="${editedProject != null}">
+                <input type="hidden" name="editedProjectId" value="${editedProject.id}">
             </c:if>
 
             <label>Наименование*<br/>
@@ -48,11 +48,11 @@
 
             <label>Проект*<br/>
                 <select name="projectId">
-                    <c:if test="${selectedProject != null}">
-                        <option value="${selectedProject.id}">${htmlUtils.escapeHtml(selectedProject.name)}</option>
+                    <c:if test="${editedProject != null}">
+                        <option value="${editedProject.id}">${htmlUtils.escapeHtml(editedProject.name)}</option>
                     </c:if>
 
-                    <c:if test="${selectedProject == null}">
+                    <c:if test="${editedProject == null}">
                         <c:forEach var="project" items="${projectList}">
                             <option value="${project.id}"
                                     <c:if test="${param.projectId != null
@@ -128,10 +128,13 @@
             <p>* – обязательные поля.</p>
             <input type="submit" value="${title}"/>
             <a
-                    <c:if test="${selectedProject != null}">
-                        href="<c:url value="/project/edit?id=${selectedProject.id}"/>"
+                    <c:if test="${editedProject != null && editedProject.id != 0}">
+                        href="<c:url value="/project/edit?id=${editedProject.id}"/>"
                     </c:if>
-                    <c:if test="${selectedProject == null}">
+                    <c:if test="${editedProject != null && editedProject.id == 0}">
+                        href="<c:url value="/project/new"/>"
+                    </c:if>
+                    <c:if test="${editedProject == null}">
                         href="<c:url value="/task"/>"
                     </c:if>
             >
